@@ -16,7 +16,7 @@
     - [ ] Add a link to this file in your root README.md.
     - [ ] Include: team name, brand, core values, and a member roster (brief overview for each member + link to their personal GitHub page).
 
-#Team Intro Video
+# Team Intro Video
 - [ ] Record Video: Create a max 2.5-minute introductory video (MP4 or Quicktime).
 - [ ] Upload Video: Name the file exactly teamintro.mp4 and save it at /admin/videos/teamintro.mp4.
 
