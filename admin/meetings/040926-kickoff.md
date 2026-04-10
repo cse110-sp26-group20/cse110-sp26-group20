@@ -30,4 +30,4 @@
 
 ## To Do
 1. Sign up on team bonding scheduleit
-2. Review Week 2 Plans in repo and prepare for meeting accordingly (cse110-sp26-group20/admin/plans/week2-plan.md)
+2. Review [Week 2 Plans](/admin/plans/week2-plan.md) in repo and prepare for meeting accordingly
