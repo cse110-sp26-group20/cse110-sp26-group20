@@ -1,7 +1,7 @@
 # Team 20 Meeting Minutes 04-09-26
 
 ## Meeting Details 
-**Type:** Kickoff Meeting!
+**Type:** Kickoff Meeting!  
 **Location:** Catalyst 0125, 6:20-6:30pm
 
 **Attendance:** 
