@@ -1,4 +1,4 @@
-# Team 20 Meeting Minutes 04-09-26
+# Meeting Minutes 04-09-26 - Zingers Team 20
 
 ## Meeting Details 
 **Type:** Kickoff Meeting!  
