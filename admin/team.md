@@ -1,6 +1,7 @@
 # Zingerz
 
-We value collaboration, equal contribution, and full transparency in our work as a team. You can read more about our values and standards in our [team charter](/admin/misc/rules.md#2-values-and-standards)!
+We value collaboration, equal contribution, and full transparency in our work as a team.  
+You can read more about our values and standards in our [team charter](/admin/misc/rules.md#2-values-and-standards)!
 
 ## Leads
 
