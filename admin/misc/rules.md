@@ -20,7 +20,7 @@
 
 ### 5. Addressing Rule Violations (Non-Compliance)
 * **Step 1: Friendly Reminder:** If a team member is not following the group rules (e.g., missing deadlines, failing to contribute, unresponsive), the first step is to send a direct message (DM) as a gentle reminder to check in on them.
-* **Step 2: Group Discussion:** If the behavior persists after the direct message, the issue will be brought up transparently during the weekly meeting to understand the root cause and re-align on team expectations. TA conatct will proceed with continued rule breaking.
+* **Step 2: Group Discussion:** If the behavior persists after the direct message, the issue will be brought up transparently during the weekly meeting to understand the root cause and re-align on team expectations. TA contact will proceed with continued rule breaking.
 
 ### 6. Transparent Communication Protocols
 * **Responsiveness:** All team members are expected to respond to team messages in a timely manner. Acknowledging a message with a simple reaction or short reply is highly encouraged.
