@@ -1,11 +1,11 @@
 # Meeting Minutes 04-13-26 - Zingerz Team 20
 
 ## Meeting Details 
-**Type:** Group Meeting
+**Type:** Group Meeting  
 **Location:** Zoom, 5:00pm - 7:00pm
 
 **Attendance:** 
-* Present:  Andre, Noah, Cadie, Iban, Adam, Christine, Esha, En-Yu
+* Present: Andre, Noah, Cadie, Iban, Adam, Christine, Esha, En-Yu
 * Absent: Abas, Jad, Yezhi
 
 

@@ -1,11 +1,11 @@
 # Meeting Minutes 04-13-26 - Zingerz Team 20
 
 ## Meeting Details 
-**Type:** TA Meeting
-**Location:** Zoom, 4:30 - 5:00
+**Type:** TA Meeting  
+**Location:** Zoom, 4:30pm - 5:00pm
 
 **Attendance:** 
-* Present: Yezhi, Andre, Noah, Cadie, Iban, Adam, Christine, Esha, Abas, En-Yu, Jad
+* Present: Yezhi, Andre, Noah, Cadie, Iban, Adam, Christine, Esha, Abas, En-Yu, Jad, TA Omair
 * Absent: None
 
 ## Agenda
@@ -19,12 +19,12 @@
 
 **Discussed:**
 1. Met TA
-   - Our TA Qmair introduced himself and gave us his background and advice for the class
+   - Our TA Omair introduced himself and gave us his background and advice for the class
 2. Slack Discussion
    - Slack must be used in order to moniter progress
    - Slack stops giving notification outside of work hours, need to find work around
 3. Background of class
-   - Qmair explained that this class is fast paced and meant to throw us in the deep end and he advised
+   - Omair explained that this class is fast paced and meant to throw us in the deep end and he advised
      - Stay on top of things and ask group for help whenever needed
      - Come to him when we have questions
      - Schedule quick group meetings online if ever needed
