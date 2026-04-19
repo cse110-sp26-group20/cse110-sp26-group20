@@ -2,9 +2,9 @@
 
 ## Meeting Details 
 
-**Type:** Meeting for WarmUp 2
+**Type:** Meeting for Warmup 2
 
-**Date:** April 19, 2026
+**Location:** Zoom, 2:00pm - 3:10pm
 
 **Attendance:**
 * Yezhi
@@ -27,7 +27,7 @@
 * AI Strategy
 
 ### Unresolved:
-* Confirmation with TA on whether the team will add on to "Warm up 1."
+* Confirmation with TA on whether the team will add on to warmup 1
 
 ### Decisions:
 * Miro will be used for group info; categories will be created for open contributions.
