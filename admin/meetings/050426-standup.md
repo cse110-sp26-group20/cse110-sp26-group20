@@ -1,4 +1,4 @@
-# Meeting Minutes 05-4-26 - Zingerz Team 20
+# Meeting Minutes 05-04-26 - Zingerz Team 20
 
 ## Meeting Details 
 
@@ -14,7 +14,7 @@
 * Andre
 * Iban
 * Abas
-* Christine
+* Esha
 * Jad
 * Anvik
 
