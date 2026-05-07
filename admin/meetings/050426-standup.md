@@ -2,7 +2,7 @@
 
 ## Meeting Details 
 
-**Type:** Stand Up
+**Type:** Standup
 
 **Location:** Zoom, 4:00pm - 4:50pm
 
