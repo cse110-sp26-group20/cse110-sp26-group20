@@ -1,0 +1,21 @@
+{
+  "name": "backend",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "start": "node dist/server.js",
+    "dev": "tsx watch --include 'src/**/*.ts' src/server.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.8.0",
+    "tsc-alias": "1.8.17",
+    "tsx": "^4.22.0",
+    "typescript": "^6.0.3"
+  }
+}
