@@ -1,0 +1,31 @@
+name: Lint and format
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - source/**
+      - package.json
+      - package-lock.json
+      - prettier.config.js
+      - .github/workflows/lint-format.yml
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Prettier
+        run: npm run format:check

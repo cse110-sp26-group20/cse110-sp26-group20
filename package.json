@@ -1,0 +1,23 @@
+{
+  "name": "cse110-sp26-group20",
+  "type": "module",
+  "workspaces": [
+    "source/backend",
+    "source/frontend"
+  ],
+  "scripts": {
+    "lint": "npm run lint --workspaces --if-present",
+    "lint:fix": "npm run lint:fix --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
+    "format:check": "npm run format:check --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.1",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.2.0",
+    "prettier": "^3.8.3",
+    "typescript-eslint": "^8.59.3"
+  }
+}

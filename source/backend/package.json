@@ -5,7 +5,11 @@
     "build": "tsc && tsc-alias",
     "start": "node dist/server.js",
     "dev": "tsx watch --include 'src/**/*.ts' src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "dotenv": "^17.4.2",
