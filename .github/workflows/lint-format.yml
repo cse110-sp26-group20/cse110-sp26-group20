@@ -9,10 +9,12 @@ on:
       - package-lock.json
       - .github/workflows/lint-format.yml
   pull_request:
+    branches: [main]
     paths:
       - source/**
       - package.json
       - package-lock.json
+      - prettier.config.js
       - .github/workflows/lint-format.yml
 
 jobs:
