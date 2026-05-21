@@ -34,25 +34,21 @@ export class ImageResponse {
 
 export class ImagePrompt {
     private rawPrompt: string;
-    private arguments: Record<string, any>;
+    private arguments: Record<string, unknown>;
 
-    constructor(rawPrompt: string, args: Record<string, any> = {}) {
+    constructor(rawPrompt: string, args: Record<string, unknown> = {}) {
         this.rawPrompt = rawPrompt;
         this.arguments = { ...args };
     }
 
-    public setArgument(key: string, value: any): void {
+    public setArgument(key: string, value: unknown): void {
         this.arguments[key] = value;
     }
 
-    public getArgument(key: string): any {
-        return this.arguments[key];
+    public getArgument<T> (key: string): T | undefined {
+        return this.arguments[key] as T;
     }
 
-    /**
-     * Parses inline arguments from the raw prompt string.
-     * Example: "A cute cat --ar 16:9 --v 5" extracts to the arguments Record.
-     */
     public parseRawPromptToArgs(): void {
         const regex = /--([a-zA-Z0-9_]+)\s+([^-]+(?:\s+[^-]+)*)/g;
         let match;
@@ -79,7 +75,11 @@ export class ImagePrompt {
         const argv: string[] = [];
         for (const [key, value] of Object.entries(this.arguments)) {
             argv.push(`--${key}`);
-            argv.push(String(value));
+            if (typeof value === 'object' && value !== null) {
+                argv.push(JSON.stringify(value));
+            } else {
+                argv.push(String(value));
+            }
         }
         return argv;
     }

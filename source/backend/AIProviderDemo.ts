@@ -1,4 +1,4 @@
-import { IUniversalAIProvider, AIGenerator, ImagePrompt, ImageResponse, ImageData, ResponseMetadata} from "./UniversalAIProvider";
+import { IUniversalAIProvider, AIGenerator, ImagePrompt, ImageResponse, ImageData, ResponseMetadata} from "./core/UniversalAIProvider";
 
 
 export class OpenAIProvider implements IUniversalAIProvider {
@@ -10,9 +10,9 @@ export class OpenAIProvider implements IUniversalAIProvider {
 
     public async generateImage(prompt: ImagePrompt): Promise<ImageResponse> {
         // OpenAI might use a JSON body API, so we extract specific properties from the Record
-        const promptText = prompt.getRawPrompt();
-        const width = prompt.getArgument("width") || 1024;
-        const height = prompt.getArgument("height") || 1024;
+        // const promptText = prompt.getRawPrompt();
+        const width = prompt.getArgument<number>("width") || 1024;
+        const height = prompt.getArgument<number>("height") || 1024;
         const sizeString = `${width}x${height}`;
         
         console.log(`[xxAIProvider] Sending API Request: Prompt="${prompt.getRawPrompt()}", Size=${sizeString}`);
@@ -64,3 +64,5 @@ async function runExample() {
     
     console.log("Metadata:", response.getMetadata());
 }
+
+runExample().catch(console.error);
