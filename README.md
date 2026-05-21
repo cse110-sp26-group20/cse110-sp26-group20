@@ -10,6 +10,7 @@ We follow automated code standards: Prettier for formatting and ESLint for linti
 - [Weekly Plans](./admin/plans/)
 - [Meeting Notes](./admin/meetings/)
 - [Architecture Decision Records](./specs/adr/)
+- [View Team Status Video on YouTube](https://www.youtube.com/watch?v=oZjkrQSXtZM)
 
 ## Repository Structure
 
