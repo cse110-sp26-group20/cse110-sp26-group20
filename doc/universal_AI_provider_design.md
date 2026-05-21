@@ -12,22 +12,13 @@ For the project right now, I have run into a few critical blockers that this arc
 
 ``` mermaid
 ---
-title: Ad
+title: Universal AI Provider Integration
 ---
 classDiagram
     class IUniversalAIProvider {
         <<interface>>
         +generateImage(prompt: ImagePrompt) ImageResponse
     }
-
-    class OpenAIProvider {
-        +generateImage(prompt: ImagePrompt) ImageResponse
-    }
-    
-    class StableDiffusionProvider {
-        +generateImage(prompt: ImagePrompt) ImageResponse
-    }
-
     class AIGenerator {
         -provider: IUniversalAIProvider
         -timeoutMs: number
@@ -67,9 +58,6 @@ classDiagram
         -modelName: string
         -finishReason: string
     }
-
-    IUniversalAIProvider <|.. OpenAIProvider : Implements
-    IUniversalAIProvider <|.. StableDiffusionProvider : Implements
     
     AIGenerator o-- IUniversalAIProvider : DI （IoC)
     
@@ -81,4 +69,22 @@ classDiagram
     
     ImageResponse *-- ImageData : Composition
     ImageResponse *-- ResponseMetadata : Composition
+```
+
+### Implementation
+
+``` mermaid
+classDiagram
+    class IUniversalAIProvider{
+        <<interface>>
+    }
+    class OpenAIProvider {
+        +generateImage(prompt: ImagePrompt) ImageResponse
+    }
+    
+    class StableDiffusionProvider {
+        +generateImage(prompt: ImagePrompt) ImageResponse
+    }
+    IUniversalAIProvider <|.. OpenAIProvider : Implements
+    IUniversalAIProvider <|.. StableDiffusionProvider : Implements
 ```
