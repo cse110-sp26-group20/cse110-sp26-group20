@@ -1,4 +1,4 @@
-# Architecture Decision Record: Universal AI Provider Integration
+# Universal AI Provider Integration
 ### Bottom Line Up Front (BLUF)
 We have adopted an Inversion of Control (IoC) architecture combined with a dynamic TypeScript configuration pattern to decouple our core execution logic from specific AI models. This design allows us to seamlessly swap AI providers and dynamically pass unknown or evolving model parameters without modifying our core interfaces, keeping our architecture extensible and future-proof.
 
