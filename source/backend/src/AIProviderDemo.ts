@@ -3,9 +3,9 @@ import {
   ImageData,
   ImagePrompt,
   ImageResponse,
-  IUniversalAIProvider,
   ResponseMetadata
 } from './core/UniversalAIProvider';
+import type { IUniversalAIProvider } from './core/UniversalAIProvider';
 
 export class OpenAIProvider implements IUniversalAIProvider {
   key: string = '';

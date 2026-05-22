@@ -46,7 +46,7 @@ export class ImagePrompt {
   }
 
   public getArgument<T>(key: string): T | undefined {
-    return this.arguments[key] as T;
+    if (key) return this.arguments[key] as T;
   }
 
   public parseRawPromptToArgs(): void {
@@ -54,8 +54,9 @@ export class ImagePrompt {
     let match;
 
     while ((match = regex.exec(this.rawPrompt)) !== null) {
-      const key = match[1].trim();
-      const value = match[2].trim();
+      const [, matchedKey, matchedValue] = match;
+      const key = (matchedKey || '').trim();
+      const value = matchedValue?.trim();
       this.setArgument(key, value);
     }
 
