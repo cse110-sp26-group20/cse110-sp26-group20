@@ -29,7 +29,7 @@
   - Backend:
     - Completed research on Imgflip and OpenAI api
     - Completed the universal AI interface to support different models smoothly
-    - Tested the imageflip api 
+    - Tested the Imgflip api 
     
 
 ## To Do
