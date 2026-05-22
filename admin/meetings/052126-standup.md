@@ -1,4 +1,4 @@
-# Meeting Minutes 05-19-26 - Zingerz Team 20
+# Meeting Minutes 05-21-26 - Zingerz Team 20
 
 ## Meeting Details
 
