@@ -20,6 +20,8 @@ export class OpenAIProvider implements IUniversalAIProvider {
     const height = prompt.getArgument<number>('height') || 1024;
     const sizeString = `${width}x${height}`;
 
+    console.log(typeof width);
+
     console.log(
       `[xxAIProvider] Sending API Request: Prompt="${prompt.getRawPrompt()}", Size=${sizeString}`
     );
@@ -66,7 +68,7 @@ export class StableDiffusionProvider implements IUniversalAIProvider {
 // Usage Example
 // ============================================================================
 
-async function runExample() {
+export async function runExample() {
   // 1. Create a prompt with dynamic, unknown parameters using the Record pattern
   const prompt = new ImagePrompt(
     'This is an example!!! --ar 16:9 --stylize 100',
@@ -90,5 +92,3 @@ async function runExample() {
 
   console.log('Metadata:', response.getMetadata());
 }
-
-runExample().catch(console.error);
