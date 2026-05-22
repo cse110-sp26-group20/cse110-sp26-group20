@@ -27,7 +27,7 @@
   - Frontend:
     - Decidied on the style for the hifi(vibrant summer) and font
   - Backend:
-    - Completed research on ImageFlip and OpenAI api
+    - Completed research on Imgflip and OpenAI api
     - Completed the universal AI interface to support different models smoothly
     - Tested the imageflip api 
     
