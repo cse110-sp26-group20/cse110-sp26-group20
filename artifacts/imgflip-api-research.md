@@ -67,6 +67,7 @@ Unlike most modern APIs, this endpoint DOES NOT accept raw JSON bodies. The requ
 
 ### Example Response
 If successful, the API returns the URL of the newly hosted image.
+
 **Example Success Response:**
 ```json
 {
