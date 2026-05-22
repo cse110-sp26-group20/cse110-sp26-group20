@@ -61,7 +61,6 @@
 ## To Do
 
 - Prepare to complete assigned code review and indicate individual contributions
-- Continue researching image generation APIs
 - Frontend: Redesign editor screen to follow Instagram Stories-style interaction
 - Frontend: Research whimsical app design for UI inspiration
 - Backend: Continue researching image generation APIs
