@@ -3,7 +3,7 @@
 | Attribute | Value                                |
 | --------- | ------------------------------------ |
 | Date      | `2026-05-22`                         |
-| Status    | Proposed                             |
+| Status    | Accepted                             |
 | Deciders  | Backend Team + TA                    |
 
 ## Context
@@ -13,6 +13,8 @@ Manual testing of backend APIs is error-prone and cannot prevent regressions. We
 ## Decision
 
 We will adopt **Jest** alongside **`ts-jest`** for writing and executing backend unit tests. We will also implement a **GitHub Actions CI workflow** that automatically runs `npm ci` and `npm test` on all Pull Requests targeting the `main` branch where backend files are modified.
+
+**Package**: `jest`, `ts-jest`, `@types/jest`
 
 ## Consequences
 
