@@ -25,7 +25,8 @@ export class ImagePrompt {
       const [, matchedKey, matchedValue] = match;
       const key = (matchedKey || '').trim();
       const value = matchedValue?.trim();
-      this.setArgument(key, value);
+      // cast to number if it looks like one, otherwise keep as string
+      this.setArgument(key, isNaN(Number(value)) ? value : Number(value));
     }
 
     // Clean the raw prompt by removing the parsed parameters
