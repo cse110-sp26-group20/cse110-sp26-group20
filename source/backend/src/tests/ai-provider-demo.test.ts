@@ -1,5 +1,6 @@
 import { OpenAIProvider, StableDiffusionProvider } from '../AIProviderDemo';
-import { AIGenerator, ImagePrompt } from '../core/UniversalAIProvider';
+import { ImagePrompt } from '../models/ImagePrompt';
+import { AIGenerator } from '../services/AIGenerator';
 
 describe('Universal AI Provider', () => {
   it('should return a correct result from OpenAIProvider demo', async () => {
@@ -10,7 +11,7 @@ describe('Universal AI Provider', () => {
     const provider = new OpenAIProvider();
     const generator = new AIGenerator(provider);
     const result = await generator.execute(prompt);
-    expect(result.getImage().width).toBe('512');
+    expect(result.getImage().width).toBe(512);
     expect(result.getImage().height).toBe(512);
   });
 

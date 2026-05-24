@@ -1,11 +1,11 @@
+import { ImagePrompt } from './models/ImagePrompt';
 import {
-  AIGenerator,
   ImageData,
-  ImagePrompt,
   ImageResponse,
   ResponseMetadata
-} from './core/UniversalAIProvider';
-import type { IUniversalAIProvider } from './core/UniversalAIProvider';
+} from './models/ImageResponse';
+import type { IUniversalAIProvider } from './models/UniversalAIProvider';
+import { AIGenerator } from './services/AIGenerator';
 
 export class OpenAIProvider implements IUniversalAIProvider {
   key: string = '';
