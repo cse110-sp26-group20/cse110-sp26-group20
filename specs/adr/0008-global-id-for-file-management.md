@@ -7,7 +7,7 @@
 | Deciders  | Team                                 |
 
 ## Context
-Our application requires image handling that spans multiple distinct features: `file uploads, a `template library` (populated from the Imgflip API during startup), and an `editor`. Because we are building a lightweight Express-TS application without a relational database, we need a simple, unified, and highly performant way to manage and retrieve these files.
+Our application requires image handling that spans multiple distinct features: `file uploads`, a `template library` (populated from the Imgflip API during startup), and an `editor`. Because we are building a lightweight Express-TS application without a relational database, we need a simple, unified, and highly performant way to manage and retrieve these files.
 
 The Editor feature, in particular, does not care whether an image was uploaded by a user or fetched as a template. It only needs to locate the local file path and stream it to the client. We need a strategy to decouple the origin of the file from how it is queried and served.
 
