@@ -1,6 +1,6 @@
-import { OpenAIProvider, StableDiffusionProvider } from '../AIProviderDemo';
-import { ImagePrompt } from '../models/ImagePrompt';
-import { AIGenerator } from '../services/AIGenerator';
+import { ImagePrompt } from '../models/image-prompt';
+import { AIGenerator } from '../services/ai-generator';
+import { OpenAIProvider, StableDiffusionProvider } from './ai-provider-demo';
 
 describe('Universal AI Provider', () => {
   it('should return a correct result from OpenAIProvider demo', async () => {

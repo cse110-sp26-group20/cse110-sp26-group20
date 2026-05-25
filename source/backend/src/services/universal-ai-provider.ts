@@ -1,5 +1,5 @@
-import type { ImagePrompt } from './ImagePrompt';
-import type { ImageResponse } from './ImageResponse';
+import type { ImagePrompt } from '../models/image-prompt';
+import type { ImageResponse } from '../models/image-response';
 
 // IoC
 export interface IUniversalAIProvider {

@@ -1,25 +1,17 @@
-import type { ImagePrompt } from '../models/ImagePrompt';
-import type { ImageResponse } from '../models/ImageResponse';
-import type { IUniversalAIProvider } from '../models/UniversalAIProvider';
+import type { ImagePrompt } from '../models/image-prompt';
+import type { ImageResponse } from '../models/image-response';
+import type { IUniversalAIProvider } from './universal-ai-provider';
 
 export class AIGenerator {
   private provider: IUniversalAIProvider;
-  private timeoutMs: number = 5000; // Default 5s or set by the *.config files
-  private maxRetries: number = 3;
 
   // Dependency Injection
   constructor(provider: IUniversalAIProvider) {
     this.provider = provider;
   }
 
-  public setTimeout(timeoutMs: number): void {
-    this.timeoutMs = timeoutMs;
-  }
-
   public async execute(prompt: ImagePrompt): Promise<ImageResponse> {
-    console.log(
-      `[AIGenerator] Starting generation with timeout ${this.timeoutMs}ms...`
-    );
+    console.log(`[AIGenerator] Starting generation...`);
     try {
       const response = await this.provider.generateImage(prompt);
       console.log(`[AIGenerator] Generation successful.`);
