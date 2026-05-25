@@ -15,7 +15,9 @@ For the project right now, I have run into a few critical blockers that this arc
 
 ## Decision
 
-We will invoke Inversion of Control (IoC) for the AIGenerator acts strictly as a robust orchestrator. 
+We will invoke the idea of Inversion of Control (IoC) to address the problem. We decided to inject the implementation of AI via AIGenerator, which acts strictly as a robust orchestrator. 
+
+More details: [universal_AI_provider_design.md](https://github.com/cse110-sp26-group20/cse110-sp26-group20/blob/main/artifacts/universal_AI_provider_design.md)
 
 ## Consequences
 
@@ -25,7 +27,7 @@ By injecting the IUniversalAIProvider interface into its constructor rather than
 
 ### Negatives/tradeoffs
 
-I will cause the AIGenerator to complex. Need some time to understand. 
+It will cause the AIGenerator to complex. Need some time to understand. 
 
 ### Follow-up
 
