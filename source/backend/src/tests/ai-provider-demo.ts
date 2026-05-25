@@ -5,7 +5,7 @@ import {
   ResponseMetadata
 } from '../models/image-response';
 import { AIGenerator } from '../services/ai-generator';
-import type { IUniversalAIProvider } from '../services/universal-ai-provider';
+import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 export class OpenAIProvider implements IUniversalAIProvider {
   key: string = '';
