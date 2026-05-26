@@ -3,7 +3,7 @@
 | Attribute | Value                                |
 | --------- | ------------------------------------ |
 | Date      | `2026-05-23`                         |
-| Status    | Proposed                             |
+| Status    | Accepted                             |
 | Deciders  | Team                                 |
 
 ## Context
