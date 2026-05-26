@@ -7,8 +7,8 @@ import express, {
 } from 'express';
 import { isHttpError } from 'http-errors';
 
-// import aiRoutes from "./routes/ai.routes";
-// import imageRoutes from "./routes/image.routes";
+// import aiRouter from "./routers/ai.router";
+// import imageRouter from "./routers/image.router";
 
 const app = express();
 
