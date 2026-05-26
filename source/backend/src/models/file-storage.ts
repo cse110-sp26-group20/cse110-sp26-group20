@@ -2,7 +2,7 @@ import { Readable, type Stream } from 'stream';
 
 export abstract class StorageStrategy {
   /**
-   * 
+   *
    * @param filename name
    * @param fileStream stream
    * @return path/filename.ext

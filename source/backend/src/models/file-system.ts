@@ -12,7 +12,7 @@ export class FileRecord {
      */
     public type: string,
     public create: Date,
-    public matedata: Record<string,unknown>
+    public matedata: Record<string, unknown>
   ) {}
 }
 export interface FileRepositoryOperator {
