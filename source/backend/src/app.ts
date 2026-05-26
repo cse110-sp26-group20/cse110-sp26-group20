@@ -14,8 +14,8 @@ const app = express();
 
 app.use(express.json());
 
-// app.use("/api/ai", aiRoutes);
-// app.use("/api/images", imageRoutes);
+// app.use("/api/ai", aiRouter);
+// app.use("/api/images", imageRouter);
 
 /**
  * Error handler; all errors thrown by server are handled here.
