@@ -3,8 +3,8 @@
 | Attribute | Value                                |
 | --------- | ------------------------------------ |
 | Date      | `2026-05-24`                         |
-| Status    | Pending                              |
-| Deciders  |                                      |
+| Status    | Accepted                             |
+| Deciders  | Team                                 |
 
 ## Context
 
@@ -22,7 +22,7 @@ More details about what purpose each folder serves: [model-route-controller.md](
 ### Positives
 
 - **Clear separation of concerns:** Each layer has a single, obvious responsibility — easy to navigate and extend.
-- **No circular imports:** Dependencies flow strictly downward (`routes → controllers → services → models`). 
+- **No circular imports:** Dependencies flow strictly downward (`routers → controllers → services → models`). 
 - **Testable in isolation:** Services and models can be unit tested independently of HTTP concerns.
 
 ### Negatives/Tradeoffs

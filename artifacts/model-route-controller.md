@@ -2,7 +2,7 @@
 
 ```
 src/
-├── routes/          # URL definitions
+├── routers/         # URL definitions
 ├── controllers/     # HTTP request/response handling
 ├── services/        # Business logic
 │   └── providers/   # Concrete AI provider implementations
@@ -21,7 +21,7 @@ src/
 
 **`controllers/`** — Handles HTTP request and response. Unpacks the request, validates inputs, calls a service, sends the response. Nothing else.
 
-**`routes/`** — Maps a URL and HTTP method to a controller function. No logic.
+**`routers/`** — Maps a URL and HTTP method to a controller function. No logic.
 
 ---
 
@@ -35,7 +35,7 @@ Follow this pattern for every new endpoint:
 
 **3. Handle HTTP in `controllers/`**
 
-**4. Register the route in `routes/`**
+**4. Register the route in `routers/`**
 
 **5. Mount in `app.ts`**
 ```typescript
