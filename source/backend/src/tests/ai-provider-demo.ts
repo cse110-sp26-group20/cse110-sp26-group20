@@ -1,11 +1,11 @@
+import { ImagePrompt } from '../models/image-prompt';
 import {
-  AIGenerator,
   ImageData,
-  ImagePrompt,
   ImageResponse,
   ResponseMetadata
-} from './core/UniversalAIProvider';
-import type { IUniversalAIProvider } from './core/UniversalAIProvider';
+} from '../models/image-response';
+import type { IUniversalAIProvider } from '../models/universal-ai-provider';
+import { AIGenerator } from '../services/ai-generator';
 
 export class OpenAIProvider implements IUniversalAIProvider {
   key: string = '';
@@ -86,7 +86,6 @@ export async function runExample() {
 
   // Initialize the Orchestrator
   const generator = new AIGenerator(provider);
-  generator.setTimeout(45000);
 
   const response = await generator.execute(prompt);
 
