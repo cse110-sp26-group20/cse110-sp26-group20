@@ -1,0 +1,730 @@
+/* === DESIGN TOKENS === */
+:root {
+  --color-bg: #1e1e1e;
+  --color-panel: #252525;
+  --color-canvas: #8a8a8a;
+  --color-input: #363636;
+  --color-border: #444444;
+  --color-accent: #6644cc;
+  --color-accent-hover: #7755dd;
+  --color-text: #ffffff;
+  --color-text-muted: #aaaaaa;
+
+  --header-height: 58px;
+  --sidebar-width: 80px;
+  --panel-width: 282px;
+  --tab-bar-height: 64px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+}
+
+/* === RESET === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ===================================================
+   HEADER
+   =================================================== */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  padding: 0 24px;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+/* "← Templates" — visible only on mobile (see media query) */
+.header-back {
+  display: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.logo {
+  font-size: 1.65rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: var(--color-text);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-link {
+  font-size: 1rem;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+
+.nav-link:hover {
+  color: var(--color-accent);
+}
+
+.btn-export {
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.btn-export:hover {
+  color: var(--color-accent);
+}
+
+/* ===================================================
+   EDITOR LAYOUT (3-column grid on desktop)
+   =================================================== */
+.editor-layout {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr var(--panel-width);
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ===================================================
+   LEFT TOOL SIDEBAR
+   =================================================== */
+.tool-sidebar {
+  background-color: var(--color-panel);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.tool-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  min-height: 62px;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-text-muted);
+  gap: 5px;
+  padding: 8px 6px;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+
+.tool-btn:hover {
+  background-color: var(--color-input);
+  color: var(--color-text);
+}
+
+.tool-btn.active {
+  background-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.tool-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.tool-icon--text {
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.tool-label {
+  font-size: 0.58rem;
+  text-align: center;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+/* ===================================================
+   CANVAS AREA
+   =================================================== */
+.canvas-area {
+  background-color: var(--color-canvas);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.canvas-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 1;
+  overflow: hidden;
+  padding: 16px;
+}
+
+#meme-canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Mobile caption bar — hidden by default, shown on mobile */
+.mobile-caption-bar {
+  width: 100%;
+  padding: 12px 20px 16px;
+}
+
+.mobile-caption-input {
+  width: 100%;
+  padding: 11px 16px;
+  background-color: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.mobile-caption-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mobile-caption-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+/* ===================================================
+   CONTROLS PANEL (right column on desktop)
+   =================================================== */
+.controls-panel {
+  background-color: var(--color-panel);
+  border-left: 1px solid var(--color-border);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Individual tool panels — only the .active one is shown */
+.tool-panel {
+  display: none;
+  flex-direction: column;
+}
+
+.tool-panel.active {
+  display: flex;
+}
+
+.panel-section {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.panel-section:last-child {
+  border-bottom: none;
+}
+
+/* ===================================================
+   SECTION TITLES
+   =================================================== */
+.section-title {
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+  color: var(--color-text);
+  margin-bottom: 14px;
+}
+
+/* ===================================================
+   FORM ELEMENTS
+   =================================================== */
+.form-group {
+  margin-bottom: 12px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.text-input {
+  width: 100%;
+  padding: 9px 12px;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: inherit;
+  transition: border-color 0.15s;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.text-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* ===================================================
+   FONT CONTROLS (desktop dropdowns)
+   =================================================== */
+.select-input {
+  width: 100%;
+  padding: 9px 12px;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.select-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.font-detail-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.font-detail-row .select-input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.font-size-group {
+  display: flex;
+  align-items: center;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 10px;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.number-input {
+  width: 42px;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  text-align: right;
+  font-family: inherit;
+}
+
+.number-input:focus {
+  outline: none;
+}
+
+.unit-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* ===================================================
+   COLOR SECTION
+   =================================================== */
+.color-display-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 7px 11px;
+  margin-bottom: 10px;
+}
+
+.color-preview {
+  width: 22px;
+  height: 22px;
+  border-radius: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+  cursor: pointer;
+  display: block;
+}
+
+.hex-input {
+  flex: 1;
+  background: none;
+  border: none;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  font-family: monospace;
+  min-width: 0;
+}
+
+.hex-input:focus {
+  outline: none;
+}
+
+.opacity-display {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.color-swatches {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.swatch {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition:
+    border-color 0.15s,
+    transform 0.1s;
+}
+
+.swatch:hover {
+  border-color: var(--color-text);
+  transform: scale(1.12);
+}
+
+.swatch.selected {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+/* White swatch needs a visible outline */
+.swatch[data-color="#ffffff"] {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+/* Rainbow swatch — opens the native color picker */
+.swatch--rainbow {
+  background: conic-gradient(red, #ff0, lime, cyan, blue, magenta, red);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.color-picker-hidden {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: none;
+}
+
+/* ===================================================
+   MOBILE SIZE SLIDER
+   =================================================== */
+.size-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.size-label {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.size-slider {
+  flex: 1;
+  accent-color: var(--color-accent);
+  cursor: pointer;
+}
+
+/* ===================================================
+   MOBILE FONT PRESET BUTTONS
+   =================================================== */
+.font-btn-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.font-btn-label {
+  font-size: 0.875rem;
+  color: var(--color-text);
+}
+
+.font-btn-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.font-preset-btn {
+  padding: 7px 12px;
+  background-color: var(--color-input);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+.font-preset-btn:hover {
+  background-color: #484848;
+}
+
+.font-preset-btn.active {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+/* ===================================================
+   AI PANEL
+   =================================================== */
+.ai-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  margin-top: 12px;
+  background-color: var(--color-accent);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+}
+
+.placeholder-msg {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 20px 0;
+}
+
+/* ===================================================
+   MOBILE BOTTOM TAB BAR
+   =================================================== */
+.mobile-tab-bar {
+  background-color: var(--color-panel);
+  border-top: 1px solid var(--color-border);
+  height: var(--tab-bar-height);
+  display: none; /* shown on mobile below */
+  justify-content: space-around;
+  align-items: stretch;
+  flex-shrink: 0;
+  z-index: 20;
+}
+
+.tab-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  gap: 4px;
+  padding: 8px 4px;
+  transition: color 0.15s;
+  min-width: 0;
+}
+
+.tab-btn.active {
+  color: var(--color-accent);
+}
+
+.tab-btn:hover:not(.active) {
+  color: var(--color-text);
+}
+
+.tab-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.tab-icon--text {
+  font-weight: 900;
+  font-size: 1.5rem;
+}
+
+.tab-label {
+  font-size: 0.6rem;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* ===================================================
+   UTILITY CLASSES
+   =================================================== */
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+/* ===================================================
+   RESPONSIVE — MOBILE  (≤ 768px)
+   =================================================== */
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+
+  /* Header: back arrow | logo (centered) | export → */
+  .site-header {
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .header-back {
+    display: block;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Absolutely center the logo so flanking items don't push it */
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.3rem;
+  }
+
+  /* Editor: vertical stack instead of 3-column grid */
+  .editor-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  /* Canvas: proportional height, aligned to top */
+  .canvas-area {
+    flex-shrink: 0;
+    min-height: 240px;
+    justify-content: flex-start;
+    padding-top: 12px;
+  }
+
+  .canvas-wrapper {
+    flex: unset;
+    padding: 0 12px;
+  }
+
+  /* Controls panel fills remaining width below canvas */
+  .controls-panel {
+    border-left: none;
+    border-top: 1px solid var(--color-border);
+    flex-shrink: 0;
+    overflow-y: visible;
+  }
+
+  /* Show mobile tab bar */
+  .mobile-tab-bar {
+    display: flex;
+  }
+
+  /* Utility overrides */
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block;
+  }
+
+  /* Specific mobile-only elements that need flex */
+  .mobile-tab-bar.mobile-only {
+    display: flex;
+  }
+
+  .swatch--rainbow.mobile-only {
+    display: flex;
+  }
+
+  /* Inline span inside export button */
+  .btn-export .mobile-only {
+    display: inline;
+  }
+}

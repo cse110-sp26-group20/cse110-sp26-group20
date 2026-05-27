@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MemeLab Editor</title>
+    <link rel="stylesheet" href="editor.css" />
+  </head>
+  <body>
+    <!-- ===== HEADER ===== -->
+    <header class="site-header">
+      <!-- Mobile: back arrow to template library -->
+      <a href="index.html" class="header-back" aria-label="Back to Templates"
+        >&#8592; Templates</a
+      >
+
+      <!-- Logo (centered on mobile, left on desktop) -->
+      <a href="index.html" class="logo" aria-label="MemeLab home">
+        MEMEL<span class="logo-flask">&#9879;</span>B
+      </a>
+
+      <!-- Desktop: Templates nav link + Export button -->
+      <nav class="header-nav" aria-label="Main navigation">
+        <a href="index.html" class="nav-link desktop-only">Templates</a>
+        <button class="btn-export" id="export-btn" type="button">
+          Export<span class="mobile-only"> &#8594;</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- ===== EDITOR LAYOUT ===== -->
+    <div class="editor-layout">
+      <!-- LEFT TOOL SIDEBAR (desktop only) -->
+      <aside class="tool-sidebar desktop-only" aria-label="Editor tools">
+        <button
+          class="tool-btn active"
+          data-tool="text"
+          type="button"
+          aria-pressed="true"
+        >
+          <span class="tool-icon tool-icon--text">T</span>
+          <span class="tool-label">Text</span>
+        </button>
+        <button
+          class="tool-btn"
+          data-tool="stickers"
+          type="button"
+          aria-pressed="false"
+        >
+          <span class="tool-icon">&#128522;</span>
+          <span class="tool-label">Stickers</span>
+        </button>
+        <button
+          class="tool-btn"
+          data-tool="filters"
+          type="button"
+          aria-pressed="false"
+        >
+          <span class="tool-icon tool-icon--filters">&#9141;</span>
+          <span class="tool-label">Filters</span>
+        </button>
+        <button
+          class="tool-btn"
+          data-tool="ai"
+          type="button"
+          aria-pressed="false"
+        >
+          <span class="tool-icon">&#10024;</span>
+          <span class="tool-label">AI Generation</span>
+        </button>
+      </aside>
+
+      <!-- CENTER CANVAS AREA -->
+      <section class="canvas-area" aria-label="Meme canvas">
+        <div class="canvas-wrapper">
+          <canvas id="meme-canvas" width="800" height="500">
+            Your browser does not support the HTML canvas element.
+          </canvas>
+        </div>
+
+        <!-- Mobile only: single caption input below canvas -->
+        <div class="mobile-caption-bar mobile-only">
+          <input
+            type="text"
+            id="mobile-caption-input"
+            class="mobile-caption-input"
+            placeholder="Enter message..."
+            aria-label="Caption text"
+          />
+        </div>
+      </section>
+
+      <!-- RIGHT CONTROLS PANEL -->
+      <aside class="controls-panel" id="controls-panel" aria-label="Text controls">
+        <!-- TEXT PANEL -->
+        <div class="tool-panel active" id="text-panel" role="tabpanel">
+          <!-- Desktop: separate Top Text / Bottom Text inputs -->
+          <div class="panel-section desktop-only">
+            <h2 class="section-title">Caption</h2>
+
+            <div class="form-group">
+              <label for="top-text">Top Text</label>
+              <input
+                type="text"
+                id="top-text"
+                class="text-input"
+                placeholder="Enter message..."
+                aria-label="Top caption text"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="bottom-text">Bottom Text</label>
+              <input
+                type="text"
+                id="bottom-text"
+                class="text-input"
+                placeholder="Enter message..."
+                aria-label="Bottom caption text"
+              />
+            </div>
+          </div>
+
+          <!-- Mobile: Text section header + size slider -->
+          <div class="panel-section mobile-only">
+            <h2 class="section-title">Text</h2>
+            <div class="size-row">
+              <label for="font-size-slider" class="size-label">Size</label>
+              <input
+                type="range"
+                id="font-size-slider"
+                class="size-slider"
+                min="10"
+                max="200"
+                value="80"
+                aria-label="Font size"
+              />
+            </div>
+          </div>
+
+          <!-- FONT SECTION -->
+          <div class="panel-section">
+            <h2 class="section-title desktop-only">Font</h2>
+
+            <!-- Desktop: dropdown controls -->
+            <div class="desktop-only">
+              <select
+                id="font-family"
+                class="select-input"
+                aria-label="Font family"
+              >
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Impact">Impact</option>
+                <option value="Arial">Arial</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Helvetica">Helvetica</option>
+                <option value="Verdana">Verdana</option>
+              </select>
+
+              <div class="font-detail-row">
+                <select
+                  id="font-weight"
+                  class="select-input"
+                  aria-label="Font style"
+                >
+                  <option value="bold">Bold</option>
+                  <option value="normal">Normal</option>
+                  <option value="italic">Italic</option>
+                  <option value="bold italic">Bold Italic</option>
+                </select>
+
+                <div class="font-size-group">
+                  <input
+                    type="number"
+                    id="font-size"
+                    class="number-input"
+                    value="140"
+                    min="10"
+                    max="300"
+                    aria-label="Font size in pixels"
+                  />
+                  <span class="unit-label">px</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mobile: preset font buttons -->
+            <div class="mobile-only">
+              <div class="font-btn-row">
+                <label class="font-btn-label">Font</label>
+                <div class="font-btn-group">
+                  <button
+                    class="font-preset-btn active"
+                    data-font="Impact"
+                    type="button"
+                  >
+                    Impact
+                  </button>
+                  <button
+                    class="font-preset-btn"
+                    data-font="Arial"
+                    type="button"
+                  >
+                    Arial
+                  </button>
+                  <button
+                    class="font-preset-btn"
+                    data-font="Comic Sans MS"
+                    type="button"
+                  >
+                    Comic
+                  </button>
+                  <button
+                    class="font-preset-btn"
+                    data-font="Times New Roman"
+                    type="button"
+                  >
+                    Times NR
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLOR SECTION -->
+          <div class="panel-section">
+            <h2 class="section-title">Color</h2>
+
+            <!-- Desktop: hex + opacity display row -->
+            <div class="color-display-row desktop-only">
+              <label
+                class="color-preview"
+                id="color-preview"
+                for="color-picker-input"
+                style="background-color: #000000"
+                aria-label="Current color preview"
+              ></label>
+              <input
+                type="text"
+                id="color-hex"
+                class="hex-input"
+                value="000000"
+                maxlength="6"
+                aria-label="Hex color value"
+              />
+              <span class="opacity-display">|&nbsp;&nbsp;100%</span>
+            </div>
+
+            <!-- Color swatches (both) -->
+            <div class="color-swatches" role="group" aria-label="Color presets">
+              <!-- Mobile only: rainbow swatch opens color picker -->
+              <label
+                class="swatch swatch--rainbow mobile-only"
+                for="color-picker-input"
+                aria-label="Custom color"
+                title="Pick a custom color"
+              >
+                <input
+                  type="color"
+                  id="color-picker-input"
+                  class="color-picker-hidden"
+                  value="#000000"
+                  aria-label="Color picker"
+                />
+              </label>
+
+              <button
+                class="swatch"
+                data-color="#ffffff"
+                style="background-color: #ffffff"
+                type="button"
+                aria-label="White"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#e03535"
+                style="background-color: #e03535"
+                type="button"
+                aria-label="Red"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#e07820"
+                style="background-color: #e07820"
+                type="button"
+                aria-label="Orange"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#d4c020"
+                style="background-color: #d4c020"
+                type="button"
+                aria-label="Yellow"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#1aaa55"
+                style="background-color: #1aaa55"
+                type="button"
+                aria-label="Green"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#3355cc"
+                style="background-color: #3355cc"
+                type="button"
+                aria-label="Blue"
+              ></button>
+              <button
+                class="swatch"
+                data-color="#7733cc"
+                style="background-color: #7733cc"
+                type="button"
+                aria-label="Purple"
+              ></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STICKERS PANEL -->
+        <div class="tool-panel" id="stickers-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">Stickers</h2>
+            <div class="stickers-grid" id="stickers-grid">
+              <!-- Populated by editor.js -->
+              <p class="placeholder-msg">Stickers coming soon&hellip;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTERS PANEL -->
+        <div class="tool-panel" id="filters-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">Filters</h2>
+            <div class="filters-list" id="filters-list">
+              <!-- Populated by editor.js -->
+              <p class="placeholder-msg">Filters coming soon&hellip;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI GENERATION PANEL -->
+        <div class="tool-panel" id="ai-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">AI Generation</h2>
+            <div class="form-group">
+              <label for="ai-prompt">Describe your meme</label>
+              <textarea
+                id="ai-prompt"
+                class="text-input ai-textarea"
+                placeholder="e.g. A dog sitting in a burning room saying everything is fine..."
+                rows="4"
+                aria-label="AI generation prompt"
+              ></textarea>
+            </div>
+            <button class="btn-primary" id="ai-generate-btn" type="button">
+              Generate Caption
+            </button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
+    <nav
+      class="mobile-tab-bar mobile-only"
+      aria-label="Editor tool tabs"
+      role="tablist"
+    >
+      <button
+        class="tab-btn active"
+        data-tool="text"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="text-panel"
+      >
+        <span class="tab-icon tab-icon--text">T</span>
+        <span class="tab-label">Text</span>
+      </button>
+      <button
+        class="tab-btn"
+        data-tool="stickers"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="stickers-panel"
+      >
+        <span class="tab-icon">&#128522;</span>
+        <span class="tab-label">Stickers</span>
+      </button>
+      <button
+        class="tab-btn"
+        data-tool="filters"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="filters-panel"
+      >
+        <span class="tab-icon">&#9141;</span>
+        <span class="tab-label">Filters</span>
+      </button>
+      <button
+        class="tab-btn"
+        data-tool="ai"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="ai-panel"
+      >
+        <span class="tab-icon">&#10024;</span>
+        <span class="tab-label">AI Generation</span>
+      </button>
+    </nav>
+
+    <script type="module" src="editor.js"></script>
+  </body>
+</html>
