@@ -2,13 +2,10 @@ export interface IDGenerator {
   generate(): string;
 }
 
-export class CounterGenerator implements IDGenerator {
-  count: number;
-  constructor() {
-    this.count = 0;
-  }
+export class TimestampIDGenerator implements IDGenerator {
+  private counter = 0;
   generate(): string {
-    this.count++;
-    return this.count.toString();
+    this.counter++;
+    return `${Date.now()}-${this.counter}`;
   }
 }
