@@ -169,7 +169,8 @@ textarea {
 }
 
 .tool-label {
-  font-size: 0.75rem;
+  font-size: 1rem;
+  font-family: "Comic Sans MS", cursive;
   text-align: center;
   line-height: 1.2;
   color: var(--lab-white);
