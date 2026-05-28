@@ -96,16 +96,6 @@ textarea {
   background-color: var(--lab-panel);
 }
 
-.logo {
-  font-family: "Arcend", "Orbitron", sans-serif;
-  font-size: 2rem;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: var(--lab-white);
-  text-transform: uppercase;
-  user-select: none;
-}
-
 .header-nav {
   display: flex;
   align-items: center;
@@ -610,6 +600,18 @@ textarea {
 
 .mobile-only {
   display: none;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-image {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Responsive mobile styles (≤ 768px) */
