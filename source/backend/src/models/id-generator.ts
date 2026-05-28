@@ -1,14 +1,13 @@
+import { randomUUID } from 'crypto';
+
 export interface IDGenerator {
   generate(): string;
 }
 
-export class CounterGenerator implements IDGenerator {
-  count: number;
-  constructor() {
-    this.count = 0;
-  }
+//Generates UUIDv4 IDs for globally unique file identification.
+
+export class UUIDGenerator implements IDGenerator {
   generate(): string {
-    this.count++;
-    return this.count.toString();
+    return randomUUID();
   }
 }
