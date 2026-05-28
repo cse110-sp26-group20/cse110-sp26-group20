@@ -1,4 +1,4 @@
-import { UUIDGenerator } from './id-generator';
+import { UUIDGenerator } from '../models/id-generator';
 
 describe('UUIDGenerator', () => {
   test('generate() returns a string', () => {
