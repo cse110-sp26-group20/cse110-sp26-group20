@@ -1,0 +1,240 @@
+:root {
+    --lab-purple: #c3b0e8;
+    --lab-green: #87c24c;
+    --lab-black: #1e1e1e;
+    --lab-white: #ededed;
+  }
+  
+  @font-face {
+      font-family: "Arcend";
+      src: url("./assets/fonts/Arcend-ARKjL.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: "Orbitron";
+      src: url("./assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+  }
+  
+  @font-face {
+      font-family: "Geologica";
+      src: url("./assets/fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf") format("truetype");
+      font-weight: normal;
+      font-style: normal;
+  }
+  
+  * {
+      box-sizing: border-box;
+  }
+  
+  body {
+      margin: 0;
+  
+  }
+  
+  .home-page{
+      position: relative;
+      min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      background-color: var(--lab-black);
+  
+  }
+  
+  .background-effects{
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+  }
+  
+  .content{
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 850px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1.5rem;
+  }
+  
+  header{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding-top: 2rem;
+  }
+  
+  .logo{
+      width: 90%;
+      display: block;
+  }
+  
+  .tagline{
+      text-align: center;
+      width: 50%;
+      font-size: 1.5rem;
+      color: var(--lab-white);
+      font-family: "Orbitron", sans-serif;
+  
+  }
+  
+  h2{
+      font-family: "Orbitron", sans-serif;
+      font-size: 2rem;
+  }
+  
+  p {
+      font-family: "Geologica", sans-serif;
+  }
+  
+  .upload-image, .browse-template{
+      width: 100%;
+  
+      min-height: 240px;
+      height: 500px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      text-align: center;
+  
+      padding: 2rem;
+  
+      gap: 1rem;
+  
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+  }
+  
+  .upload-image{
+      background-color: var(--lab-purple);
+  }
+  
+  .browse-template{
+      background-color: var(--lab-green);
+  }
+  
+  .upload-image::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 140px;
+    pointer-events: none;
+  
+    background: linear-gradient(
+      to bottom,
+      rgba(123, 44, 255, 0),
+      rgba(123, 44, 255, 0.25),
+      rgba(123, 44, 255, 0.7)
+    );
+  
+    filter: blur(2px);
+  }
+  
+  .browse-template::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 140px;
+    pointer-events: none;
+  
+    background: linear-gradient(
+      to top,
+      rgba(46, 204, 113, 0),
+      rgba(46, 204, 113, 0.25),
+      rgba(46, 204, 113, 0.7)
+    );
+  
+    filter: blur(2px);
+  }
+  
+  
+  .divider {
+    position: relative;
+    height: 140px;
+    overflow: hidden;
+    z-index: 10;
+  
+    /*purple → green reaction field */
+    /*background: linear-gradient(
+      to bottom,
+      var(--lab-purple) 0%,  
+      var(--lab-purple) 40%,
+      var(--lab-green) 60%, 
+      var(--lab-green) 100%
+    );
+    */
+  
+    background: transparent;
+  
+  }
+  
+  .particle-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  
+  
+  
+  .upload-btn,
+  .template-btn{
+      width: 100%;
+      max-width: 280px;
+  
+      min-height: 52px;
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      border: none;
+      border-radius: 999px;
+  
+      padding: 0 1.5rem;
+  
+      cursor: pointer;
+      font-family: "Geologica", sans-serif;
+  
+  }
+  
+  
+  .lattice-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  
+    opacity: 0.38;
+  }
+  
+  .lattice-bg img {
+  width: 100%;
+    height: 100%;
+    object-fit: none;
+  
+    transform: scale(0.6);
+    transform-origin: center;
+  
+    filter: drop-shadow(0 0 12px rgba(123, 44, 255, 0.25))
+            drop-shadow(0 0 12px rgba(46, 204, 113, 0.2));
+  }
+  

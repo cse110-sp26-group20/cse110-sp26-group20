@@ -7,38 +7,38 @@
     <link rel="stylesheet" href="editor.css" />
   </head>
   <body>
-    <!-- ===== HEADER ===== -->
     <header class="site-header">
-      <!-- Mobile: back arrow to template library -->
-      <a href="index.html" class="header-back" aria-label="Back to Templates"
-        >&#8592; Templates</a
-      >
 
-      <!-- Logo (centered on mobile, left on desktop) -->
-      <a href="index.html" class="logo" aria-label="MemeLab home">
-        MEMEL<span class="logo-flask">&#9879;</span>B
-      </a>
-
-      <!-- Desktop: Templates nav link + Export button -->
-      <nav class="header-nav" aria-label="Main navigation">
-        <a href="index.html" class="nav-link desktop-only">Templates</a>
-        <button class="btn-export" id="export-btn" type="button">
-          Export<span class="mobile-only"> &#8594;</span>
-        </button>
-      </nav>
+      <!-- logo + navigation on single row -->
+      <div class="header-top">
+        <a href="index.html" class="logo" aria-label="MemeLab home">
+          MEMEL<img src="">B
+        </a>
+        <nav class="header-nav" aria-label="Main navigation">
+          <a href="index.html" class="nav-link">Templates</a>
+          <a href="" class="nav-link">Export</a>
+        </nav>
+      </div>
+    
+      <!-- logo centered on separate row as navigation -->
+      <div class="header-subnav">
+        <a href="index.html" class="header-arrows">&#8592; Templates</a>
+        <a href="" class="header-arrows">Export &#8594;</a>
+      </div>
+    
     </header>
 
     <!-- ===== EDITOR LAYOUT ===== -->
     <div class="editor-layout">
       <!-- LEFT TOOL SIDEBAR (desktop only) -->
-      <aside class="tool-sidebar desktop-only" aria-label="Editor tools">
+      <aside class="tool-sidebar" aria-label="Editor tools">
         <button
-          class="tool-btn active"
+          class="tool-btn"
           data-tool="text"
           type="button"
           aria-pressed="true"
         >
-          <span class="tool-icon tool-icon--text">T</span>
+        <img src="">
           <span class="tool-label">Text</span>
         </button>
         <button
@@ -47,7 +47,7 @@
           type="button"
           aria-pressed="false"
         >
-          <span class="tool-icon">&#128522;</span>
+          <img src="">
           <span class="tool-label">Stickers</span>
         </button>
         <button
@@ -56,7 +56,7 @@
           type="button"
           aria-pressed="false"
         >
-          <span class="tool-icon tool-icon--filters">&#9141;</span>
+          <img src="">
           <span class="tool-label">Filters</span>
         </button>
         <button
@@ -65,7 +65,7 @@
           type="button"
           aria-pressed="false"
         >
-          <span class="tool-icon">&#10024;</span>
+          <img src="">
           <span class="tool-label">AI Generation</span>
         </button>
       </aside>
@@ -190,34 +190,10 @@
               <div class="font-btn-row">
                 <label class="font-btn-label">Font</label>
                 <div class="font-btn-group">
-                  <button
-                    class="font-preset-btn active"
-                    data-font="Impact"
-                    type="button"
-                  >
-                    Impact
-                  </button>
-                  <button
-                    class="font-preset-btn"
-                    data-font="Arial"
-                    type="button"
-                  >
-                    Arial
-                  </button>
-                  <button
-                    class="font-preset-btn"
-                    data-font="Comic Sans MS"
-                    type="button"
-                  >
-                    Comic
-                  </button>
-                  <button
-                    class="font-preset-btn"
-                    data-font="Times New Roman"
-                    type="button"
-                  >
-                    Times NR
-                  </button>
+                  <button class="font-btn" type="button"> Impact </button>
+                  <button class="font-btn" type="button"> Arial </button>
+                  <button class="font-btn" type="button"> Comic </button>
+                  <button class="font-btn" type="button"> Times NR </button>
                 </div>
               </div>
             </div>
@@ -319,46 +295,13 @@
         </div>
 
         <!-- STICKERS PANEL -->
-        <div class="tool-panel" id="stickers-panel" role="tabpanel">
-          <div class="panel-section">
-            <h2 class="section-title">Stickers</h2>
-            <div class="stickers-grid" id="stickers-grid">
-              <!-- Populated by editor.js -->
-              <p class="placeholder-msg">Stickers coming soon&hellip;</p>
-            </div>
-          </div>
-        </div>
+        <div class="tool-panel" id="stickers-panel" role="tabpanel"></div>
 
         <!-- FILTERS PANEL -->
-        <div class="tool-panel" id="filters-panel" role="tabpanel">
-          <div class="panel-section">
-            <h2 class="section-title">Filters</h2>
-            <div class="filters-list" id="filters-list">
-              <!-- Populated by editor.js -->
-              <p class="placeholder-msg">Filters coming soon&hellip;</p>
-            </div>
-          </div>
-        </div>
+        <div class="tool-panel" id="filters-panel" role="tabpanel"></div>
 
         <!-- AI GENERATION PANEL -->
-        <div class="tool-panel" id="ai-panel" role="tabpanel">
-          <div class="panel-section">
-            <h2 class="section-title">AI Generation</h2>
-            <div class="form-group">
-              <label for="ai-prompt">Describe your meme</label>
-              <textarea
-                id="ai-prompt"
-                class="text-input ai-textarea"
-                placeholder="e.g. A dog sitting in a burning room saying everything is fine..."
-                rows="4"
-                aria-label="AI generation prompt"
-              ></textarea>
-            </div>
-            <button class="btn-primary" id="ai-generate-btn" type="button">
-              Generate Caption
-            </button>
-          </div>
-        </div>
+        <div class="tool-panel" id="ai-panel" role="tabpanel"></div>
       </aside>
     </div>
 

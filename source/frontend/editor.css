@@ -1,36 +1,56 @@
-/* === DESIGN TOKENS === */
 :root {
-  --color-bg: #1e1e1e;
-  --color-panel: #252525;
-  --color-canvas: #8a8a8a;
-  --color-input: #363636;
-  --color-border: #444444;
-  --color-accent: #6644cc;
-  --color-accent-hover: #7755dd;
-  --color-text: #ffffff;
-  --color-text-muted: #aaaaaa;
+  --lab-purple: #c3b0e8;
+  --lab-green: #87c24c;
+  --lab-black: #1e1e1e;
+  --lab-white: #ededed;
 
-  --header-height: 58px;
-  --sidebar-width: 80px;
-  --panel-width: 282px;
+  --lab-accent: #6644cc;
+  --lab-accent-hover: #7755dd;
+  --lab-panel: #252525;
+  --lab-canvas: #8a8a8a;
+  --lab-input: #363636;
+  --lab-border: #444444;
+  --lab-muted: #aaaaaa;
+
+  --header-height: 80px;
+  --sidebar-width: 125px;
+  --panel-width: 300px;
   --tab-bar-height: 64px;
   --radius-sm: 6px;
   --radius-md: 10px;
 }
 
-/* === RESET === */
-*,
-*::before,
-*::after {
+@font-face {
+  font-family: "Arcend";
+  src: url("./assets/fonts/Arcend-ARKjL.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Orbitron";
+  src: url("./assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Geologica";
+  src: url("./assets/fonts/Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf")
+    format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  font-family: "Geologica", sans-serif;
+  margin: 0;
+  background-color: var(--lab-black);
+  color: var(--lab-white);
   height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -43,38 +63,53 @@ a {
 }
 
 button {
-  font-family: inherit;
+  font-family: "Geologica", sans-serif;
 }
 
-/* ===================================================
-   HEADER
-   =================================================== */
+/* Single row desktop header */
 .site-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: var(--header-height);
-  padding: 0 24px;
-  background-color: var(--color-bg);
-  border-bottom: 1px solid var(--color-border);
+  background-color: var(--lab-panel);
+  border-bottom: 1px solid var(--lab-border);
+  padding: 12px 12px;
   flex-shrink: 0;
   z-index: 20;
 }
 
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-subnav {
+  display: none;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--lab-panel);
+}
+
 /* "← Templates" — visible only on mobile (see media query) */
-.header-back {
+.header-arrows {
   display: none;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--lab-white);
   white-space: nowrap;
+  font-family: "Geologica", sans-serif;
 }
 
 .logo {
-  font-size: 1.65rem;
+  font-family: "Arcend", "Orbitron", sans-serif;
+  font-size: 2rem;
   font-weight: 900;
   letter-spacing: 2px;
-  color: var(--color-text);
+  color: var(--lab-white);
   text-transform: uppercase;
   user-select: none;
 }
@@ -83,36 +118,21 @@ button {
   display: flex;
   align-items: center;
   gap: 36px;
+  padding: 6px 12px;
 }
 
 .nav-link {
-  font-size: 1rem;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.3rem;
   font-weight: 600;
   transition: color 0.15s;
 }
 
 .nav-link:hover {
-  color: var(--color-accent);
+  color: var(--lab-accent);
 }
 
-.btn-export {
-  background: none;
-  border: none;
-  color: var(--color-text);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.15s;
-}
-
-.btn-export:hover {
-  color: var(--color-accent);
-}
-
-/* ===================================================
-   EDITOR LAYOUT (3-column grid on desktop)
-   =================================================== */
+/* 3-column grid on desktop */
 .editor-layout {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr var(--panel-width);
@@ -121,16 +141,14 @@ button {
   min-height: 0;
 }
 
-/* ===================================================
-   LEFT TOOL SIDEBAR
-   =================================================== */
+/* Left tool sidebar on desktop */
 .tool-sidebar {
-  background-color: var(--color-panel);
-  border-right: 1px solid var(--color-border);
+  background-color: var(--lab-border);
+  border-right: 1px solid var(--lab-border);
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
+  padding: 20px 8px;
   gap: 6px;
   overflow-y: auto;
 }
@@ -140,52 +158,45 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 62px;
-  min-height: 62px;
+  width: 64px;
+  min-height: 64px;
   border: none;
   border-radius: var(--radius-md);
   cursor: pointer;
   background: transparent;
-  color: var(--color-text-muted);
-  gap: 5px;
+  color: var(--lab-muted);
   padding: 8px 6px;
+  gap: 10px;
   transition:
     background-color 0.15s,
     color 0.15s;
 }
 
+.tool-btn img {
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
 .tool-btn:hover {
-  background-color: var(--color-input);
-  color: var(--color-text);
+  background-color: var(--lab-accent-hover);
 }
 
 .tool-btn.active {
-  background-color: var(--color-accent);
-  color: var(--color-text);
-}
-
-.tool-icon {
-  font-size: 1.25rem;
-  line-height: 1;
-}
-
-.tool-icon--text {
-  font-weight: 900;
-  font-size: 1.5rem;
+  background-color: var(--lab-accent);
 }
 
 .tool-label {
-  font-size: 0.58rem;
+  font-family: "Geologica", sans-serif;
+  font-size: 0.75rem;
   text-align: center;
   line-height: 1.2;
-  word-break: break-word;
+  color: var(--lab-white);
 }
 
-/* ===================================================
-   CANVAS AREA
-   =================================================== */
+/* Meme canvas area */
 .canvas-area {
-  background-color: var(--color-canvas);
+  background-color: var(--lab-canvas);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -221,26 +232,24 @@ button {
   background-color: rgba(255, 255, 255, 0.18);
   border: 1.5px solid rgba(255, 255, 255, 0.35);
   border-radius: 8px;
-  color: var(--color-text);
+  color: var(--lab-white);
   font-size: 1rem;
-  font-family: inherit;
+  font-family: "Geologica", sans-serif;
 }
 
 .mobile-caption-input::placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(237, 237, 237, 0.5);
 }
 
 .mobile-caption-input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.65);
+  border-color: rgba(237, 237, 237, 0.65);
 }
 
-/* ===================================================
-   CONTROLS PANEL (right column on desktop)
-   =================================================== */
+/* right control panel on desktop */
 .controls-panel {
-  background-color: var(--color-panel);
-  border-left: 1px solid var(--color-border);
+  background-color: var(--lab-input);
+  border-left: 1px solid var(--lab-border);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -258,27 +267,23 @@ button {
 
 .panel-section {
   padding: 16px 18px;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--lab-border);
 }
 
 .panel-section:last-child {
   border-bottom: none;
 }
 
-/* ===================================================
-   SECTION TITLES
-   =================================================== */
 .section-title {
-  font-size: 1rem;
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.5rem;
   font-weight: 700;
   text-decoration: underline;
-  color: var(--color-text);
+  color: var(--lab-white);
   margin-bottom: 14px;
 }
 
-/* ===================================================
-   FORM ELEMENTS
-   =================================================== */
+/* Form elements */
 .form-group {
   margin-bottom: 12px;
 }
@@ -289,30 +294,31 @@ button {
 
 .form-group label {
   display: block;
+  font-family: "Geologica", sans-serif;
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: var(--lab-muted);
   margin-bottom: 6px;
 }
 
 .text-input {
   width: 100%;
   padding: 9px 12px;
-  background-color: var(--color-input);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
+  background-color: var(--lab-white);
+  border: 1px solid var(--lab-black);
+  border-radius: var(--radius-md);
+  color: var(--lab-white);
   font-size: 0.875rem;
-  font-family: inherit;
+  font-family: "Geologica", sans-serif;
   transition: border-color 0.15s;
 }
 
 .text-input:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--lab-accent);
 }
 
 .text-input::placeholder {
-  color: var(--color-text-muted);
+  color: var(--lab-muted);
 }
 
 /* ===================================================
@@ -321,18 +327,19 @@ button {
 .select-input {
   width: 100%;
   padding: 9px 12px;
-  background-color: var(--color-input);
-  border: 1px solid var(--color-border);
+  background-color: var(--lab-input);
+  border: 1px solid var(--lab-border);
   border-radius: var(--radius-sm);
-  color: var(--color-text);
+  color: var(--lab-white);
   font-size: 0.875rem;
+  font-family: "Geologica", sans-serif;
   cursor: pointer;
   margin-bottom: 8px;
 }
 
 .select-input:focus {
   outline: none;
-  border-color: var(--color-accent);
+  border-color: var(--lab-accent);
 }
 
 .font-detail-row {
@@ -349,8 +356,8 @@ button {
 .font-size-group {
   display: flex;
   align-items: center;
-  background-color: var(--color-input);
-  border: 1px solid var(--color-border);
+  background-color: var(--lab-input);
+  border: 1px solid var(--lab-border);
   border-radius: var(--radius-sm);
   padding: 0 10px;
   gap: 4px;
@@ -361,10 +368,10 @@ button {
   width: 42px;
   background: none;
   border: none;
-  color: var(--color-text);
+  color: var(--lab-white);
   font-size: 0.875rem;
+  font-family: "Geologica", sans-serif;
   text-align: right;
-  font-family: inherit;
 }
 
 .number-input:focus {
@@ -372,8 +379,9 @@ button {
 }
 
 .unit-label {
+  font-family: "Geologica", sans-serif;
   font-size: 0.78rem;
-  color: var(--color-text-muted);
+  color: var(--lab-muted);
   white-space: nowrap;
 }
 
@@ -384,8 +392,8 @@ button {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--color-input);
-  border: 1px solid var(--color-border);
+  background-color: var(--lab-input);
+  border: 1px solid var(--lab-border);
   border-radius: var(--radius-sm);
   padding: 7px 11px;
   margin-bottom: 10px;
@@ -395,7 +403,7 @@ button {
   width: 22px;
   height: 22px;
   border-radius: 3px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(237, 237, 237, 0.2);
   flex-shrink: 0;
   cursor: pointer;
   display: block;
@@ -405,7 +413,7 @@ button {
   flex: 1;
   background: none;
   border: none;
-  color: var(--color-text);
+  color: var(--lab-white);
   font-size: 0.875rem;
   font-family: monospace;
   min-width: 0;
@@ -416,8 +424,9 @@ button {
 }
 
 .opacity-display {
+  font-family: "Geologica", sans-serif;
   font-size: 0.82rem;
-  color: var(--color-text-muted);
+  color: var(--lab-muted);
   white-space: nowrap;
   flex-shrink: 0;
 }
@@ -443,18 +452,18 @@ button {
 }
 
 .swatch:hover {
-  border-color: var(--color-text);
+  border-color: var(--lab-white);
   transform: scale(1.12);
 }
 
 .swatch.selected {
-  border-color: var(--color-text);
-  box-shadow: 0 0 0 2px var(--color-accent);
+  border-color: var(--lab-white);
+  box-shadow: 0 0 0 2px var(--lab-accent);
 }
 
 /* White swatch needs a visible outline */
 .swatch[data-color="#ffffff"] {
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(237, 237, 237, 0.35);
 }
 
 /* Rainbow swatch — opens the native color picker */
@@ -479,9 +488,7 @@ button {
   border: none;
 }
 
-/* ===================================================
-   MOBILE SIZE SLIDER
-   =================================================== */
+/* Mobile size slider */
 .size-row {
   display: flex;
   align-items: center;
@@ -489,16 +496,17 @@ button {
 }
 
 .size-label {
+  font-family: "Geologica", sans-serif;
   font-size: 0.875rem;
-  color: var(--color-text);
+  color: var(--lab-white);
   white-space: nowrap;
-  flex-shrink: 0;
+
 }
 
 .size-slider {
-  flex: 1;
-  accent-color: var(--color-accent);
+  accent-color: var(--lab-white);
   cursor: pointer;
+  flex: 0.7;
 }
 
 /* ===================================================
@@ -511,78 +519,46 @@ button {
 }
 
 .font-btn-label {
+  font-family: "Geologica", sans-serif;
   font-size: 0.875rem;
-  color: var(--color-text);
+  color: var(--lab-white);
 }
 
 .font-btn-group {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
+  
 }
 
-.font-preset-btn {
-  padding: 7px 12px;
-  background-color: var(--color-input);
-  border: 1px solid var(--color-border);
+.font-btn {
+  padding: 10px 20px;
+  background-color: var(--lab-white);
+  border: 1px solid var(--lab-black);
   border-radius: var(--radius-sm);
-  color: var(--color-text);
+  color: var(--lab-black);
+  font-family: "Geologica", sans-serif;
   font-size: 0.8rem;
   cursor: pointer;
+  border-radius: 15px;
   transition:
     background-color 0.15s,
     border-color 0.15s;
 }
 
-.font-preset-btn:hover {
-  background-color: #484848;
+.font-btn:hover {
+  background-color: var(--lab-accent-hover);
 }
 
-.font-preset-btn.active {
-  background-color: var(--color-accent);
-  border-color: var(--color-accent);
+.font-btn.active {
+  background-color: var(--lab-accent);
+  border-color: var(--lab-accent);
 }
 
-/* ===================================================
-   AI PANEL
-   =================================================== */
-.ai-textarea {
-  resize: vertical;
-  min-height: 90px;
-}
-
-.btn-primary {
-  display: block;
-  width: 100%;
-  padding: 11px;
-  margin-top: 12px;
-  background-color: var(--color-accent);
-  border: none;
-  border-radius: var(--radius-sm);
-  color: var(--color-text);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-
-.btn-primary:hover {
-  background-color: var(--color-accent-hover);
-}
-
-.placeholder-msg {
-  color: var(--color-text-muted);
-  font-size: 0.875rem;
-  text-align: center;
-  padding: 20px 0;
-}
-
-/* ===================================================
-   MOBILE BOTTOM TAB BAR
-   =================================================== */
+/* Mobile bottom tab bar */
 .mobile-tab-bar {
-  background-color: var(--color-panel);
-  border-top: 1px solid var(--color-border);
+  background-color: var(--lab-panel);
+  border-top: 1px solid var(--lab-border);
   height: var(--tab-bar-height);
   display: none; /* shown on mobile below */
   justify-content: space-around;
@@ -599,7 +575,7 @@ button {
   flex: 1;
   border: none;
   background: transparent;
-  color: var(--color-text-muted);
+  color: var(--lab-muted);
   cursor: pointer;
   gap: 4px;
   padding: 8px 4px;
@@ -608,11 +584,11 @@ button {
 }
 
 .tab-btn.active {
-  color: var(--color-accent);
+  color: var(--lab-accent);
 }
 
 .tab-btn:hover:not(.active) {
-  color: var(--color-text);
+  color: var(--lab-white);
 }
 
 .tab-icon {
@@ -626,14 +602,13 @@ button {
 }
 
 .tab-label {
+  font-family: "Geologica", sans-serif;
   font-size: 0.6rem;
   text-align: center;
   line-height: 1.2;
 }
 
-/* ===================================================
-   UTILITY CLASSES
-   =================================================== */
+/* Utility classes */
 .desktop-only {
   display: block;
 }
@@ -642,9 +617,7 @@ button {
   display: none;
 }
 
-/* ===================================================
-   RESPONSIVE — MOBILE  (≤ 768px)
-   =================================================== */
+/* Responsive mobile styles (≤ 768px) */
 @media (max-width: 768px) {
   body {
     overflow: hidden;
@@ -652,22 +625,34 @@ button {
 
   /* Header: back arrow | logo (centered) | export → */
   .site-header {
-    padding: 0 16px;
-    position: relative;
+    background-color: var(--lab-border);
+    flex-direction: column;
+    height: auto;
+    padding: 12px 0;
+    gap: 8px;
   }
 
-  .header-back {
+  /* Always present — makes logo + desktop nav sit on one row */
+  .header-top {
+    padding: 0 16px;
+    justify-content: center;
+  }
+
+  /* 2nd row mobile navigation bar hidden by default */
+  .header-subnav {
+    display: flex;
+    padding: 8px 16px;
+  }
+
+  .header-arrows {
     display: block;
     position: relative;
     z-index: 1;
   }
 
-  /* Absolutely center the logo so flanking items don't push it */
-  .logo {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.3rem;
+  /* Hides the inline desktop navigation in the mobile version */
+  .header-nav {
+    display: none;
   }
 
   /* Editor: vertical stack instead of 3-column grid */
@@ -677,6 +662,10 @@ button {
     flex: 1;
     overflow-y: auto;
     min-height: 0;
+  }
+
+  .tool-sidebar {
+    display: none;
   }
 
   /* Canvas: proportional height, aligned to top */
@@ -695,7 +684,7 @@ button {
   /* Controls panel fills remaining width below canvas */
   .controls-panel {
     border-left: none;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--lab-border);
     flex-shrink: 0;
     overflow-y: visible;
   }
@@ -721,10 +710,5 @@ button {
 
   .swatch--rainbow.mobile-only {
     display: flex;
-  }
-
-  /* Inline span inside export button */
-  .btn-export .mobile-only {
-    display: inline;
   }
 }
