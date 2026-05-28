@@ -1,11 +1,13 @@
+import { randomUUID } from 'crypto';
+
 export interface IDGenerator {
   generate(): string;
 }
 
-export class TimestampIDGenerator implements IDGenerator {
-  private counter = 0;
+//Generates UUIDv4 IDs for globally unique file identification.
+
+export class UUIDGenerator implements IDGenerator {
   generate(): string {
-    this.counter++;
-    return `${Date.now()}-${this.counter}`;
+    return randomUUID();
   }
 }
