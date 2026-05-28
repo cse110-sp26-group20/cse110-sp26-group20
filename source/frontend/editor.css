@@ -1,6 +1,4 @@
 :root {
-  --lab-purple: #c3b0e8;
-  --lab-green: #87c24c;
   --lab-black: #1e1e1e;
   --lab-white: #ededed;
 
@@ -18,6 +16,7 @@
   --tab-bar-height: 64px;
   --radius-sm: 6px;
   --radius-md: 10px;
+  --radius-lg: 15px;
 }
 
 @font-face {
@@ -62,8 +61,11 @@ a {
   text-decoration: none;
 }
 
-button {
-  font-family: "Geologica", sans-serif;
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
 }
 
 /* Single row desktop header */
@@ -73,7 +75,7 @@ button {
   justify-content: space-between;
   height: var(--header-height);
   background-color: var(--lab-panel);
-  border-bottom: 1px solid var(--lab-border);
+  border-bottom: 2px solid var(--lab-black);
   padding: 12px 12px;
   flex-shrink: 0;
   z-index: 20;
@@ -92,16 +94,6 @@ button {
   justify-content: space-between;
   align-items: center;
   background-color: var(--lab-panel);
-}
-
-/* "← Templates" — visible only on mobile (see media query) */
-.header-arrows {
-  display: none;
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--lab-white);
-  white-space: nowrap;
-  font-family: "Geologica", sans-serif;
 }
 
 .logo {
@@ -123,7 +115,7 @@ button {
 
 .nav-link {
   font-family: "Orbitron", sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 600;
   transition: color 0.15s;
 }
@@ -158,10 +150,10 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 64px;
-  min-height: 64px;
+  width: 70%;
+  min-height: 72px;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   cursor: pointer;
   background: transparent;
   color: var(--lab-muted);
@@ -187,7 +179,6 @@ button {
 }
 
 .tool-label {
-  font-family: "Geologica", sans-serif;
   font-size: 0.75rem;
   text-align: center;
   line-height: 1.2;
@@ -234,7 +225,6 @@ button {
   border-radius: 8px;
   color: var(--lab-white);
   font-size: 1rem;
-  font-family: "Geologica", sans-serif;
 }
 
 .mobile-caption-input::placeholder {
@@ -266,12 +256,8 @@ button {
 }
 
 .panel-section {
-  padding: 16px 18px;
-  border-bottom: 1px solid var(--lab-border);
-}
-
-.panel-section:last-child {
-  border-bottom: none;
+  padding: 8px 18px;
+  
 }
 
 .section-title {
@@ -283,32 +269,27 @@ button {
   margin-bottom: 14px;
 }
 
-/* Form elements */
-.form-group {
-  margin-bottom: 12px;
+/* Caption editor styles */
+.caption-editor {
+  margin-bottom: 10px;
 }
 
-.form-group:last-child {
-  margin-bottom: 0;
-}
-
-.form-group label {
+.caption-editor label {
   display: block;
-  font-family: "Geologica", sans-serif;
-  font-size: 0.8rem;
-  color: var(--lab-muted);
-  margin-bottom: 6px;
+  font-size: 1rem;
+  color: var(--lab-white);
+  margin-bottom: 5px;
 }
 
 .text-input {
   width: 100%;
+  height: 3rem;
   padding: 9px 12px;
   background-color: var(--lab-white);
-  border: 1px solid var(--lab-black);
+  border: 2px solid var(--lab-black);
   border-radius: var(--radius-md);
-  color: var(--lab-white);
+  color: var(--lab-black);
   font-size: 0.875rem;
-  font-family: "Geologica", sans-serif;
   transition: border-color 0.15s;
 }
 
@@ -321,20 +302,26 @@ button {
   color: var(--lab-muted);
 }
 
-/* ===================================================
-   FONT CONTROLS (desktop dropdowns)
-   =================================================== */
+/* Desktop ride sidebar font controls */
 .select-input {
   width: 100%;
-  padding: 9px 12px;
-  background-color: var(--lab-input);
-  border: 1px solid var(--lab-border);
-  border-radius: var(--radius-sm);
-  color: var(--lab-white);
-  font-size: 0.875rem;
-  font-family: "Geologica", sans-serif;
+  height: 3rem;
+  padding: 9px 36px 9px 12px;
+  background-color: var(--lab-white);
+  border: 2px solid var(--lab-black);
+  border-radius: var(--radius-lg);
+  color: var(--lab-black);
+  font-size: 1.1rem;
   cursor: pointer;
   margin-bottom: 8px;
+  /* Remove native arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Custom chevron arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231e1e1e' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
 }
 
 .select-input:focus {
@@ -345,56 +332,56 @@ button {
 .font-detail-row {
   display: flex;
   gap: 8px;
-  align-items: stretch;
 }
 
 .font-detail-row .select-input {
-  flex: 1;
+  flex: 1.1;
   margin-bottom: 0;
 }
 
 .font-size-group {
   display: flex;
+  flex: 1;
   align-items: center;
-  background-color: var(--lab-input);
-  border: 1px solid var(--lab-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--lab-white);
+  border: 2px solid var(--lab-black);
+  border-radius: var(--radius-lg);
   padding: 0 10px;
   gap: 4px;
   flex-shrink: 0;
 }
 
-.number-input {
-  width: 42px;
-  background: none;
-  border: none;
-  color: var(--lab-white);
-  font-size: 0.875rem;
-  font-family: "Geologica", sans-serif;
-  text-align: right;
+.font-size-group:hover {
+  border: 2px solid var(--lab-accent-hover);
 }
 
-.number-input:focus {
+.font-size-input {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--lab-black);
+  font-size: 1rem;
+  text-align: right;
+} 
+
+.font-size-input:focus {
   outline: none;
 }
 
 .unit-label {
-  font-family: "Geologica", sans-serif;
   font-size: 0.78rem;
   color: var(--lab-muted);
   white-space: nowrap;
 }
 
-/* ===================================================
-   COLOR SECTION
-   =================================================== */
+/* COLOR SECTION */
 .color-display-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--lab-input);
-  border: 1px solid var(--lab-border);
-  border-radius: var(--radius-sm);
+  background-color: var(--lab-white);
+  border: 2px solid var(--lab-border);
+  border-radius: var(--radius-lg);
   padding: 7px 11px;
   margin-bottom: 10px;
 }
@@ -403,7 +390,7 @@ button {
   width: 22px;
   height: 22px;
   border-radius: 3px;
-  border: 1px solid rgba(237, 237, 237, 0.2);
+  border: 2px solid rgba(237, 237, 237, 0.2);
   flex-shrink: 0;
   cursor: pointer;
   display: block;
@@ -413,9 +400,8 @@ button {
   flex: 1;
   background: none;
   border: none;
-  color: var(--lab-white);
-  font-size: 0.875rem;
-  font-family: monospace;
+  color: var(--lab-black);
+  font-size: 1rem;
   min-width: 0;
 }
 
@@ -423,22 +409,51 @@ button {
   outline: none;
 }
 
-.opacity-display {
-  font-family: "Geologica", sans-serif;
-  font-size: 0.82rem;
+.opacity-divider {
+  font-size: 1rem;
   color: var(--lab-muted);
-  white-space: nowrap;
   flex-shrink: 0;
 }
 
-.color-swatches {
+.opacity-input {
+  width: 36px;
+  background: none;
+  border: none;
+  color: var(--lab-black);
+  font-size: 1rem;
+  font-family: "Geologica", sans-serif;
+  text-align: right;
+  padding: 0;
+  min-width: 0;
+  /* Remove native number spinners */
+  -moz-appearance: textfield;
+}
+
+.opacity-input:focus {
+  outline: none;
+}
+
+/* Remove spinners in Chrome/Safari/Edge */
+.opacity-input::-webkit-inner-spin-button,
+.opacity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.opacity-pct {
+  font-size: 1rem;
+  color: var(--lab-black);
+  flex-shrink: 0;
+}
+
+.color-btn-group {
   display: flex;
   gap: 7px;
   flex-wrap: wrap;
   align-items: center;
 }
 
-.swatch {
+.color-btn {
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -451,23 +466,23 @@ button {
     transform 0.1s;
 }
 
-.swatch:hover {
+.color-btn:hover {
   border-color: var(--lab-white);
   transform: scale(1.12);
 }
 
-.swatch.selected {
+.color-btn.selected {
   border-color: var(--lab-white);
   box-shadow: 0 0 0 2px var(--lab-accent);
 }
 
 /* White swatch needs a visible outline */
-.swatch[data-color="#ffffff"] {
+.color-btn[data-color="#ffffff"] {
   border-color: rgba(237, 237, 237, 0.35);
 }
 
 /* Rainbow swatch — opens the native color picker */
-.swatch--rainbow {
+.color-btn--rainbow {
   background: conic-gradient(red, #ff0, lime, cyan, blue, magenta, red);
   position: relative;
   overflow: hidden;
@@ -495,33 +510,18 @@ button {
   gap: 14px;
 }
 
-.size-label {
-  font-family: "Geologica", sans-serif;
-  font-size: 0.875rem;
-  color: var(--lab-white);
-  white-space: nowrap;
-
-}
-
 .size-slider {
   accent-color: var(--lab-white);
   cursor: pointer;
   flex: 0.7;
 }
 
-/* ===================================================
-   MOBILE FONT PRESET BUTTONS
-   =================================================== */
+/* Mobile font button styles */
 .font-btn-row {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 10px;
-}
-
-.font-btn-label {
-  font-family: "Geologica", sans-serif;
-  font-size: 0.875rem;
-  color: var(--lab-white);
 }
 
 .font-btn-group {
@@ -532,12 +532,10 @@ button {
 }
 
 .font-btn {
-  padding: 10px 20px;
+  padding: 6px 30px;
   background-color: var(--lab-white);
-  border: 1px solid var(--lab-black);
-  border-radius: var(--radius-sm);
+  border: 2px solid var(--lab-black);
   color: var(--lab-black);
-  font-family: "Geologica", sans-serif;
   font-size: 0.8rem;
   cursor: pointer;
   border-radius: 15px;
@@ -557,8 +555,8 @@ button {
 
 /* Mobile bottom tab bar */
 .mobile-tab-bar {
-  background-color: var(--lab-panel);
-  border-top: 1px solid var(--lab-border);
+  background-color: var(--lab-input);
+  border-top: 1px solid var(--lab-black);
   height: var(--tab-bar-height);
   display: none; /* shown on mobile below */
   justify-content: space-around;
@@ -592,17 +590,14 @@ button {
 }
 
 .tab-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
   font-size: 1.3rem;
   line-height: 1;
 }
 
-.tab-icon--text {
-  font-weight: 900;
-  font-size: 1.5rem;
-}
-
 .tab-label {
-  font-family: "Geologica", sans-serif;
   font-size: 0.6rem;
   text-align: center;
   line-height: 1.2;
@@ -619,14 +614,10 @@ button {
 
 /* Responsive mobile styles (≤ 768px) */
 @media (max-width: 768px) {
-  body {
-    overflow: hidden;
-  }
-
-  /* Header: back arrow | logo (centered) | export → */
   .site-header {
     background-color: var(--lab-border);
     flex-direction: column;
+    align-items: stretch;
     height: auto;
     padding: 12px 0;
     gap: 8px;
@@ -641,13 +632,8 @@ button {
   /* 2nd row mobile navigation bar hidden by default */
   .header-subnav {
     display: flex;
-    padding: 8px 16px;
-  }
-
-  .header-arrows {
-    display: block;
-    position: relative;
-    z-index: 1;
+    padding: 16px 16px;
+    font-size: 1.2rem;
   }
 
   /* Hides the inline desktop navigation in the mobile version */
@@ -684,7 +670,8 @@ button {
   /* Controls panel fills remaining width below canvas */
   .controls-panel {
     border-left: none;
-    border-top: 1px solid var(--lab-border);
+    border-top: 1px solid var(--lab-panel);
+    background-color: var(--lab-panel);
     flex-shrink: 0;
     overflow-y: visible;
   }
@@ -703,12 +690,13 @@ button {
     display: block;
   }
 
-  /* Specific mobile-only elements that need flex */
-  .mobile-tab-bar.mobile-only {
-    display: flex;
+  /* Hide desktop-only color row on mobile */
+  .color-display-row {
+    display: none;
   }
 
-  .swatch--rainbow.mobile-only {
+  /* Specific mobile-only elements that need flex */
+  .color-btn--rainbow.mobile-only {
     display: flex;
   }
 }

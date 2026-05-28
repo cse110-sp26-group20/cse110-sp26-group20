@@ -22,15 +22,15 @@
     
       <!-- logo centered on separate row as navigation -->
       <div class="header-subnav">
-        <a href="index.html" class="header-arrows">&#8592; Templates</a>
-        <a href="" class="header-arrows">Export &#8594;</a>
+        <a href="index.html">&#8592; Templates</a>
+        <a href="">Export &#8594;</a>
       </div>
     
     </header>
 
-    <!-- ===== EDITOR LAYOUT ===== -->
+    <!-- Editor layout -->
     <div class="editor-layout">
-      <!-- LEFT TOOL SIDEBAR (desktop only) -->
+      <!-- left tool sidebar for desktop -->
       <aside class="tool-sidebar" aria-label="Editor tools">
         <button
           class="tool-btn"
@@ -70,7 +70,7 @@
         </button>
       </aside>
 
-      <!-- CENTER CANVAS AREA -->
+      <!-- Center canvas area -->
       <section class="canvas-area" aria-label="Meme canvas">
         <div class="canvas-wrapper">
           <canvas id="meme-canvas" width="800" height="500">
@@ -98,7 +98,7 @@
           <div class="panel-section desktop-only">
             <h2 class="section-title">Caption</h2>
 
-            <div class="form-group">
+            <div class="caption-editor">
               <label for="top-text">Top Text</label>
               <input
                 type="text"
@@ -109,7 +109,7 @@
               />
             </div>
 
-            <div class="form-group">
+            <div class="caption-editor">
               <label for="bottom-text">Bottom Text</label>
               <input
                 type="text"
@@ -125,7 +125,7 @@
           <div class="panel-section mobile-only">
             <h2 class="section-title">Text</h2>
             <div class="size-row">
-              <label for="font-size-slider" class="size-label">Size</label>
+              <label for="font-size-slider">Size</label>
               <input
                 type="range"
                 id="font-size-slider"
@@ -144,11 +144,7 @@
 
             <!-- Desktop: dropdown controls -->
             <div class="desktop-only">
-              <select
-                id="font-family"
-                class="select-input"
-                aria-label="Font family"
-              >
+              <select id="font-family" class="select-input" aria-label="Font family">
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Impact">Impact</option>
                 <option value="Arial">Arial</option>
@@ -160,10 +156,7 @@
 
               <div class="font-detail-row">
                 <select
-                  id="font-weight"
-                  class="select-input"
-                  aria-label="Font style"
-                >
+                  id="font-weight" class="select-input" aria-label="Font style">
                   <option value="bold">Bold</option>
                   <option value="normal">Normal</option>
                   <option value="italic">Italic</option>
@@ -174,7 +167,7 @@
                   <input
                     type="number"
                     id="font-size"
-                    class="number-input"
+                    class="font-size-input"
                     value="140"
                     min="10"
                     max="300"
@@ -188,7 +181,7 @@
             <!-- Mobile: preset font buttons -->
             <div class="mobile-only">
               <div class="font-btn-row">
-                <label class="font-btn-label">Font</label>
+                <label>Font</label>
                 <div class="font-btn-group">
                   <button class="font-btn" type="button"> Impact </button>
                   <button class="font-btn" type="button"> Arial </button>
@@ -204,7 +197,7 @@
             <h2 class="section-title">Color</h2>
 
             <!-- Desktop: hex + opacity display row -->
-            <div class="color-display-row desktop-only">
+            <div class="color-display-row">
               <label
                 class="color-preview"
                 id="color-preview"
@@ -220,14 +213,24 @@
                 maxlength="6"
                 aria-label="Hex color value"
               />
-              <span class="opacity-display">|&nbsp;&nbsp;100%</span>
+              <span class="opacity-divider">|</span>
+              <input
+                type="number"
+                id="opacity-input"
+                class="opacity-input"
+                value="100"
+                min="0"
+                max="100"
+                aria-label="Opacity percentage"
+              />
+              <span class="opacity-pct">%</span>
             </div>
 
-            <!-- Color swatches (both) -->
-            <div class="color-swatches" role="group" aria-label="Color presets">
-              <!-- Mobile only: rainbow swatch opens color picker -->
+            <!-- Color buttons (both) -->
+            <div class="color-btn-group" role="group" aria-label="Color presets">
+              <!-- Mobile only: rainbow color-btn opens color picker -->
               <label
-                class="swatch swatch--rainbow mobile-only"
+                class="color-btn color-btn--rainbow mobile-only"
                 for="color-picker-input"
                 aria-label="Custom color"
                 title="Pick a custom color"
@@ -240,51 +243,43 @@
                   aria-label="Color picker"
                 />
               </label>
-
               <button
-                class="swatch"
-                data-color="#ffffff"
-                style="background-color: #ffffff"
-                type="button"
-                aria-label="White"
-              ></button>
-              <button
-                class="swatch"
+                class="color-btn"
                 data-color="#e03535"
                 style="background-color: #e03535"
                 type="button"
                 aria-label="Red"
               ></button>
               <button
-                class="swatch"
+                class="color-btn"
                 data-color="#e07820"
                 style="background-color: #e07820"
                 type="button"
                 aria-label="Orange"
               ></button>
               <button
-                class="swatch"
+                class="color-btn"
                 data-color="#d4c020"
                 style="background-color: #d4c020"
                 type="button"
                 aria-label="Yellow"
               ></button>
               <button
-                class="swatch"
+                class="color-btn"
                 data-color="#1aaa55"
                 style="background-color: #1aaa55"
                 type="button"
                 aria-label="Green"
               ></button>
               <button
-                class="swatch"
+                class="color-btn"
                 data-color="#3355cc"
                 style="background-color: #3355cc"
                 type="button"
                 aria-label="Blue"
               ></button>
               <button
-                class="swatch"
+                class="color-btn"
                 data-color="#7733cc"
                 style="background-color: #7733cc"
                 type="button"
@@ -293,70 +288,28 @@
             </div>
           </div>
         </div>
-
-        <!-- STICKERS PANEL -->
-        <div class="tool-panel" id="stickers-panel" role="tabpanel"></div>
-
-        <!-- FILTERS PANEL -->
-        <div class="tool-panel" id="filters-panel" role="tabpanel"></div>
-
-        <!-- AI GENERATION PANEL -->
-        <div class="tool-panel" id="ai-panel" role="tabpanel"></div>
       </aside>
     </div>
 
     <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
-    <nav
-      class="mobile-tab-bar mobile-only"
-      aria-label="Editor tool tabs"
-      role="tablist"
-    >
-      <button
-        class="tab-btn active"
-        data-tool="text"
-        type="button"
-        role="tab"
-        aria-selected="true"
-        aria-controls="text-panel"
-      >
-        <span class="tab-icon tab-icon--text">T</span>
+    <nav class="mobile-tab-bar" aria-label="Editor tool tabs" role="tablist">
+      <button class="tab-btn" type="button" role="tab" aria-controls="text-panel">
+        <img src="" class="tab-icon">
         <span class="tab-label">Text</span>
       </button>
       <button
-        class="tab-btn"
-        data-tool="stickers"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="stickers-panel"
-      >
-        <span class="tab-icon">&#128522;</span>
+        class="tab-btn" type="button" role="tab" aria-controls="stickers-panel">
+        <img src="" class="tab-icon">
         <span class="tab-label">Stickers</span>
       </button>
-      <button
-        class="tab-btn"
-        data-tool="filters"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="filters-panel"
-      >
-        <span class="tab-icon">&#9141;</span>
+      <button class="tab-btn" type="button" role="tab" aria-controls="filters-panel">
+        <img src="" class="tab-icon">
         <span class="tab-label">Filters</span>
       </button>
-      <button
-        class="tab-btn"
-        data-tool="ai"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="ai-panel"
-      >
-        <span class="tab-icon">&#10024;</span>
+      <button class="tab-btn" type="button" role="tab" aria-controls="ai-panel">
+        <img src="" class="tab-icon">
         <span class="tab-label">AI Generation</span>
       </button>
     </nav>
-
-    <script type="module" src="editor.js"></script>
   </body>
 </html>
