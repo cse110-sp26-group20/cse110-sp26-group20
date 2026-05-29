@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>MemeLab Homepage</title>
+        <meta name="description" content="MemeLab">
+        <link rel="stylesheet" href="home.css">
+    </head>
+    <body>
+        <main class = "home-page">
+
+            <div class = "content">
+                <header>
+                    <img class = "logo" src="./images/memelab_logo.svg" alt="MemeLab Logo"/>
+                    <p class = "tagline">
+                        Experimental Humor
+                    </p>
+                </header>
+                <div class="lattice-bg">
+                    <img class="lattice" src="./images/lattice.svg">
+                </div>
+                <section class = "upload-image">
+                    <h2>Create your own experiment</h2>
+                    <p>Turn your photo into a meme</p>
+                    <button class = "upload-btn">Upload from camera roll</button>
+                </section>
+
+                <div class="divider">
+                    <div class="particle-layer"></div>
+                </div>
+
+                <section class = "browse-template">
+                    <h2>Select specimen from the Lab</h2>
+                    <p>Start from our library of templates</p>
+                    <button class = "template-btn">Browse Templates</button>
+                </section>
+
+    
+                <script>
+                    const layer = document.querySelector(".particle-layer");
+
+                    function rand(min, max) {
+                    return Math.random() * (max - min) + min;
+                    }
+
+                    function spawnParticle() {
+                    const p = document.createElement("div");
+
+                    const size = rand(3, 10);
+                    const startX = rand(0, window.innerWidth);
+
+                    p.style.position = "absolute";
+                    p.style.left = startX + "px";
+                    p.style.top = "50%";
+
+                    p.style.width = size + "px";
+                    p.style.height = size + "px";
+                    p.style.borderRadius = "50%";
+
+                    const isPurple = Math.random() > 0.5;
+
+                    p.style.background = isPurple ? "#b56cff" : "#2fe08a";
+                    p.style.boxShadow = isPurple
+                        ? "0 0 10px rgba(181,108,255,0.4)"
+                        : "0 0 10px rgba(47,224,138,0.4)";
+
+                    layer.appendChild(p);
+
+                    const direction = Math.random() > 0.5 ? -1 : 1;
+
+                    const driftX = rand(-30, 30) * direction;
+                    const driftY = rand(-80, 80);
+
+                    const duration = rand(1200, 2200);
+
+                    p.animate(
+                        [
+                            {
+                                transform: "translate(0px, 0px) scale(0.6)",
+                                opacity: 0
+                            },
+                            {
+                                transform: `translate(${driftX * 0.3}px, ${driftY * 0.3}px) scale(1)`,
+                                opacity: 1,
+                                offset: 0.3
+                            },
+                            {
+                                transform: `translate(${driftX}px, ${driftY}px) scale(0.3)`,
+                                opacity: 0
+                            }
+                        ],
+                        {
+                            duration,
+                            easing: "ease-in-out"
+                        }
+                    );
+
+                    setTimeout(() => p.remove(), duration);
+                    }
+
+                    setInterval(() => {
+                        for (let i = 0; i < 5; i++) {
+                            spawnParticle();
+                        }
+                    }, 120);
+                </script>
+
+            </div>
+
+        </main>
+    </body>
+</html>
+
