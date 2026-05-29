@@ -1,14 +1,14 @@
 # 0012. Adopt OpenAI Node.js SDK for AI Image Generation
 
-| Attribute | Value                                |
-| --------- | ------------------------------------ |
-| Date      | `2026-05-29`                         |
-| Status    | Pending                              |
-| Deciders  |                                      |
+| Attribute | Value             |
+| --------- | ----------------- |
+| Date      | `2026-05-29`      |
+| Status    | Pending           |
+| Deciders  | Backend team + TA |
 
 ## Context
 
-The backend needs to communicate with OpenAI's image generation API as first model to process images. Making raw HTTP requests to the API is verbose and requires manual handling of authentication, request formatting, and response parsing. Making our code more error prone and harder to understand. 
+The backend needs to communicate with OpenAI's image generation API as first model to process images. Making raw HTTP requests to the API is verbose and requires manual handling of authentication, request formatting, and response parsing. Making our code more error prone and harder to understand.
 
 ## Decision
 
@@ -20,8 +20,9 @@ The client is initialised once per provider file and scoped to that file only:
 
 ```typescript
 // services/providers/OpenAIProvider.ts
-import OpenAI from 'openai'
-const client = new OpenAI({ apiKey: config.openAIKey })
+import OpenAI from 'openai';
+
+const client = new OpenAI({ apiKey: config.openAIKey });
 ```
 
 ## Consequences
@@ -38,4 +39,4 @@ const client = new OpenAI({ apiKey: config.openAIKey })
 
 ### Follow-up
 
-- Implement remaining providers (`ClaudeProvider`, `StableDiffusionProvider`) using their respective SDKs following the same pattern.
+- Implement OpenAI SDK
