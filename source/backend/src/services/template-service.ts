@@ -1,8 +1,8 @@
 import { UUIDGenerator } from '../models/id-generator';
 // @ts-ignore
-import { FileRecord, FileRepository, type FileRepositoryOperator } from '../models/file-system';
+import { FileRepository } from '../models/file-system';
 // @ts-ignore
-import { LocalDiskStorageStrategy, type StorageStrategy } from '../models/file-storage';
+import { LocalDiskStorageStrategy } from '../models/file-storage';
 
 const fileRepo = new FileRepository();
 const diskStrategy = new LocalDiskStorageStrategy();
