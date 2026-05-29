@@ -1,10 +1,5 @@
 @import "./global.css";
 :root {
-  --lab-black: #1e1e1e;
-  --lab-white: #ededed;
-
-  --lab-accent: #6644cc;
-  --lab-accent-hover: #7755dd;
   --lab-panel: #252525;
   --lab-canvas: #8a8a8a;
   --lab-input: #363636;
@@ -20,34 +15,12 @@
   --radius-lg: 15px;
 }
 
-@font-face {
-  font-family: "Arcend";
-  src: url("./fonts/Arcend-ARKjL.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Orbitron";
-  src: url("./fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Geologica";
-  src: url("./fonts/Geologica-VariableFont_CRSV,SHRP,slnt,wght.ttf")
-    format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: "Geologica", sans-serif;
+  font-family: var(--font-body);
   margin: 0;
   background-color: var(--lab-black);
   color: var(--lab-white);
@@ -105,7 +78,7 @@ textarea {
 }
 
 .nav-link {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 600;
   transition: color 0.15s;
@@ -171,7 +144,7 @@ textarea {
 
 .tool-label {
   font-size: 1rem;
-  font-family: "Comic Sans MS", cursive;
+  font-family: var(--font-body);
   text-align: center;
   line-height: 1.2;
   color: var(--lab-white);
@@ -253,7 +226,7 @@ textarea {
 }
 
 .section-title {
-  font-family: "Orbitron", sans-serif;
+  font-family: var(--font-display);
   font-size: 1.5rem;
   font-weight: 700;
   text-decoration: underline;
