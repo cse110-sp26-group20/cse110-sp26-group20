@@ -603,12 +603,6 @@ textarea {
   display: none;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  height: 100%;
-}
-
 .logo-image {
   height: 40px;
   width: auto;
