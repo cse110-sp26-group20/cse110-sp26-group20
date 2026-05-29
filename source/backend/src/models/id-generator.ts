@@ -11,3 +11,14 @@ export class UUIDGenerator implements IDGenerator {
     return randomUUID();
   }
 }
+export class CounterGenerator implements IDGenerator {
+  count: number;
+  constructor() {
+    this.count = 0;
+  }
+  generate(): string {
+    this.count++;
+    return this.count.toString();
+  }
+}
+export const counterGenerator = new CounterGenerator();
