@@ -3,7 +3,7 @@
 | Attribute | Value             |
 | --------- | ----------------- |
 | Date      | `2026-05-29`      |
-| Status    | Pending           |
+| Status    | Accepted          |
 | Deciders  | Backend team + TA |
 
 ## Context
