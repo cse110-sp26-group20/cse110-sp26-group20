@@ -7,21 +7,21 @@
   
   @font-face {
       font-family: "Arcend";
-      src: url("./assets/fonts/Arcend-ARKjL.ttf") format("truetype");
+      src: url("./fonts/Arcend-ARKjL.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
   }
   
   @font-face {
       font-family: "Orbitron";
-      src: url("./assets/fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
+      src: url("./fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
   }
   
   @font-face {
       font-family: "Geologica";
-      src: url("./assets/fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf") format("truetype");
+      src: url("./fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf") format("truetype");
       font-weight: normal;
       font-style: normal;
   }
@@ -172,17 +172,6 @@
     height: 140px;
     overflow: hidden;
     z-index: 10;
-  
-    /*purple → green reaction field */
-    /*background: linear-gradient(
-      to bottom,
-      var(--lab-purple) 0%,  
-      var(--lab-purple) 40%,
-      var(--lab-green) 60%, 
-      var(--lab-green) 100%
-    );
-    */
-  
     background: transparent;
   
   }
