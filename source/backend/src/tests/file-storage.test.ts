@@ -1,9 +1,10 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+
 import {
   LocalStorageStrategy,
-  NoStorageStrategy,
+  NoStorageStrategy
 } from '../models/file-storage';
 
 describe('LocalStorageStrategy', () => {

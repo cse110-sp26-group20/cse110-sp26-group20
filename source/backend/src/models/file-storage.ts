@@ -11,7 +11,7 @@ export abstract class StorageStrategy {
    */
   abstract write(
     filename: string,
-    fileStream: Buffer | Stream,
+    fileStream: Buffer | Stream
   ): Promise<string>;
 
   abstract read(filename: string): Promise<Stream>;
