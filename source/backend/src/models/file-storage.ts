@@ -11,8 +11,9 @@ export abstract class StorageStrategy {
    */
   abstract write(
     filename: string,
-    fileStream: Buffer | Stream
+    fileStream: Buffer | Stream,
   ): Promise<string>;
+
   abstract read(filename: string): Promise<Stream>;
   abstract remove(filename: string): Promise<boolean>;
   abstract resolvePath(filename: string): Promise<string>;
@@ -25,6 +26,7 @@ export abstract class StorageStrategy {
 export class LocalStorageStrategy extends StorageStrategy {
   constructor(private storageDir: string) {
     super();
+
     if (!fs.existsSync(this.storageDir)) {
       fs.mkdirSync(this.storageDir, { recursive: true });
     }
@@ -37,16 +39,20 @@ export class LocalStorageStrategy extends StorageStrategy {
    */
   async write(filename: string, fileStream: Buffer | Stream): Promise<string> {
     const filePath = await this.resolvePath(filename);
+
     if (Buffer.isBuffer(fileStream)) {
       await fs.promises.writeFile(filePath, fileStream);
     } else {
       await new Promise<void>((resolve, reject) => {
         const writeStream = fs.createWriteStream(filePath);
+
         fileStream.pipe(writeStream);
+
         writeStream.on('finish', resolve);
         writeStream.on('error', reject);
       });
     }
+
     return filePath;
   }
 
@@ -55,9 +61,11 @@ export class LocalStorageStrategy extends StorageStrategy {
    */
   async read(filename: string): Promise<Stream> {
     const filePath = await this.resolvePath(filename);
+
     if (!fs.existsSync(filePath)) {
       return Readable.from([]);
     }
+
     return fs.createReadStream(filePath);
   }
 
@@ -66,10 +74,13 @@ export class LocalStorageStrategy extends StorageStrategy {
    */
   async remove(filename: string): Promise<boolean> {
     const filePath = await this.resolvePath(filename);
+
     if (!fs.existsSync(filePath)) {
       return false;
     }
+
     await fs.promises.unlink(filePath);
+
     return true;
   }
 
