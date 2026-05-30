@@ -15,21 +15,21 @@
 
 @font-face {
     font-family: "Arcend";
-    src: url("./fonts/Arcend-ARKjL.ttf") format("truetype");
+    src: url("../fonts/Arcend-ARKjL.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Orbitron";
-    src: url("./fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
+    src: url("../fonts/Orbitron-VariableFont_wght.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Geologica";
-    src: url("./fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf") format("truetype");
+    src: url("../fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
