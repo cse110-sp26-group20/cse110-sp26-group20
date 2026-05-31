@@ -76,10 +76,11 @@ interface ImgflipResponse {
 export const templateCache: TemplateData[] = [];
 
 export async function bootstrapTemplates() {
+  templateCache.length = 0;
+
   try {
     const response = await fetch('https://api.imgflip.com/get_memes');
     const json = (await response.json()) as ImgflipResponse;
-
     if (json.success) {
       const memes = json.data.memes;
 
