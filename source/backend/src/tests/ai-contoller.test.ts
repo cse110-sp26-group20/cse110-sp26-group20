@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express';
 
-import { generateResponse } from '../../controllers/ai.controller';
+import { generateResponse } from '../controllers/ai.controller';
 
 describe('AI Controller', () => {
   it('should return 400 if prompt is missing', async () => {
+    // TODO: Communicate with frontend what they will submit.
     const req = { body: {} } as Partial<Request> as Request;
     const res = {
       status: jest.fn().mockReturnThis(),

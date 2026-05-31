@@ -2,7 +2,7 @@ import type { Request, Response } from 'express';
 
 import { ImagePrompt } from '../models/image-prompt';
 import { AIGenerator } from '../services/ai-generator';
-import { OpenAIProvider } from '../services/providers/openai-provider';
+import { OpenAIProvider } from '../services/openai-provider';
 
 export async function generateResponse(req: Request, res: Response) {
   try {

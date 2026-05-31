@@ -1,14 +1,15 @@
-import fs from 'fs';
+// import fs from 'fs';
+import { Readable } from 'stream';
 import { OpenAI, toFile } from 'openai';
 
-import config from '../../config';
-import { ImagePrompt } from '../../models/image-prompt';
+import config from '../config';
+import { ImagePrompt } from '../models/image-prompt';
 import {
   ImageData,
   ImageResponse,
   ResponseMetadata
-} from '../../models/image-response';
-import type { IUniversalAIProvider } from '../../models/universal-ai-provider';
+} from '../models/image-response';
+import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 // Initialize the OpenAI client with the API key from the configuration
 const client = new OpenAI({
@@ -24,8 +25,15 @@ export class OpenAIProvider implements IUniversalAIProvider {
   async generateImage(prompt: ImagePrompt): Promise<ImageResponse> {
     const startTime = Date.now(); // start timer before API call
 
-    // TODO: When file repository is implemented, this should be replaced with actual file handling logic
-    const imageFile = 'src/meme.png';
+    // TODO: Use argument read the real file base on what you need.
+    // More see the `ai-openid-provider.test.ts`
+    // const imageFile = 'src/meme.png';
+    const imageStream = prompt.getArgument<Readable>('img');
+    if (!imageStream || !(imageStream instanceof Readable)) {
+      throw new Error('Image argument is missing or not a Readable Stream.');
+    }
+    const name = prompt.getArgument<string>('name');
+    const MIME = prompt.getArgument<string>('type');
 
     // these come FROM the prompt, not hardcoded
     const width = prompt.getArgument<number>('width') || 512;
@@ -35,8 +43,8 @@ export class OpenAIProvider implements IUniversalAIProvider {
     const apiResponse = await client.images.edit({
       prompt: prompt.getRawPrompt(),
       model: 'gpt-image-1-mini',
-      image: await toFile(fs.createReadStream(imageFile), null, {
-        type: 'image/png'
+      image: await toFile(imageStream, name, {
+        type: MIME
       })
     });
 
