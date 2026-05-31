@@ -22,11 +22,16 @@ export abstract class StorageStrategy {
 /**
  * LocalStorageStrategy stores files on the local file system.
  * It writes, reads, removes, and resolves files inside a local storage directory.
+ * This handles null / empty / invalid storage directory
  */
 export class LocalStorageStrategy extends StorageStrategy {
   constructor(private storageDir: string) {
     super();
 
+  if (!this.storageDir || this.storageDir.trim() === '') {
+    throw new Error('Storage directory cannot be empty.');
+  }
+    
     if (!fs.existsSync(this.storageDir)) {
       fs.mkdirSync(this.storageDir, { recursive: true });
     }
@@ -86,8 +91,12 @@ export class LocalStorageStrategy extends StorageStrategy {
 
   /**
    * Builds the full local path for a filename.
+   * This handle null and empty filename
    */
   async resolvePath(filename: string): Promise<string> {
+    if (!filename || filename.trim() === '') {
+      throw new Error('Filename cannot be empty.');
+    }
     return path.join(this.storageDir, filename);
   }
 }
