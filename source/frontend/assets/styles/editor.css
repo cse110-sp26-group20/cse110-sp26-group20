@@ -47,8 +47,8 @@ textarea {
   align-items: center;
   justify-content: space-between;
   height: var(--header-height);
-  background-color: var(--lab-panel);
-  border-bottom: 2px solid var(--lab-black);
+  background-color: var(--black-gray);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   padding: 12px 12px;
   flex-shrink: 0;
   z-index: 20;
@@ -93,14 +93,18 @@ textarea {
   display: grid;
   grid-template-columns: var(--sidebar-width) 1fr var(--panel-width);
   flex: 1;
-  overflow: hidden;
+  overflow: clip;
   min-height: 0;
+  position: relative;
+  z-index: 1;
 }
 
 /* Left tool sidebar on desktop */
 .tool-sidebar {
-  background-color: var(--lab-border);
-  border-right: 1px solid var(--lab-border);
+  background-color: var(--lab-black);
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.4);
+  position: relative;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -185,6 +189,10 @@ textarea {
 .mobile-caption-bar {
   width: 100%;
   padding: 12px 20px 16px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .mobile-caption-input {
@@ -208,7 +216,8 @@ textarea {
 
 /* right control panel on desktop */
 .controls-panel {
-  background-color: var(--lab-input);
+  background-color: var(--lab-black);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   border-left: 1px solid var(--lab-border);
   overflow-y: auto;
   display: flex;
@@ -597,15 +606,56 @@ textarea {
   scale: 0.8;
 }
 
+
+/*---------- FILTERS TAB -------------*/
+
+#filters-panel .filter img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  object-position: 0rem;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+#filters-panel .filter p {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+#filters-panel {
+  padding-top: 2rem;
+}
+
+#filters-panel .filter{
+  padding-top: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+#filters-panel .filter:hover img {
+  outline: 2px solid var(--lab-accent-hover)
+}
+
+#filters-panel .filter:hover p {
+  color: var(--lab-accent-hover)
+}
+
+#filters-panel .filter.active img {
+  outline: 2px solid var(--lab-accent-hover)
+}
+
+#filters-panel .filter.active p {
+  color: var(--lab-accent)
+}
+
+
 /* Responsive mobile styles (≤ 768px) */
 @media (max-width: 768px) {
   .site-header {
-    background-color: var(--lab-border);
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
-    padding: 12px 0 0 0;
-    gap: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
   }
 
   /* Always present — makes logo + desktop nav sit on one row */
@@ -619,6 +669,7 @@ textarea {
     display: flex;
     padding: 16px 16px;
     font-size: 1.2rem;
+    background-color: var(--lab-black);
   }
 
   /* Hides the inline desktop navigation in the mobile version */
@@ -649,10 +700,11 @@ textarea {
 
   /* Canvas: proportional height, aligned to top */
   .canvas-area {
-    flex-shrink: 0;
-    min-height: 240px;
+    flex: 1;
+    min-height: 0;
     justify-content: flex-start;
     padding-top: 12px;
+    position: relative;
   }
 
   .canvas-wrapper {
@@ -664,14 +716,18 @@ textarea {
   .controls-panel {
     border-left: none;
     border-top: 1px solid var(--lab-panel);
-    background-color: var(--lab-panel);
+    background-color: var(--lab-black);
     flex-shrink: 0;
-    overflow-y: visible;
+    overflow: hidden;
   }
 
   /* Show mobile tab bar */
   .mobile-tab-bar {
     display: flex;
+    background-color: var(--black-gray);
+    box-shadow: 0 -4px 6px -2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
   }
 
   /* Utility overrides */
@@ -696,4 +752,29 @@ textarea {
   .hexagon-decor {
     display: none;
   }
+
+  #filters-panel {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  #filters-panel .filter {
+    flex-shrink: 0;
+  }
+
+  #filters-panel .filter img {
+  width: 125px;
+  height: 125px;
+  object-fit: cover;
+  object-position: 0rem;
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
 }

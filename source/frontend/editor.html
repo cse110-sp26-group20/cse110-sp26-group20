@@ -10,7 +10,6 @@
   </head>
   <body>
     <header class="site-header">
-
       <!-- logo + navigation on single row -->
       <div class="header-top">
         <a href="home.html" aria-label="MemeLab home">
@@ -21,14 +20,13 @@
           <a href="export.html" class="nav-link">Export</a>
         </nav>
       </div>
-    
-      <!-- logo centered on separate row as navigation -->
-      <div class="header-subnav">
-        <a href="template.html" class="nav-link">&#8592; Templates</a>
-        <a href="export.html" class="nav-link">Export &#8594;</a>
-      </div>
-    
     </header>
+
+    <!-- Mobile subnav row (Templates / Export) — separate from header so each can have its own shadow -->
+    <div class="header-subnav">
+      <a href="template.html" class="nav-link">&#8592; Templates</a>
+      <a href="export.html" class="nav-link">Export &#8594;</a>
+    </div>
 
     <!-- Editor layout -->
     <div class="editor-layout">
@@ -50,7 +48,7 @@
           aria-pressed="false"
         >
          <i class="fa-regular fa-image"></i>
-          <span class="tool-label">Stickers</span>
+          <span class="tool-label">Images</span>
         </button>
         <button
           class="tool-btn"
@@ -95,7 +93,7 @@
       <!-- RIGHT CONTROLS PANEL -->
       <aside class="controls-panel" id="controls-panel" aria-label="Text controls">
         <!-- TEXT PANEL -->
-        <div class="tool-panel active" id="text-panel" role="tabpanel">
+        <div class="tool-panel" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->
           <div class="panel-section desktop-only">
             <h2 class="section-title">Caption</h2>
@@ -271,6 +269,38 @@
             </div>
           </div>
         </div>
+
+        <!-- FILTERS PANEL -->
+        <div class="tool-panel active" id="filters-panel" role="tabpanel">
+          <div class="filter" id="filter-1">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <p>Normal</p>
+          </div>
+          <div class="filter" id="filter-2">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <p>Black & White</p>
+          </div>
+          <div class="filter" id="filter-3">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <p>Distorted</p>
+          </div>
+          <div class="filter" id="filter-4">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <p>Toaster</p>
+          </div>
+          <div class="filter" id="filter-5">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <p>Low-Resolution</p>
+          </div>
+          <div class="filter" id="filter-6">
+            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up">
+            <p>Glitch</p>
+          </div>
+          
+        </div>  
+
+            <img src="assets/images/template-hexagons.svg" class="hexagon-decor" alt="">
+
       </aside>
     </div>
 
@@ -295,6 +325,5 @@
       </button>
     </nav>
 
-    <img src="assets/images/template-hexagons.svg" class="hexagon-decor" alt="">
   </body>
 </html>
