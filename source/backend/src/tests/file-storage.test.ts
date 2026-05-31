@@ -1,12 +1,12 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
+import type { Readable } from 'stream';
 
 import {
   LocalStorageStrategy,
   NoStorageStrategy
 } from '../models/file-storage';
-import type { Readable } from 'stream';
 
 describe('LocalStorageStrategy', () => {
   let storageDir: string;
@@ -71,7 +71,7 @@ describe('LocalStorageStrategy', () => {
     const content = 'hello world';
     await storage.write('real.txt', Buffer.from(content));
 
-    const stream = await storage.read('real.txt') as Readable;
+    const stream = (await storage.read('real.txt')) as Readable;
     expect(stream).toBeDefined();
 
     const chunks: Buffer[] = [];
