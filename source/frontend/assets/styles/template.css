@@ -1,8 +1,8 @@
 @import "./global.css";
 
 :root {
-    --navbar-color: #393939;
-    --background-color: #282828;
+    --navbar-color: #282828;
+    --background-color: #1e1e1e;
     --purple-color: #7C5CBF;
     --light-gray-color: #969696;
     --text-color: #EDEDED;
@@ -19,20 +19,23 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10rem; 
-    padding: 0.5rem 2rem;
-    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+    height: 80px;
+    padding: 12px 12px;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.3));
 }
 
 .memelab-logo {
-    height: 7vh;
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 .navbar-buttons {
     display: flex;
-    gap: 4rem;
+    gap: 36px;
     font-family: var(--font-display);
     font-weight: 600;
+    padding: 6px 12px;
 }
 
 .nav-link {
@@ -47,7 +50,7 @@ header {
     color: var(--text-color);
     text-decoration: none;
     cursor: pointer;
-    font-size: 175%;
+    font-size: 1.5rem;
 }
 
 body {
@@ -86,6 +89,7 @@ body {
 .template-section img {
     width: 225px;
     height: auto;
+    border-radius: 1rem;
     filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
 }
 
@@ -111,6 +115,31 @@ body {
 @media (max-width: 850px) {
     .memelab-logo {
         height: 4.5vh;
+    }
+    .template-section {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .template-section img {
+        width: 175px;
+        height: auto;
+        filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+    }
+}
+
+/* SMALLER DESKTOP SCREEN */
+/* 2 columns */
+@media (max-width: 650px) {
+    header {
+        justify-content: center;
+    }
+    h1 {
+        text-align: center;
+    }
+    .memelab-logo {
+        height: 40px;
+    }
+    .navbar-buttons {
+        display: none;
     }
     .template-section {
         grid-template-columns: repeat(2, 1fr);
