@@ -28,10 +28,10 @@ export class LocalStorageStrategy extends StorageStrategy {
   constructor(private storageDir: string) {
     super();
 
-  if (!this.storageDir || this.storageDir.trim() === '') {
-    throw new Error('Storage directory cannot be empty.');
-  }
-    
+    if (!this.storageDir || this.storageDir.trim() === '') {
+      throw new Error('Storage directory cannot be empty.');
+    }
+
     if (!fs.existsSync(this.storageDir)) {
       fs.mkdirSync(this.storageDir, { recursive: true });
     }

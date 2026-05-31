@@ -49,15 +49,21 @@ describe('LocalStorageStrategy', () => {
   });
 
   test('constructor throws error for empty storage directory', () => {
-    expect(() => new LocalStorageStrategy('')).toThrow('Storage directory cannot be empty.');
+    expect(() => new LocalStorageStrategy('')).toThrow(
+      'Storage directory cannot be empty.'
+    );
   });
 
   test('resolvePath() throws error for empty filename', async () => {
-  await expect(storage.resolvePath('')).rejects.toThrow('Filename cannot be empty.');
+    await expect(storage.resolvePath('')).rejects.toThrow(
+      'Filename cannot be empty.'
+    );
   });
 
   test('resolvePath() throws error for null filename', async () => {
-  await expect(storage.resolvePath(null as unknown as string)).rejects.toThrow('Filename cannot be empty.');
+    await expect(
+      storage.resolvePath(null as unknown as string)
+    ).rejects.toThrow('Filename cannot be empty.');
   });
 });
 
