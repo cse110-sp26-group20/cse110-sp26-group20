@@ -7,7 +7,7 @@ import { CounterGenerator } from '../models/id-generator';
 import { FileRepository } from '../services/file-repository';
 import { streamToBuffer } from './utils';
 
-describe('Universal AI Provider', () => {
+describe('FileRepository', () => {
   let strategy: StorageStrategy;
   let fileRepository: FileRepositoryOperator;
   const counterGenerator = new CounterGenerator();
