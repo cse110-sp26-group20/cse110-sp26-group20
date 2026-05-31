@@ -6,14 +6,27 @@ import express, {
   type Response
 } from 'express';
 import { isHttpError } from 'http-errors';
-
-import aiRouter from './routers/ai.router';
-
-// import imageRouter from "./routers/image.router";
+import { createAIRouter } from './routers/ai.router';
+import { OpenAIProvider } from './services/openai-provider';
+import { AIController } from './controllers/ai.controller';
+import type { IUniversalAIProvider } from './models/universal-ai-provider';
+import { FileRecord, type FileRepositoryOperator } from './models/file-system';
+import { NoStorageStrategy } from './models/file-storage';
 
 const app = express();
 
 app.use(express.json());
+
+// IoC for aiController
+const aiGenerator:IUniversalAIProvider = new OpenAIProvider();
+const fakeFileRepo = {
+  saveFile(_file, metadata, _strategy) {
+    console.log('do nothing!!!');
+    return metadata;
+  },
+} as FileRepositoryOperator;
+const aiController = new AIController(aiGenerator,fakeFileRepo, new NoStorageStrategy());
+const aiRouter = createAIRouter(aiController);
 
 app.use('/api/ai', aiRouter);
 // app.use("/api/images", imageRouter);

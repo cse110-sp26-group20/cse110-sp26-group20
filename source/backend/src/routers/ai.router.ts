@@ -1,9 +1,8 @@
 import express from 'express';
+import { AIController } from '../controllers/ai.controller';
 
-import { generateResponse } from '../controllers/ai.controller';
-
-const router = express.Router();
-
-router.post('/generate', generateResponse);
-
-export default router;
+export function createAIRouter(aiController: AIController) {
+  const router = express.Router();
+  router.post('/generate', aiController.generateResponse);
+  return router;
+}

@@ -2,6 +2,10 @@ import type { ImagePrompt } from '../models/image-prompt';
 import type { ImageResponse } from '../models/image-response';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
+/**
+ * Overdesgin for this class, Dependency Injection IUniversalAIProvider directly
+ * [abandon] 
+ */
 export class AIGenerator {
   private provider: IUniversalAIProvider;
 

@@ -8,7 +8,7 @@ import { OpenAIProvider } from '../services/openai-provider';
  * TODO: Test the ai provider first. 
  * Focus on the provider don't care about file-repository or others.
  */
-describe('Open AI Generator', async () => {
+describe('Open AI Generator', () => {
   let ai: IUniversalAIProvider;
   beforeAll(() => {
     ai = new OpenAIProvider();
