@@ -127,11 +127,25 @@ textarea {
     background-color 0.15s,
     color 0.15s;
 }
-
+/* 
 .tool-btn img {
   width: 75px;
   height: 75px;
   display: block;
+} */
+
+.tool-btn svg {
+  width: 75px;
+  height: 75px;
+  display: block;
+}
+
+.tool-btn i {
+  font-size: 3rem;
+}
+
+.tab-btn i {
+  font-size: 1.75rem;
 }
 
 .tool-btn:hover {
