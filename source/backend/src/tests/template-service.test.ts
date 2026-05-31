@@ -1,4 +1,4 @@
-import type { Request } from 'express';
+import type { Request, Response } from 'express';
 import { getTemplates } from '../controllers/image.controller';
 import { bootstrapTemplates, templateCache } from '../services/template-service';
 
@@ -18,18 +18,12 @@ describe('TemplateService', () => {
       }
     };
 
-    const fakeNetworkResponse: any = {
-      json: async () => { //represents awaiting imgflip response
-        return fakeImgflipData;
-      },
-      arrayBuffer: async () => { //represents awaiting imagebuffer
-        return new ArrayBuffer(0);
-      }
+    const fakeNetworkResponse = {
+      json: async () => fakeImgflipData,
+      arrayBuffer: async () => new ArrayBuffer(0)
     };
 
-    global.fetch = async () => {
-      return fakeNetworkResponse;
-    };
+    global.fetch = (() => Promise.resolve(fakeNetworkResponse)) as unknown as typeof fetch;
 
     await bootstrapTemplates();
 
@@ -53,43 +47,34 @@ describe('ImageController', () => {
   });
 
   test('getTemplates() returns 503 when cache is empty', () => {
-    let statusCode = 0;
-    const fakeResponse: any = {};
-    fakeResponse.status = (code: number) => {
-      statusCode = code;
-      return fakeResponse; 
-    };
-    fakeResponse.json = () => {
-      return fakeResponse;
+    
+    const fakeResponse: Partial<Response> = {
+      status: jest.fn().mockReturnThis(), //jest.fn() records info like status code or meme data
+      json: jest.fn().mockReturnThis() //mockReturnThis() returns an actual object
     };
 
+    
     const req = {} as Request;
 
-    getTemplates(req, fakeResponse);
+    getTemplates(req, fakeResponse as Response);
 
-    expect(statusCode).toBe(503);
+    expect(fakeResponse.status).toHaveBeenCalledWith(503);
   });
 
   test('push a fake meme, getTemplates() returns 200 when cache contains data', () => {
-    templateCache.push({ id: '11423', name: 'Fake Meme', url: 'http', width: 500, height: 500 });
-    
-    let statusCode = 0;
-    //fake express response
-    const fakeResponse: any = {};
-    //assigns the status code
-    fakeResponse.status = (code: number) => {
-      statusCode = code;
-      return fakeResponse; 
-    };
-    //simulates sending the meme data
-    fakeResponse.json = () => {
-      return fakeResponse;
+    const fake = { id: '11423', name: 'Fake Meme', url: 'http', width: 500, height: 500 };
+    templateCache.push(fake);
+
+    const fakeResponse: Partial<Response> = {
+      status: jest.fn().mockReturnThis(), 
+      json: jest.fn().mockReturnThis()
     };
 
     const req = {} as Request;
 
-    getTemplates(req, fakeResponse);
+    getTemplates(req, fakeResponse as Response);
 
-    expect(statusCode).toBe(200);
+    expect(fakeResponse.status).toHaveBeenCalledWith(200);
+    expect(fakeResponse.json).toHaveBeenCalledWith([fake]);
   });
 });

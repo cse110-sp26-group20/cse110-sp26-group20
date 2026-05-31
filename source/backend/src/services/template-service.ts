@@ -4,25 +4,37 @@ import { UUIDGenerator } from '../models/id-generator';
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
 import { NoStorageStrategy, type StorageStrategy } from '../models/file-storage';
 
-class FakeRepository implements FileRepositoryOperator {
-  saveFile(file: any, metadata: Partial<FileRecord>, strategy: StorageStrategy): FileRecord {
-    // Returns fake FileRecord
+//temp fakerepository so file can be tested
+class FakeRepository {
+  saveFile(file: Buffer, metadata: Partial<FileRecord>, strategy: StorageStrategy) {
+    void strategy;
+    if (!file) throw new Error("File buffer is required");
+
     return new FileRecord(
-      metadata.id || 'fake-id-123', 
-      metadata.filename || 'template.jpg',
-      `/mock/path/${metadata.filename}`,
-      'image/jpeg',
-      new Date(),
+      metadata.id as string, 
+      metadata.filename as string, 
+      '/mock/path.jpg', 
+      'image/jpeg', 
+      new Date(), 
       {}
     );
   }
 
-  getFileById(id: string): FileRecord | undefined { return undefined; }
-  getFileStream(id: string, strategy: StorageStrategy): any { return undefined; }
+  getFileById(id: string) { 
+    void id;
+    return undefined; 
+  }
+
+  getFileStream(id: string, strategy: StorageStrategy) { 
+    void id;
+    void strategy;
+    throw new Error("getFileStream not implemented"); 
+  }
 }
 
-const fileRepo = new FakeRepository();
+const fileRepo = new FakeRepository() as unknown as FileRepositoryOperator;
 const diskStrategy = new NoStorageStrategy();
+
 //uncomment when FileSystem is finished
 //const fileRepo = new FileRepository();
 //const diskStrategy = new LocalDiskStorageStrategy();
