@@ -6,6 +6,7 @@ import {
   LocalStorageStrategy,
   NoStorageStrategy
 } from '../models/file-storage';
+import type { Readable } from 'stream';
 
 describe('LocalStorageStrategy', () => {
   let storageDir: string;
@@ -23,6 +24,7 @@ describe('LocalStorageStrategy', () => {
   test('write() saves a file', async () => {
     const filePath = await storage.write('test.txt', Buffer.from('hello'));
     expect(fs.existsSync(filePath)).toBe(true);
+    expect(fs.readFileSync(filePath, 'utf-8')).toBe('hello');
   });
 
   test('read() returns a stream', async () => {
@@ -64,6 +66,20 @@ describe('LocalStorageStrategy', () => {
     await expect(
       storage.resolvePath(null as unknown as string)
     ).rejects.toThrow('Filename cannot be empty.');
+  });
+  test('read() returns a stream with correct content', async () => {
+    const content = 'hello world';
+    await storage.write('real.txt', Buffer.from(content));
+
+    const stream = await storage.read('real.txt') as Readable;
+    expect(stream).toBeDefined();
+
+    const chunks: Buffer[] = [];
+    for await (const chunk of stream) {
+      chunks.push(Buffer.from(chunk));
+    }
+    const resultString = Buffer.concat(chunks).toString('utf-8');
+    expect(resultString).toBe(content);
   });
 });
 
