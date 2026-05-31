@@ -8,14 +8,14 @@ import express, {
 import { isHttpError } from 'http-errors';
 
 //import aiRouter from "./routers/ai.router";
-import imageRouter from "./routers/image.router";
+import imageRouter from './routers/image.router';
 
 const app = express();
 
 app.use(express.json());
 
 // app.use("/api/ai", aiRouter);
-app.use("/api/images", imageRouter);
+app.use('/api/images', imageRouter);
 
 /**
  * Error handler; all errors thrown by server are handled here.
