@@ -1,11 +1,31 @@
 import { UUIDGenerator } from '../models/id-generator';
-// @ts-ignore
-import { FileRepository } from '../models/file-system';
-// @ts-ignore
-import { LocalDiskStorageStrategy } from '../models/file-storage';
+//import { FileRepository } from '../models/file-system';
+//import { LocalDiskStorageStrategy } from '../models/file-storage';
+import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
+import { NoStorageStrategy, type StorageStrategy } from '../models/file-storage';
 
-const fileRepo = new FileRepository();
-const diskStrategy = new LocalDiskStorageStrategy();
+class FakeRepository implements FileRepositoryOperator {
+  saveFile(file: any, metadata: Partial<FileRecord>, strategy: StorageStrategy): FileRecord {
+    // Returns fake FileRecord
+    return new FileRecord(
+      metadata.id || 'fake-id-123', 
+      metadata.filename || 'template.jpg',
+      `/mock/path/${metadata.filename}`,
+      'image/jpeg',
+      new Date(),
+      {}
+    );
+  }
+
+  getFileById(id: string): FileRecord | undefined { return undefined; }
+  getFileStream(id: string, strategy: StorageStrategy): any { return undefined; }
+}
+
+const fileRepo = new FakeRepository();
+const diskStrategy = new NoStorageStrategy();
+//uncomment when FileSystem is finished
+//const fileRepo = new FileRepository();
+//const diskStrategy = new LocalDiskStorageStrategy();
 const idGen = new UUIDGenerator();
 
 // format we will send to the frontend
@@ -50,7 +70,8 @@ export async function bootstrapTemplates() {
           const arrayBuffer = await imageRes.arrayBuffer();
           const imageBuffer = Buffer.from(arrayBuffer);
           //using filerepo system to save img and metadata
-          const savedRecord = await fileRepo.saveFile(
+          //const savedRecord = await fileRepo.saveFile(
+          const savedRecord = fileRepo.saveFile(
             imageBuffer, 
             { 
               id: newTemplateId,    
