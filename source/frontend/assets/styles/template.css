@@ -1,3 +1,5 @@
+@import "./global.css";
+
 :root {
     --navbar-color: #393939;
     --background-color: #282828;
@@ -29,6 +31,16 @@ header {
 .navbar-buttons {
     display: flex;
     gap: 4rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+}
+
+.nav-link {
+    transition: color 0.15s;
+}
+
+.nav-link:hover {
+    color: var(--lab-accent-hover);
 }
 
 .navbar-buttons a{

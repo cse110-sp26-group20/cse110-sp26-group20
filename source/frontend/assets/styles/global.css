@@ -47,7 +47,7 @@ body {
 body {
   background-color: var(--lab-black);
   color: var(--lab-white);
-  font-family: var(--font-body);
+  font-family: var(--font-display);
 }
 
 a {
@@ -69,6 +69,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-display);
+  font-weight: 600;
 }
 
 p,
@@ -77,5 +78,6 @@ input,
 button,
 textarea,
 select {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
+  font-weight: 600;
 }

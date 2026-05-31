@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MemeLab Editor</title>
     <link rel="stylesheet" href="assets/styles/editor.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/9f8f81d6ad.js" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -16,15 +17,15 @@
           <img src="assets/images/memelab_logo.svg" alt="MemeLab Logo" class="logo-image">
         </a>
         <nav class="header-nav" aria-label="Main navigation">
-          <a href="templates.html" class="nav-link">Templates</a>
+          <a href="template.html" class="nav-link">Templates</a>
           <a href="export.html" class="nav-link">Export</a>
         </nav>
       </div>
     
       <!-- logo centered on separate row as navigation -->
       <div class="header-subnav">
-        <a href="templates.html">&#8592; Templates</a>
-        <a href="export.html">Export &#8594;</a>
+        <a href="template.html" class="nav-link">&#8592; Templates</a>
+        <a href="export.html" class="nav-link">Export &#8594;</a>
       </div>
     
     </header>
@@ -202,10 +203,13 @@
               <label
                 class="color-preview"
                 id="color-preview"
-                for="color-picker-input"
+                for="color-picker-desktop"
                 style="background-color: #000000"
                 aria-label="Current color preview"
-              ></label>
+              >
+                <input type="color" id="color-picker-desktop"
+                  class="color-picker-hidden" value="#000000" />
+              </label>
               <input
                 type="text"
                 id="color-hex"
@@ -214,7 +218,7 @@
                 maxlength="6"
                 aria-label="Hex color value"
               />
-              <span class="opacity-divider">|</span>
+              <span style="color: var(--lab-muted)">|</span>
               <input
                 type="number"
                 id="opacity-input"
@@ -228,14 +232,13 @@
             </div>
 
             <!-- Color buttons (both) -->
-            <div class="color-btn-group" role="group" aria-label="Color presets">
-              <!-- Mobile only: rainbow color-btn opens color picker -->
+            <div class="color-btn-group" aria-label="Color presets">
               <label
                 class="color-btn color-btn--rainbow mobile-only"
-                for="color-picker-input"
                 aria-label="Custom color"
                 title="Pick a custom color"
               >
+                <img src="assets/images/rainbow-beaker.svg" alt="">
                 <input
                   type="color"
                   id="color-picker-input"
@@ -244,48 +247,27 @@
                   aria-label="Color picker"
                 />
               </label>
-              <button
-                class="color-btn"
-                data-color="#e03535"
-                style="background-color: #e03535"
-                type="button"
-                aria-label="Red"
-              ></button>
-              <button
-                class="color-btn"
-                data-color="#e07820"
-                style="background-color: #e07820"
-                type="button"
-                aria-label="Orange"
-              ></button>
-              <button
-                class="color-btn"
-                data-color="#d4c020"
-                style="background-color: #d4c020"
-                type="button"
-                aria-label="Yellow"
-              ></button>
-              <button
-                class="color-btn"
-                data-color="#1aaa55"
-                style="background-color: #1aaa55"
-                type="button"
-                aria-label="Green"
-              ></button>
-              <button
-                class="color-btn"
-                data-color="#3355cc"
-                style="background-color: #3355cc"
-                type="button"
-                aria-label="Blue"
-              ></button>
-              <button
-                class="color-btn"
-                data-color="#7733cc"
-                style="background-color: #7733cc"
-                type="button"
-                aria-label="Purple"
-              ></button>
+
+              
+
+              <button class="color-btn" data-color="#e03535" type="button" aria-label="Red">
+                <img src="assets/images/red-beaker.svg" alt="">
+              </button>
+              <button class="color-btn" data-color="#e07820" type="button" aria-label="Orange">
+                <img src="assets/images/orange-beaker.svg" alt="">
+              </button>
+              <button class="color-btn" data-color="#d4c020" type="button" aria-label="Yellow">
+                <img src="assets/images/yellow-beaker.svg" alt="">
+              </button>
+              <button class="color-btn" data-color="#1aaa55" type="button" aria-label="Green">
+                <img src="assets/images/green-beaker.svg" alt="">
+              </button>
+              <button class="color-btn" data-color="#3355cc" type="button" aria-label="Blue">
+                <img src="assets/images/blue-beaker.svg" alt="">
+              </button>
+              <button class="color-btn" data-color="#7733cc" type="button" aria-label="Purple">
+                <img src="assets/images/purple-beaker.svg" alt="">
+              </button>
             </div>
           </div>
         </div>
@@ -295,7 +277,7 @@
     <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
     <nav class="mobile-tab-bar" aria-label="Editor tool tabs" role="tablist">
       <button class="tab-btn" type="button" role="tab" aria-controls="text-panel">
-        <i class="fa-solid fa-sliders"></i>
+        <i class="fa-solid fa-t"></i>
         <span class="tab-label">Text</span>
       </button>
       <button
@@ -312,5 +294,7 @@
         <span class="tab-label">AI Generation</span>
       </button>
     </nav>
+
+    <img src="assets/images/template-hexagons.svg" class="hexagon-decor" alt="">
   </body>
 </html>
