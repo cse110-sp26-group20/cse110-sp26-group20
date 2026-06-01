@@ -17,7 +17,7 @@ import { getValidImageExtension } from '../utils/mime-type.utils';
  * * @param file - The file stream or Buffer.
  * @param metadata - The file's metadata (must include `type`).
  * @param strategy - The specific storage strategy to apply.
- * @returns Immediately returns the assembled `FileRecord` (even if the underlying file is still transferring).
+ * @returns Immediately returns the assembled `FileRecord` (even if the underlying file is still transferring). FileRecord.
  */
 export class FileRepository implements FileRepositoryOperator {
   inMemoryMap = new Map<string, FileRecord>();
@@ -40,19 +40,26 @@ export class FileRepository implements FileRepositoryOperator {
 
     const id = this.generator.generate();
     const filename = `${id}${extension}`;
+    let path = '';
 
     // async write
     strategy.write(filename, file).catch((err) => {
       console.error(err);
     });
     strategy.resolvePath(filename).then((value) => {
-      metadata.localPath = value;
+      path = value;
     });
-    metadata.id = id;
-    metadata.create = new Date();
-    metadata.filename = filename;
 
-    const record = metadata as FileRecord;
+
+    const record:FileRecord = {
+      id: id,
+      filename: filename,
+      localPath:path,
+      type:metadata.type,
+      matedata: metadata.matedata || {},
+      create: new Date(),
+    };
+    // const record = metadata as FileRecord;
 
     this.inMemoryMap.set(id, record);
 
