@@ -86,11 +86,12 @@ export async function bootstrapTemplates() {
 
       for (const meme of memes) {
         const newTemplateId = idGen.generate();
-        const imageRes = await fetch(meme.url);
-        const arrayBuffer = await imageRes.arrayBuffer();
-        const imageBuffer = Buffer.from(arrayBuffer);
-        //using filerepo system to save img and metadata
-        //const savedRecord = await fileRepo.saveFile(
+
+        const imageBuffer =
+          diskStrategy instanceof NoStorageStrategy
+            ? Buffer.alloc(0)
+            : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
+
         const savedRecord = fileRepo.saveFile(
           imageBuffer,
           {

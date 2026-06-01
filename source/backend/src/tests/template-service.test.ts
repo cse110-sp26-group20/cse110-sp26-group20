@@ -7,11 +7,16 @@ import {
 } from '../services/template-service';
 
 describe('TemplateService', () => {
+  const originalFetch = global.fetch;
+
   //reset cache
   beforeEach(() => {
     templateCache.length = 0;
   });
 
+  afterEach(() => {
+    global.fetch = originalFetch;
+  });
   test('bootstrapTemplates() fetches and saves memes', async () => {
     const fakeImgflipData = {
       success: true,
