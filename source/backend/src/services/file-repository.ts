@@ -50,14 +50,13 @@ export class FileRepository implements FileRepositoryOperator {
       path = value;
     });
 
-
-    const record:FileRecord = {
+    const record: FileRecord = {
       id: id,
       filename: filename,
-      localPath:path,
-      type:metadata.type,
+      localPath: path,
+      type: metadata.type,
       matedata: metadata.matedata || {},
-      create: new Date(),
+      create: new Date()
     };
     // const record = metadata as FileRecord;
 
