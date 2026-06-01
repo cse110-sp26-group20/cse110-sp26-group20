@@ -3,8 +3,8 @@ import type { ImageResponse } from '../models/image-response';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 /**
- * Overdesgin for this class, Dependency Injection IUniversalAIProvider directly
- * [abandon] 
+ * Overdesign note: this wrapper is kept for demo/tests.
+ * Prefer injecting an `IUniversalAIProvider` directly where possible.
  */
 export class AIGenerator {
   private provider: IUniversalAIProvider;
