@@ -26,7 +26,7 @@ export class FileRepository implements FileRepositoryOperator {
     this.generator = generator;
   }
   saveFile(
-    file: Buffer | import('node:stream'),
+    file: Buffer | Stream,
     metadata: Partial<FileRecord>,
     strategy: StorageStrategy
   ): FileRecord {
