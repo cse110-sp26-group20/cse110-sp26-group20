@@ -37,7 +37,7 @@ Project progress, feature planning, AI integration, and upcoming midterm prepara
 
 - Christine spoke with TA Omair — AI does not need to be a direct user-facing feature; it can run in the background
   - When a user opens a meme template, an **AI-generated caption** could already be populated
-  - Alternatively (current proposed solution), a **user prompt input** on the editor tab could be used to generate captions
+  - Alternatively (current proposed solution), a **user prompt input** on the editor tab could be used to modify the current editor canvas
 - Frontend will pass an **image + prompt** to the backend
 - Backend will likely return a **base64 encoded image** for the frontend to display
 - Prompt history and token counting were suggested but **deferred for later**
