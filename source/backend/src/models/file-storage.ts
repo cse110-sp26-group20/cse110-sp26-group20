@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { Readable, type Stream } from 'stream';
+import { pipeline } from 'stream/promises';
 
 export abstract class StorageStrategy {
   /**
@@ -22,7 +23,7 @@ export abstract class StorageStrategy {
 /**
  * LocalStorageStrategy stores files on the local file system.
  * It writes, reads, removes, and resolves files inside a local storage directory.
- * This handles null / empty / invalid storage directory
+ * Throws when the storage directory is empty.
  */
 export class LocalStorageStrategy extends StorageStrategy {
   constructor(private storageDir: string) {
@@ -48,14 +49,8 @@ export class LocalStorageStrategy extends StorageStrategy {
     if (Buffer.isBuffer(fileStream)) {
       await fs.promises.writeFile(filePath, fileStream);
     } else {
-      await new Promise<void>((resolve, reject) => {
-        const writeStream = fs.createWriteStream(filePath);
-
-        fileStream.pipe(writeStream);
-
-        writeStream.on('finish', resolve);
-        writeStream.on('error', reject);
-      });
+      const writeStream = fs.createWriteStream(filePath);
+      await pipeline(fileStream as NodeJS.ReadableStream, writeStream);
     }
 
     return filePath;
@@ -68,7 +63,7 @@ export class LocalStorageStrategy extends StorageStrategy {
     const filePath = await this.resolvePath(filename);
 
     if (!fs.existsSync(filePath)) {
-      return Readable.from([]);
+      throw new Error('File does not exist.');
     }
 
     return fs.createReadStream(filePath);
@@ -97,7 +92,15 @@ export class LocalStorageStrategy extends StorageStrategy {
     if (!filename || filename.trim() === '') {
       throw new Error('Filename cannot be empty.');
     }
-    return path.join(this.storageDir, filename);
+
+    const storageRoot = path.resolve(this.storageDir);
+    const filePath = path.resolve(storageRoot, filename);
+
+    if (!filePath.startsWith(storageRoot + path.sep)) {
+      throw new Error('Filename cannot escape storage directory.');
+    }
+
+    return filePath;
   }
 }
 

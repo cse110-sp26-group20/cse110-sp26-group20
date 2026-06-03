@@ -27,10 +27,10 @@ describe('LocalStorageStrategy', () => {
     expect(fs.readFileSync(filePath, 'utf-8')).toBe('hello');
   });
 
-  test('read() returns a stream', async () => {
-    const stream = await storage.read('missing.txt');
-    expect(stream).toBeDefined();
-    expect(typeof stream.pipe).toBe('function');
+  test('read() throws error for missing file', async () => {
+    await expect(storage.read('missing.txt')).rejects.toThrow(
+      'File does not exist.'
+    );
   });
 
   test('resolvePath() returns full path', async () => {
@@ -80,6 +80,12 @@ describe('LocalStorageStrategy', () => {
     }
     const resultString = Buffer.concat(chunks).toString('utf-8');
     expect(resultString).toBe(content);
+  });
+
+  test('resolvePath() throws error for path traversal filename', async () => {
+    await expect(storage.resolvePath('../../secret.txt')).rejects.toThrow(
+      'Filename cannot escape storage directory.'
+    );
   });
 });
 
