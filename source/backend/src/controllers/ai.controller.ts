@@ -1,8 +1,9 @@
 import type { Request, Response } from 'express';
 
 import { ImagePrompt } from '../models/image-prompt';
-import { type IUniversalAIProvider } from '../models/universal-ai-provider';
-import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
+import { ImagePrompt } from '../models/image-prompt';
+import type { IUniversalAIProvider } from '../models/universal-ai-provider';
+import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 import type { StorageStrategy } from '../models/file-storage';
 import { Readable } from 'stream';
 

@@ -1,7 +1,8 @@
 import type { Request, Response } from 'express';
 import { AIController } from '../controllers/ai.controller';
+import { AIController } from '../controllers/ai.controller';
 import { ImagePrompt } from '../models/image-prompt';
-import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
+import type { FileRepositoryOperator } from '../models/file-system';
 import { NoStorageStrategy } from '../models/file-storage';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
