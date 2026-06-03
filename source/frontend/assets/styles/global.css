@@ -1,0 +1,83 @@
+:root {
+  --lab-purple: #c3b0e8;
+  --lab-green: #87c24c;
+  --lab-black: #1e1e1e;
+  --lab-white: #ededed;
+
+  --lab-accent: #754ded;
+  --lab-accent-hover: #8e71e6;
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Geologica', sans-serif;
+  --font-logo: 'Arcend', sans-serif;
+}
+
+@font-face {
+  font-family: 'Arcend';
+  src: url('../fonts/Arcend-ARKjL.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('../fonts/Orbitron-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Geologica';
+  src: url('../fonts/Geologica-VariableFont_CRSV\,SHRP\,slnt\,wght.ttf')
+    format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--lab-black);
+  color: var(--lab-white);
+  font-family: var(--font-display);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+p,
+label,
+input,
+button,
+textarea,
+select {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
