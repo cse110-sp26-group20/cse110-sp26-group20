@@ -1,166 +1,166 @@
-@import "./global.css";
+@import './global.css';
 
 :root {
-    --navbar-color: #393939;
-    --background-color: #282828;
-    --purple-color: #7C5CBF;
-    --light-gray-color: #969696;
-    --text-color: #EDEDED;
+  --navbar-color: #393939;
+  --background-color: #282828;
+  --purple-color: #7c5cbf;
+  --light-gray-color: #969696;
+  --text-color: #ededed;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 header {
-    background-color: var(--navbar-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10rem; 
-    padding: 0.5rem 2rem;
-    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+  background-color: var(--navbar-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10rem;
+  padding: 0.5rem 2rem;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
 }
 
 .memelab-logo {
-    height: 7vh;
+  height: 7vh;
 }
 
 .navbar-buttons {
-    display: flex;
-    gap: 4rem;
-    font-family: var(--font-display);
-    font-weight: 600;
+  display: flex;
+  gap: 4rem;
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 .nav-link {
-    transition: color 0.15s;
+  transition: color 0.15s;
 }
 
 .nav-link:hover {
-    color: var(--lab-accent-hover);
+  color: var(--lab-accent-hover);
 }
 
-.navbar-buttons a{
-    color: var(--text-color);
-    text-decoration: none;
-    cursor: pointer;
-    font-size: 175%;
+.navbar-buttons a {
+  color: var(--text-color);
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 175%;
 }
 
 body {
-    background-color: var(--background-color);
+  background-color: var(--background-color);
 }
 
 #template-hexagon {
-    position: absolute;
-    right: 0;
-    top: 50px;
-    height: 30vh;
-    z-index: -1;
-    pointer-events: none;
+  position: absolute;
+  right: 0;
+  top: 50px;
+  height: 30vh;
+  z-index: -1;
+  pointer-events: none;
 }
 
 .template-body h1 {
-    margin-top: 3rem;
-    margin-left: 2rem;
-    margin-bottom: 1rem;
-    color: var(--text-color);
-    text-decoration: underline;
+  margin-top: 3rem;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  text-decoration: underline;
 }
 
 .template-section {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: center;
+  place-items: center;
+  background-color: var(--navbar-color);
+  margin: 0 2rem;
+  padding: 2rem 2rem;
+  row-gap: 2rem;
+  border-radius: 1rem;
+}
+
+.template-section img {
+  width: 225px;
+  height: auto;
+  filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+/* 4 columns */
+@media (max-width: 1320px) {
+  .template-section {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* 3 columns */
+@media (max-width: 1100px) {
+  .memelab-logo {
+    height: 6vh;
+  }
+
+  .template-section {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* 2 columns */
+@media (max-width: 850px) {
+  .memelab-logo {
+    height: 4.5vh;
+  }
+  .template-section {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .template-section img {
+    width: 175px;
+    height: auto;
+    filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
+  }
+}
+
+/* IPHONE/MOBILE */
+@media (max-width: 430px) {
+  header {
+    justify-content: center;
+    padding: 1rem 0;
+  }
+  .memelab-logo {
+    height: 3.6vh;
+  }
+
+  .navbar-buttons {
+    display: none;
+  }
+
+  .template-body h1 {
+    text-align: center;
+    margin: 2rem 0;
+  }
+
+  #template-hexagon {
+    display: none;
+  }
+
+  .template-section {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     place-items: center;
     background-color: var(--navbar-color);
     margin: 0 2rem;
     padding: 2rem 2rem;
     row-gap: 2rem;
+    column-gap: 1.5rem;
     border-radius: 1rem;
-}
+  }
 
-.template-section img {
-    width: 225px;
+  .template-section img {
+    width: 125px;
     height: auto;
     filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
-}
-
-/* 4 columns */
-@media (max-width: 1320px) {
-    .template-section {
-        grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* 3 columns */
-@media (max-width: 1100px) {
-    .memelab-logo {
-        height: 6vh;
-    }
-
-    .template-section {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* 2 columns */
-@media (max-width: 850px) {
-    .memelab-logo {
-        height: 4.5vh;
-    }
-    .template-section {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .template-section img {
-        width: 175px;
-        height: auto;
-        filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
-    }
-}
-
-/* IPHONE/MOBILE */
-@media (max-width: 430px) {
-    header {
-        justify-content: center;
-        padding: 1rem 0;
-    }
-    .memelab-logo {
-        height: 3.6vh;
-    }
-
-    .navbar-buttons{
-        display: none;
-    }
-
-    .template-body h1 {
-        text-align: center;
-        margin: 2rem 0;
-    }
-
-    #template-hexagon {
-        display:none;
-    }
-
-    .template-section {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        justify-content: center;
-        place-items: center;
-        background-color: var(--navbar-color);
-        margin: 0 2rem;
-        padding: 2rem 2rem;
-        row-gap: 2rem;
-        column-gap: 1.5rem;
-        border-radius: 1rem;
-    }
-    
-    .template-section img {
-        width: 125px;
-        height: auto;
-        filter: drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.5));
-    }   
+  }
 }

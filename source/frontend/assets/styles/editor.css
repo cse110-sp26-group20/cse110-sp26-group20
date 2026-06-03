@@ -1,4 +1,4 @@
-@import "./global.css";
+@import './global.css';
 :root {
   --lab-panel: #252525;
   --lab-canvas: #8a8a8a;
@@ -130,8 +130,8 @@ textarea {
 }
 
 .tool-btn svg {
-  width: 2.5rem; 
-  height: 2rem;  
+  width: 2.5rem;
+  height: 2rem;
   display: block;
 }
 
@@ -415,9 +415,9 @@ textarea {
 }
 
 .color-btn {
-  display: flex;           
-  align-items: center;     
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;
@@ -429,7 +429,7 @@ textarea {
 }
 
 .color-btn img {
-  width: 50px;         
+  width: 50px;
   height: 50px;
 }
 
@@ -442,7 +442,7 @@ textarea {
 }
 
 .color-picker-hidden {
-  position: fixed;   
+  position: fixed;
   opacity: 0;
   pointer-events: none;
   border: none;
@@ -459,8 +459,8 @@ textarea {
 .size-slider {
   -webkit-appearance: none;
   appearance: none;
-  height: 4px; 
-  background: var(--lab-white); 
+  height: 4px;
+  background: var(--lab-white);
   border-radius: 2px;
   cursor: pointer;
   flex: 0.7;
