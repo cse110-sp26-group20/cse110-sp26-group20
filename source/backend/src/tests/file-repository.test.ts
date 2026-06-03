@@ -10,9 +10,10 @@ import { streamToBuffer } from './utils';
 describe('FileRepository', () => {
   let strategy: StorageStrategy;
   let fileRepository: FileRepositoryOperator;
-  const counterGenerator = new CounterGenerator();
+  let counterGenerator: CounterGenerator;
 
   beforeEach(() => {
+    counterGenerator = new CounterGenerator();
     strategy = new NoStorageStrategy();
     fileRepository = new FileRepository(counterGenerator);
   });
@@ -99,7 +100,7 @@ describe('FileRepository', () => {
     const buffer = Buffer.from('dummy data');
     const emptyRecord: Partial<FileRecord> = {}; // Missing 'type'
 
-    // Assuming saveFile is now async based on the previous refactor
+    // saveFile() is synchronous and should throw immediately for invalid metadata
     expect(() => {
       fileRepository.saveFile(buffer, emptyRecord, strategy);
     }).toThrow(TypeError);

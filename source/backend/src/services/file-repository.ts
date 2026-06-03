@@ -7,14 +7,14 @@ import { getValidImageExtension } from '../utils/mime-type.utils';
 
 /**
  * Saves the file and generates a unique record.
- * * @description
+ * @description
  * Performance Optimization Note:
  * This method employs a "fire-and-forget" (asynchronous write, early return) strategy.
  * The underlying file storage (`strategy.write`) executes silently in the background,
  * allowing the method to immediately return the generated `FileRecord` to the caller.
  * In very rare cases, if the background storage fails, the frontend will possess a valid ID
  * but subsequent requests for the file will result in a 404. This is an intentional and acceptable design trade-off.
- * * @param file - The file stream or Buffer.
+ * @param file - The file stream or Buffer.
  * @param metadata - The file's metadata (must include `type`).
  * @param strategy - The specific storage strategy to apply.
  * @returns Immediately returns the assembled `FileRecord` (even if the underlying file is still transferring). FileRecord.

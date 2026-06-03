@@ -15,7 +15,7 @@ const SUPPORTED_IMAGE_MIME_TYPES: Record<string, string> = {
 
 /**
  * Validates the MIME type and returns the corresponding file extension.
- * * @param mimeType - The MIME string to validate.
+ * @param mimeType - The MIME string to validate.
  * @returns The corresponding file extension (including the dot, e.g., '.png').
  * @throws {UnsupportedMimeTypeError} If the provided MIME type is not in the allowlist.
  */
