@@ -34,6 +34,9 @@ export class OpenAIProvider implements IUniversalAIProvider {
     }
     const name = prompt.getArgument<string>('name');
     const MIME = prompt.getArgument<string>('type');
+    if (!name || !MIME) {
+      throw new Error('Image name/type arguments are required (name, type).');
+    }
 
     // these come FROM the prompt, not hardcoded
     const width = prompt.getArgument<number>('width') || 512;
@@ -46,6 +49,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
       image: await toFile(imageStream, name, {
         type: MIME
       })
+    });
     });
 
     // check if the API response contains the expected data(list of generated images), in our case the list of len = 1

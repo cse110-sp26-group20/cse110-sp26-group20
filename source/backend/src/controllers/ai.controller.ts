@@ -16,7 +16,7 @@ export class AIController {
   generateResponse = async (req: Request, res: Response) => {
     try {
       const { prompt } = req.body;
-      if (!prompt) {
+      if (typeof prompt !== 'string' || prompt.trim().length === 0) {
         return res.status(400).json({ error: 'Prompt is required' });
       }
 
