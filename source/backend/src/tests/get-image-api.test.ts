@@ -80,7 +80,7 @@ describe('ImageController', () => {
       error: 'Image not found.'
     });
   });
-  test('if existed a localPath, the localPath should be return with no stratage call.', async () => {
+  test('when localPath exists, returns it without calling the strategy', async () => {
     mockRequest.params = { id: '1' };
     const mockRecord: FileRecord = {
       id: '1',
