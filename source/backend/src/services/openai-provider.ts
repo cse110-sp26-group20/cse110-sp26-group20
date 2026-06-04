@@ -26,7 +26,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
     const startTime = Date.now(); // start timer before API call
 
     // TODO: Use argument read the real file base on what you need.
-    // More see the `ai-openid-provider.test.ts`
+    // More see the `ai-openai-provider.test.ts`
     // const imageFile = 'src/meme.png';
     const imageStream = prompt.getArgument<Readable>('img');
     if (!imageStream || !(imageStream instanceof Readable)) {
