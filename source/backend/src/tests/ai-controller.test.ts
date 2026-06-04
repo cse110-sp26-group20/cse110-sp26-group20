@@ -1,9 +1,10 @@
 import type { Request, Response } from 'express';
 
-import { AIController, AIController } from '../controllers/ai.controller';
+import { AIController } from '../controllers/ai.controller';
 import { NoStorageStrategy } from '../models/file-storage';
-import type { FileRepositoryOperator } from '../models/file-system';
+import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 import { ImagePrompt } from '../models/image-prompt';
+import type { ImageResponse } from '../models/image-response';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 describe('AIController', () => {
@@ -68,12 +69,12 @@ describe('AIController', () => {
         height: 1024
       }),
       getMetadata: () => ({ revised_prompt: 'a very cute cat' })
-    } as any);
+    } as unknown as ImageResponse);
 
     mockFileRepo.saveFile.mockReturnValueOnce({
       id: '1',
       localPath: 'test'
-    } as any);
+    } as unknown as FileRecord);
 
     await aiController.generateResponse(
       mockReq as Request,
