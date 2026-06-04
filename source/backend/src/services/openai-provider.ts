@@ -50,7 +50,6 @@ export class OpenAIProvider implements IUniversalAIProvider {
         type: MIME
       })
     });
-    });
 
     // check if the API response contains the expected data(list of generated images), in our case the list of len = 1
     if (!apiResponse.data || apiResponse.data.length === 0) {
