@@ -130,4 +130,25 @@ describe('ImageController', () => {
       mockRecord.filename
     );
   });
+
+  test('when resolvePath throws, forwards error to next()', async () => {
+    mockRequest.params = { id: '1' };
+    const err = new Error('boom');
+    const mockRecord: FileRecord = {
+      id: '1',
+      filename: 'avatar.png',
+      localPath: '',
+      type: '',
+      create: new Date(),
+      matedata: {}
+    };
+    mockFileRepo.getFileById.mockReturnValue(mockRecord);
+    mockStorageStrategy.resolvePath.mockRejectedValue(err);
+
+    await imageController.getImg(mockRequest as Request, mockResponse as Response, mockNext);
+
+    expect(mockNext).toHaveBeenCalledWith(err);
+    expect(mockResponse.status).not.toHaveBeenCalled();
+    expect(mockResponse.json).not.toHaveBeenCalled();
+  });
 });
