@@ -80,7 +80,7 @@ describe('ImageController', () => {
       localPath: '/uploads/1.png',
       type: '',
       create: new Date(),
-      matedata: {}
+      metadata: {}
     };
     mockFileRepo.getFileById.mockReturnValue(mockRecord);
 
