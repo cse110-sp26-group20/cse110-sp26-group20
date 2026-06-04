@@ -64,7 +64,7 @@ describe('ImageController', () => {
     expect(mockStorageStrategy.resolvePath).not.toHaveBeenCalled();
   });
 
-  test('if not at file repo, return 404', async () => {
+  test('when file record is missing, returns 404', async () => {
     mockRequest.params = { id: '999' };
     mockFileRepo.getFileById.mockReturnValue(undefined);
 
