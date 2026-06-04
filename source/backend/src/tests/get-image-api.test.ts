@@ -104,7 +104,7 @@ describe('ImageController', () => {
     expect(mockStorageStrategy.resolvePath).not.toHaveBeenCalled();
   });
 
-  test('if NOT a localPath is existed, stratage should be called.', async () => {
+  test('when localPath is missing, calls the strategy to resolve the URL', async () => {
     mockRequest.params = { id: '1' };
     const mockRecord: FileRecord = {
       id: '1',
