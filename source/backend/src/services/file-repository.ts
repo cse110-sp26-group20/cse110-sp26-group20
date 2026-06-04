@@ -41,30 +41,29 @@ export class FileRepository implements FileRepositoryOperator {
 
     const id = this.generator.generate();
     const filename = `${id}${extension}`;
-    let path = '';
-
-    // async write
-    strategy.write(filename, file).catch((err) => {
-      console.error(err);
-    });
-    strategy.resolvePath(filename).then((value) => {
-      path = value;
-    });
 
     const record: FileRecord = {
       id: id,
       filename: filename,
-      localPath: path,
+      localPath: '',
       type: metadata.type,
       matedata: metadata.matedata || {},
       create: new Date()
     };
-    // const record = metadata as FileRecord;
+
+    // fire-and-forget write; update localPath when the strategy returns it
+    strategy
+      .write(filename, file)
+      .then((writtenPath) => {
+        record.localPath = writtenPath;
+      })
+      .catch((err) => {
+        console.error(`Failed to write file ${filename}:`, err);
+      });
 
     this.inMemoryMap.set(id, record);
 
     return record;
-  }
   getFileById(id: string): FileRecord | undefined {
     return this.inMemoryMap.get(id);
   }
