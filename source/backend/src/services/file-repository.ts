@@ -64,6 +64,7 @@ export class FileRepository implements FileRepositoryOperator {
     this.inMemoryMap.set(id, record);
 
     return record;
+  }
   getFileById(id: string): FileRecord | undefined {
     return this.inMemoryMap.get(id);
   }
