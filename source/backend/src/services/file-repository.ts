@@ -1,4 +1,5 @@
-import Stream, { PassThrough } from 'node:stream';
+import { PassThrough } from 'stream';
+import type Stream from 'stream';
 
 import type { StorageStrategy } from '../models/file-storage';
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
