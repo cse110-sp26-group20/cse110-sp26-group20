@@ -14,7 +14,9 @@ export class ImageController {
     try {
       const imageID = req.params.id;
       if (!imageID) {
-        return resp.status(400).json({ error: 'No image id in request params.' });
+        return resp
+          .status(400)
+          .json({ error: 'No image id in request params.' });
       }
       const record = this.fileRepo.getFileById(imageID as string);
 

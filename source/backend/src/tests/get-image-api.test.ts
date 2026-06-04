@@ -145,7 +145,11 @@ describe('ImageController', () => {
     mockFileRepo.getFileById.mockReturnValue(mockRecord);
     mockStorageStrategy.resolvePath.mockRejectedValue(err);
 
-    await imageController.getImg(mockRequest as Request, mockResponse as Response, mockNext);
+    await imageController.getImg(
+      mockRequest as Request,
+      mockResponse as Response,
+      mockNext
+    );
 
     expect(mockNext).toHaveBeenCalledWith(err);
     expect(mockResponse.status).not.toHaveBeenCalled();
