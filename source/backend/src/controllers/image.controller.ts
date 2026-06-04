@@ -5,10 +5,10 @@ import type { FileRepositoryOperator } from '../models/file-system';
 
 export class ImageController {
   fileRepo: FileRepositoryOperator;
-  stratage: StorageStrategy;
-  constructor(fileRepo: FileRepositoryOperator, stratage: StorageStrategy) {
+  strategy: StorageStrategy;
+  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
     this.fileRepo = fileRepo;
-    this.stratage = stratage;
+    this.strategy = strategy;
   }
   async getImg(req: Request, resp: Response, nextFunc: NextFunction) {
     try {
