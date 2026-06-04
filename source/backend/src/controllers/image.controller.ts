@@ -23,7 +23,7 @@ export class ImageController {
       }
 
       const imageUrl =
-        record.localPath || (await this.stratage.resolvePath(record.filename));
+        record.localPath || (await this.strategy.resolvePath(record.filename));
 
       return resp.status(200).json({
         id: record.id,
