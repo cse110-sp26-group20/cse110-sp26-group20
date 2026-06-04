@@ -57,7 +57,7 @@ describe('ImageController', () => {
 
     expect(mockResponse.status).toHaveBeenCalledWith(400);
     expect(mockResponse.json).toHaveBeenCalledWith({
-      error: 'no image id on the params.'
+      error: 'No image id in request params.'
     });
 
     expect(mockFileRepo.getFileById).not.toHaveBeenCalled();
