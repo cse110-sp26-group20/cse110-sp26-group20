@@ -50,13 +50,9 @@ export class InMemoryFileRepository implements FileRepositoryOperator {
     return this.records.get(id);
   }
 
-  getFileStream(id: string): Stream | undefined {
+  async getFileStream(id: string): Promise<Stream | undefined> {
     const record = this.records.get(id);
     if (!record) return undefined;
-    let stream: Stream | undefined;
-    this.strategy.read(record.filename).then((s) => {
-      stream = s;
-    });
-    return stream;
+    return this.strategy.read(record.filename);
   }
 }

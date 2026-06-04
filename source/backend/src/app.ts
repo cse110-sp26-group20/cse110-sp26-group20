@@ -13,7 +13,6 @@ import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
 import { LocalStorageStrategy } from './models/local-storage-strategy';
 import { getImgRouter } from './routers/image.router';
-import { getUploadRouter } from './routers/upload.router';
 
 // resolve uploads directory relative to the process working directory so the
 // path stays consistent regardless of how the server is invoked
@@ -31,8 +30,7 @@ app.use(express.json());
 // resolvePath() returns, e.g. GET /uploads/abc123.jpg
 app.use('/uploads', express.static(uploadDir));
 
-app.use('/api/images', getImgRouter(imageController));
-app.use('/api/upload', getUploadRouter(imageController));
+app.use('/api/img', getImgRouter(imageController));
 
 /**
  * Error handler; all errors thrown by server are handled here.

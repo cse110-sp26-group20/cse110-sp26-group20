@@ -19,5 +19,5 @@ export interface FileRepositoryOperator {
     metadata: Partial<FileRecord>
   ): Promise<FileRecord>;
   getFileById(id: string): FileRecord | undefined;
-  getFileStream(id: string): Stream | undefined;
+  getFileStream(id: string): Promise<Stream | undefined>;
 }
