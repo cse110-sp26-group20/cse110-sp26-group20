@@ -1,11 +1,12 @@
 import { Readable } from 'stream';
+
 import { ImagePrompt } from '../models/image-prompt';
 // import { ImageResponse } from '../models/image-response';
 import { type IUniversalAIProvider } from '../models/universal-ai-provider';
 import { OpenAIProvider } from '../services/openai-provider';
 
 /**
- * TODO: Test the ai provider first. 
+ * TODO: Test the ai provider first.
  * Focus on the provider don't care about file-repository or others.
  */
 describe('Open AI Generator', () => {

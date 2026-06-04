@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import { AIController } from '../controllers/ai.controller';
-import { AIController } from '../controllers/ai.controller';
-import { ImagePrompt } from '../models/image-prompt';
-import type { FileRepositoryOperator } from '../models/file-system';
+
+import { AIController, AIController } from '../controllers/ai.controller';
 import { NoStorageStrategy } from '../models/file-storage';
+import type { FileRepositoryOperator } from '../models/file-system';
+import { ImagePrompt } from '../models/image-prompt';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 describe('AIController', () => {
@@ -18,7 +18,7 @@ describe('AIController', () => {
       body: {}
     };
     mockRes = {
-      status: jest.fn().mockReturnThis(), 
+      status: jest.fn().mockReturnThis(),
       json: jest.fn()
     };
 
@@ -32,7 +32,11 @@ describe('AIController', () => {
       getFileStream: jest.fn()
     } as unknown as jest.Mocked<FileRepositoryOperator>;
 
-    aiController = new AIController(mockGenerator, mockFileRepo, new NoStorageStrategy());
+    aiController = new AIController(
+      mockGenerator,
+      mockFileRepo,
+      new NoStorageStrategy()
+    );
   });
 
   afterEach(async () => {
@@ -42,7 +46,10 @@ describe('AIController', () => {
   it('should return 400 if prompt is missing', async () => {
     mockReq.body = {};
 
-    await aiController.generateResponse(mockReq as Request, mockRes as Response);
+    await aiController.generateResponse(
+      mockReq as Request,
+      mockRes as Response
+    );
 
     expect(mockRes.status).toHaveBeenCalledWith(400);
     expect(mockRes.json).toHaveBeenCalledWith({ error: 'Prompt is required' });
@@ -64,18 +71,23 @@ describe('AIController', () => {
     } as any);
 
     mockFileRepo.saveFile.mockReturnValueOnce({
-      id:'1',
+      id: '1',
       localPath: 'test'
     } as any);
 
-    await aiController.generateResponse(mockReq as Request, mockRes as Response);
+    await aiController.generateResponse(
+      mockReq as Request,
+      mockRes as Response
+    );
 
     expect(mockGenerator.generateImage).toHaveBeenCalledTimes(1);
-    expect(mockGenerator.generateImage).toHaveBeenCalledWith(expect.any(ImagePrompt));
+    expect(mockGenerator.generateImage).toHaveBeenCalledWith(
+      expect.any(ImagePrompt)
+    );
 
     expect(mockRes.status).toHaveBeenCalledWith(200);
     expect(mockRes.json).toHaveBeenCalledWith({
-      id:'1',
+      id: '1',
       url: 'test'
     });
     expect(mockFileRepo.saveFile).toHaveBeenCalledTimes(1);
