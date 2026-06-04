@@ -1,7 +1,5 @@
 import type Stream from 'stream';
 
-import type { StorageStrategy } from './file-storage';
-
 export class FileRecord {
   constructor(
     public id: string,
@@ -18,9 +16,8 @@ export class FileRecord {
 export interface FileRepositoryOperator {
   saveFile(
     file: Buffer | Stream,
-    metadata: Partial<FileRecord>,
-    strategy: StorageStrategy
-  ): FileRecord;
+    metadata: Partial<FileRecord>
+  ): Promise<FileRecord>;
   getFileById(id: string): FileRecord | undefined;
-  getFileStream(id: string, strategy: StorageStrategy): Stream | undefined;
+  getFileStream(id: string): Stream | undefined;
 }

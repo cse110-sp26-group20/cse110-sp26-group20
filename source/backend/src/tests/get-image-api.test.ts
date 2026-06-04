@@ -1,14 +1,10 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
-import { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
-import type { IDGenerator } from '../models/id-generator';
 
 describe('ImageController', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
-  let mockStorageStrategy: jest.Mocked<StorageStrategy>;
-  let mockIdGenerator: jest.Mocked<IDGenerator>;
   let imageController: ImageController;
 
   let mockRequest: Partial<Request>;
@@ -16,26 +12,13 @@ describe('ImageController', () => {
   let mockNext: jest.MockedFunction<NextFunction>;
 
   beforeEach(() => {
-    mockIdGenerator = {
-      generate: jest.fn().mockReturnValue('mock-id')
-    };
     mockFileRepo = {
       saveFile: jest.fn(),
       getFileById: jest.fn(),
       getFileStream: jest.fn()
     };
-    mockStorageStrategy = {
-      resolvePath: jest.fn(),
-      read: jest.fn(),
-      write: jest.fn(),
-      remove: jest.fn()
-    };
 
-    imageController = new ImageController(
-      mockFileRepo,
-      mockStorageStrategy,
-      mockIdGenerator
-    );
+    imageController = new ImageController(mockFileRepo);
 
     mockRequest = {
       params: {}
@@ -70,7 +53,6 @@ describe('ImageController', () => {
     });
 
     expect(mockFileRepo.getFileById).not.toHaveBeenCalled();
-    expect(mockStorageStrategy.resolvePath).not.toHaveBeenCalled();
   });
 
   test('when file record is missing, returns 404', async () => {
@@ -89,70 +71,38 @@ describe('ImageController', () => {
       error: 'Image not found.'
     });
   });
-  test('when localPath exists, returns it without calling the strategy', async () => {
+
+  test('when record exists, returns id and localPath as url', async () => {
     mockRequest.params = { id: '1' };
     const mockRecord: FileRecord = {
       id: '1',
-      filename: 'avatar.png',
-      localPath: '/static/avatar.png',
+      filename: `1.png`,
+      localPath: '/uploads/1.png',
       type: '',
       create: new Date(),
       matedata: {}
     };
     mockFileRepo.getFileById.mockReturnValue(mockRecord);
+
     await imageController.getImg(
       mockRequest as Request,
       mockResponse as Response,
       mockNext
     );
+
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith({
       id: '1',
-      url: '/static/avatar.png'
+      url: '/uploads/1.png'
     });
-    expect(mockStorageStrategy.resolvePath).not.toHaveBeenCalled();
   });
 
-  test('when localPath is missing, calls the strategy to resolve the URL', async () => {
-    mockRequest.params = { id: '1' };
-    const mockRecord: FileRecord = {
-      id: '1',
-      filename: 'avatar.png',
-      localPath: '',
-      type: '',
-      create: new Date(),
-      matedata: {}
-    };
-    mockStorageStrategy.resolvePath.mockResolvedValue('/static/avatar.png');
-    mockFileRepo.getFileById.mockReturnValue(mockRecord);
-    await imageController.getImg(
-      mockRequest as Request,
-      mockResponse as Response,
-      mockNext
-    );
-    expect(mockResponse.status).toHaveBeenCalledWith(200);
-    expect(mockResponse.json).toHaveBeenCalledWith({
-      id: '1',
-      url: '/static/avatar.png'
-    });
-    expect(mockStorageStrategy.resolvePath).toHaveBeenCalledWith(
-      mockRecord.filename
-    );
-  });
-
-  test('when resolvePath throws, forwards error to next()', async () => {
+  test('when getFileById throws, forwards error to next()', async () => {
     mockRequest.params = { id: '1' };
     const err = new Error('boom');
-    const mockRecord: FileRecord = {
-      id: '1',
-      filename: 'avatar.png',
-      localPath: '',
-      type: '',
-      create: new Date(),
-      matedata: {}
-    };
-    mockFileRepo.getFileById.mockReturnValue(mockRecord);
-    mockStorageStrategy.resolvePath.mockRejectedValue(err);
+    mockFileRepo.getFileById.mockImplementation(() => {
+      throw err;
+    });
 
     await imageController.getImg(
       mockRequest as Request,

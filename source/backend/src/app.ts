@@ -19,16 +19,10 @@ import { getUploadRouter } from './routers/upload.router';
 // path stays consistent regardless of how the server is invoked
 const uploadDir = join(process.cwd(), 'uploads');
 
-// a single id generator instance is shared between the repository and the
-// controller so both always use the same id scheme
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
-const fileRepository = new InMemoryFileRepository(idGenerator);
-const imageController = new ImageController(
-  fileRepository,
-  storageStrategy,
-  idGenerator
-);
+const fileRepository = new InMemoryFileRepository(idGenerator, storageStrategy);
+const imageController = new ImageController(fileRepository);
 
 const app = express();
 

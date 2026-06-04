@@ -1,16 +1,12 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
-import { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
-import type { IDGenerator } from '../models/id-generator';
 
 const FAKE_ID = 'test-uuid-1234';
 
 describe('ImageController.uploadImg', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
-  let mockStorageStrategy: jest.Mocked<StorageStrategy>;
-  let mockIdGenerator: jest.Mocked<IDGenerator>;
   let imageController: ImageController;
 
   let mockRequest: Partial<Request> & { file?: Express.Multer.File };
@@ -20,33 +16,20 @@ describe('ImageController.uploadImg', () => {
   const fakeSavedRecord: FileRecord = {
     id: FAKE_ID,
     filename: `${FAKE_ID}.jpg`,
-    localPath: '',
+    localPath: `/uploads/${FAKE_ID}.jpg`,
     type: 'image/jpeg',
     create: new Date(),
     matedata: {}
   };
 
   beforeEach(() => {
-    mockIdGenerator = {
-      generate: jest.fn().mockReturnValue(FAKE_ID)
-    };
     mockFileRepo = {
-      saveFile: jest.fn().mockReturnValue(fakeSavedRecord),
+      saveFile: jest.fn().mockResolvedValue(fakeSavedRecord),
       getFileById: jest.fn(),
       getFileStream: jest.fn()
     };
-    mockStorageStrategy = {
-      resolvePath: jest.fn().mockResolvedValue(`/uploads/${FAKE_ID}.jpg`),
-      read: jest.fn(),
-      write: jest.fn().mockResolvedValue(`/uploads/${FAKE_ID}.jpg`),
-      remove: jest.fn()
-    };
 
-    imageController = new ImageController(
-      mockFileRepo,
-      mockStorageStrategy,
-      mockIdGenerator
-    );
+    imageController = new ImageController(mockFileRepo);
 
     mockRequest = {};
 
@@ -100,22 +83,12 @@ describe('ImageController.uploadImg', () => {
       mockNext
     );
 
-    expect(mockIdGenerator.generate).toHaveBeenCalled();
     expect(mockFileRepo.saveFile).toHaveBeenCalledWith(
       mockRequest.file.buffer,
       expect.objectContaining({
-        id: FAKE_ID,
-        filename: `${FAKE_ID}.jpg`,
+        filename: 'photo.jpg',
         type: 'image/jpeg'
-      }),
-      mockStorageStrategy
-    );
-    expect(mockStorageStrategy.write).toHaveBeenCalledWith(
-      `${FAKE_ID}.jpg`,
-      mockRequest.file.buffer
-    );
-    expect(mockStorageStrategy.resolvePath).toHaveBeenCalledWith(
-      `${FAKE_ID}.jpg`
+      })
     );
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith({
@@ -127,9 +100,9 @@ describe('ImageController.uploadImg', () => {
     });
   });
 
-  test('when strategy.write throws, forwards error to next()', async () => {
+  test('when saveFile throws, forwards error to next()', async () => {
     const err = new Error('disk full');
-    mockStorageStrategy.write.mockRejectedValue(err);
+    mockFileRepo.saveFile.mockRejectedValue(err);
 
     mockRequest.file = {
       fieldname: 'file',

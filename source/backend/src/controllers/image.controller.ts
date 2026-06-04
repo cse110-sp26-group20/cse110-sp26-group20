@@ -1,32 +1,22 @@
 import type { NextFunction, Request, Response } from 'express';
 
-import type { StorageStrategy } from '../models/file-storage';
 import type { FileRepositoryOperator } from '../models/file-system';
-import type { IDGenerator } from '../models/id-generator';
 
 export class ImageController {
   fileRepo: FileRepositoryOperator;
-  strategy: StorageStrategy;
-  idGenerator: IDGenerator;
 
-  constructor(
-    fileRepo: FileRepositoryOperator,
-    strategy: StorageStrategy,
-    idGenerator: IDGenerator
-  ) {
+  constructor(fileRepo: FileRepositoryOperator) {
     this.fileRepo = fileRepo;
-    this.strategy = strategy;
-    this.idGenerator = idGenerator;
   }
 
   /**
    * handles `POST /api/upload/image`.
    *
    * expects a `multipart/form-data` request with a single `file` field
-   * (populated by multer before this handler runs). generates a UUID for
-   * the upload, writes the file to the configured storage strategy under
-   * the name `<uuid>.<ext>`, registers a `FileRecord` in the repository,
-   * and returns the assigned ID and a publicly accessible URL.
+   * (populated by multer before this handler runs). delegates to the
+   * repository, which generates a unique ID, writes the file via its
+   * injected storage strategy, and returns the saved record with the
+   * public URL in `localPath`.
    */
   async uploadImg(req: Request, resp: Response, nextFunc: NextFunction) {
     try {
@@ -35,31 +25,17 @@ export class ImageController {
       }
 
       const { originalname, mimetype, buffer } = req.file;
-      // preserve the original extension while using a UUID as the base name
-      // so filenames on disk are collision-free and opaque
-      const ext = originalname.split('.').pop() ?? '';
-      const id = this.idGenerator.generate();
-      const storedFilename = `${id}.${ext}`;
-
-      const record = this.fileRepo.saveFile(
-        buffer,
-        {
-          id,
-          filename: storedFilename,
-          type: mimetype,
-          create: new Date()
-        },
-        this.strategy
-      );
-
-      await this.strategy.write(storedFilename, buffer);
-      const url = await this.strategy.resolvePath(storedFilename);
+      const record = await this.fileRepo.saveFile(buffer, {
+        filename: originalname,
+        type: mimetype,
+        create: new Date()
+      });
 
       return resp.status(200).json({
         success: true,
         data: {
           id: record.id,
-          url
+          url: record.localPath
         }
       });
     } catch (error) {
@@ -82,12 +58,9 @@ export class ImageController {
         return resp.status(404).json({ error: 'Image not found.' });
       }
 
-      const imageUrl =
-        record.localPath || (await this.strategy.resolvePath(record.filename));
-
       return resp.status(200).json({
         id: record.id,
-        url: imageUrl
+        url: record.localPath
       });
     } catch (error) {
       console.error('Failed to get the picture:', error);
