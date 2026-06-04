@@ -19,6 +19,15 @@ export class ImageController {
     this.idGenerator = idGenerator;
   }
 
+  /**
+   * handles `POST /api/upload/image`.
+   *
+   * expects a `multipart/form-data` request with a single `file` field
+   * (populated by multer before this handler runs). generates a UUID for
+   * the upload, writes the file to the configured storage strategy under
+   * the name `<uuid>.<ext>`, registers a `FileRecord` in the repository,
+   * and returns the assigned ID and a publicly accessible URL.
+   */
   async uploadImg(req: Request, resp: Response, nextFunc: NextFunction) {
     try {
       if (!req.file) {
@@ -26,6 +35,8 @@ export class ImageController {
       }
 
       const { originalname, mimetype, buffer } = req.file;
+      // preserve the original extension while using a UUID as the base name
+      // so filenames on disk are collision-free and opaque
       const ext = originalname.split('.').pop() ?? '';
       const id = this.idGenerator.generate();
       const storedFilename = `${id}.${ext}`;

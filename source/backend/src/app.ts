@@ -15,7 +15,12 @@ import { LocalStorageStrategy } from './models/local-storage-strategy';
 import { getImgRouter } from './routers/image.router';
 import { getUploadRouter } from './routers/upload.router';
 
+// resolve uploads directory relative to the process working directory so the
+// path stays consistent regardless of how the server is invoked
 const uploadDir = join(process.cwd(), 'uploads');
+
+// a single id generator instance is shared between the repository and the
+// controller so both always use the same id scheme
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
@@ -28,6 +33,8 @@ const imageController = new ImageController(
 const app = express();
 
 app.use(express.json());
+// serve uploaded files as static assets under the same path that
+// resolvePath() returns, e.g. GET /uploads/abc123.jpg
 app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/images', getImgRouter(imageController));
