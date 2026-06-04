@@ -1,7 +1,7 @@
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
-import type { Readable } from 'stream';
+import { Readable } from 'stream';
 
 import {
   LocalStorageStrategy,
@@ -67,6 +67,7 @@ describe('LocalStorageStrategy', () => {
       storage.resolvePath(null as unknown as string)
     ).rejects.toThrow('Filename cannot be empty.');
   });
+
   test('read() returns a stream with correct content', async () => {
     const content = 'hello world';
     await storage.write('real.txt', Buffer.from(content));
@@ -86,6 +87,16 @@ describe('LocalStorageStrategy', () => {
     await expect(storage.resolvePath('../../secret.txt')).rejects.toThrow(
       'Filename cannot escape storage directory.'
     );
+  });
+
+  test('write() saves a file from a stream', async () => {
+    const filePath = await storage.write(
+      'stream.txt',
+      Readable.from(['hello stream'])
+    );
+
+    expect(fs.existsSync(filePath)).toBe(true);
+    expect(fs.readFileSync(filePath, 'utf-8')).toBe('hello stream');
   });
 });
 

@@ -33,9 +33,7 @@ export class LocalStorageStrategy extends StorageStrategy {
       throw new Error('Storage directory cannot be empty.');
     }
 
-    if (!fs.existsSync(this.storageDir)) {
-      fs.mkdirSync(this.storageDir, { recursive: true });
-    }
+    fs.mkdirSync(this.storageDir, { recursive: true });
   }
 
   /**
@@ -86,7 +84,7 @@ export class LocalStorageStrategy extends StorageStrategy {
 
   /**
    * Builds the full local path for a filename.
-   * This handle null and empty filename
+   * This handles null and empty filename
    */
   async resolvePath(filename: string): Promise<string> {
     if (!filename || filename.trim() === '') {
