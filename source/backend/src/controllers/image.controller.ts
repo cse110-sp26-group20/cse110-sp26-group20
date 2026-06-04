@@ -1,12 +1,15 @@
 import type { NextFunction, Request, Response } from 'express';
 
+import type { StorageStrategy } from '../models/file-storage';
 import type { FileRepositoryOperator } from '../models/file-system';
 
 export class ImageController {
   fileRepo: FileRepositoryOperator;
+  strategy: StorageStrategy;
 
-  constructor(fileRepo: FileRepositoryOperator) {
+  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
     this.fileRepo = fileRepo;
+    this.strategy = strategy;
   }
 
   /**
@@ -25,11 +28,15 @@ export class ImageController {
       }
 
       const { originalname, mimetype, buffer } = req.file;
-      const record = await this.fileRepo.saveFile(buffer, {
-        filename: originalname,
-        type: mimetype,
-        create: new Date()
-      });
+      const record = await this.fileRepo.saveFile(
+        buffer,
+        {
+          filename: originalname,
+          type: mimetype,
+          create: new Date()
+        },
+        this.strategy
+      );
 
       return resp.status(200).json({
         success: true,

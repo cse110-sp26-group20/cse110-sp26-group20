@@ -12,11 +12,9 @@ import type { IDGenerator } from './id-generator';
 export class InMemoryFileRepository implements FileRepositoryOperator {
   private records = new Map<string, FileRecord>();
   private idGenerator: IDGenerator;
-  private strategy: StorageStrategy;
 
-  constructor(idGenerator: IDGenerator, strategy: StorageStrategy) {
+  constructor(idGenerator: IDGenerator) {
     this.idGenerator = idGenerator;
-    this.strategy = strategy;
   }
 
   /**
@@ -27,20 +25,21 @@ export class InMemoryFileRepository implements FileRepositoryOperator {
    */
   async saveFile(
     file: Buffer | Stream,
-    metadata: Partial<FileRecord>
+    metadata: Partial<FileRecord>,
+    strategy: StorageStrategy
   ): Promise<FileRecord> {
     const id = this.idGenerator.generate();
     const ext = (metadata.filename ?? '').split('.').pop() ?? '';
     const storedFilename = `${id}.${ext}`;
-    await this.strategy.write(storedFilename, file);
-    const url = await this.strategy.resolvePath(storedFilename);
+    await strategy.write(storedFilename, file);
+    const url = await strategy.resolvePath(storedFilename);
     const record = new FileRecord(
       id,
       storedFilename,
       url,
       metadata.type ?? '',
       metadata.create ?? new Date(),
-      metadata.matedata ?? {}
+      metadata.metadata ?? {}
     );
     this.records.set(id, record);
     return record;
@@ -50,9 +49,12 @@ export class InMemoryFileRepository implements FileRepositoryOperator {
     return this.records.get(id);
   }
 
-  async getFileStream(id: string): Promise<Stream | undefined> {
+  async getFileStream(
+    id: string,
+    strategy: StorageStrategy
+  ): Promise<Stream | undefined> {
     const record = this.records.get(id);
     if (!record) return undefined;
-    return this.strategy.read(record.filename);
+    return strategy.read(record.filename);
   }
 }
