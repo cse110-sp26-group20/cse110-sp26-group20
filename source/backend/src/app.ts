@@ -26,7 +26,6 @@ app.use('/api/images', imageRouter);
  * disabled the eslint error. This should be used sparingly and only in situations where the lint
  * error cannot be fixed in another way.
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   let statusCode = 500;
   let errorMessage = 'An error has occurred.';

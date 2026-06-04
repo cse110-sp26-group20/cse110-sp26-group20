@@ -1,17 +1,25 @@
 import type { Request, Response } from 'express';
 
-import { getTemplates } from '../controllers/image.controller';
-import {
-  bootstrapTemplates,
-  templateCache
-} from '../services/template-service';
+import { ImageController } from '../controllers/image.controller';
+import { NoStorageStrategy } from '../models/file-storage';
+import type { FileRepositoryOperator } from '../models/file-system';
+import { TemplateService } from '../services/template-service';
+
+const fakeRepo = {
+  saveFile: jest.fn().mockReturnValue({ id: '123' }),
+  getFileById: jest.fn(),
+  getFileStream: jest.fn()
+} as unknown as FileRepositoryOperator;
+
+const fakeStrategy = new NoStorageStrategy();
 
 describe('TemplateService', () => {
   const originalFetch = global.fetch;
+  let templateService: TemplateService;
 
-  //reset cache
+  //creates new instance of template service before every test
   beforeEach(() => {
-    templateCache.length = 0;
+    templateService = new TemplateService(fakeRepo, fakeStrategy);
   });
 
   afterEach(() => {
@@ -35,10 +43,10 @@ describe('TemplateService', () => {
     global.fetch = (() =>
       Promise.resolve(fakeNetworkResponse)) as unknown as typeof fetch;
 
-    await bootstrapTemplates();
+    await templateService.bootstrapTemplates();
 
-    expect(templateCache.length).toBe(1);
-    expect(templateCache[0]?.name).toBe('Fake Meme');
+    expect(templateService.templateCache.length).toBe(1);
+    expect(templateService.templateCache[0]?.name).toBe('Fake Meme');
   });
 
   test('bootstrapTemplates() leaves cache empty if API fails', async () => {
@@ -47,15 +55,23 @@ describe('TemplateService', () => {
       throw new Error('Network Down');
     };
 
-    await bootstrapTemplates();
+    await templateService.bootstrapTemplates();
 
-    expect(templateCache.length).toBe(0);
+    expect(templateService.templateCache.length).toBe(0);
   });
 });
 
 describe('ImageController', () => {
+  let templateService: TemplateService;
+  let imageController: ImageController;
+
   beforeEach(() => {
-    templateCache.length = 0;
+    templateService = new TemplateService(fakeRepo, fakeStrategy);
+    imageController = new ImageController(
+      fakeRepo,
+      fakeStrategy,
+      templateService
+    );
   });
 
   test('getTemplates() returns 503 when cache is empty', () => {
@@ -66,7 +82,7 @@ describe('ImageController', () => {
 
     const req = {} as Request;
 
-    getTemplates(req, fakeResponse as Response);
+    imageController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(503);
   });
@@ -79,7 +95,7 @@ describe('ImageController', () => {
       width: 500,
       height: 500
     };
-    templateCache.push(fake);
+    templateService.templateCache.push(fake);
 
     const fakeResponse: Partial<Response> = {
       status: jest.fn().mockReturnThis(),
@@ -88,7 +104,7 @@ describe('ImageController', () => {
 
     const req = {} as Request;
 
-    getTemplates(req, fakeResponse as Response);
+    imageController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(200);
     expect(fakeResponse.json).toHaveBeenCalledWith([fake]);

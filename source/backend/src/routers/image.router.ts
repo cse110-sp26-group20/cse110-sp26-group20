@@ -1,9 +1,11 @@
 import { Router } from 'express';
 
-import { getTemplates } from '../controllers/image.controller';
+import { ImageController } from '../controllers/image.controller';
 
-const router = Router();
+export function getImgRouter(controller: ImageController) {
+  const router = Router();
+  router.get('/templates', controller.getTemplates);
+  router.get('/:id', controller.getImg.bind(controller));
 
-router.get('/templates', getTemplates);
-
-export default router;
+  return router;
+}

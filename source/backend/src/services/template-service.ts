@@ -2,50 +2,8 @@ import {
   NoStorageStrategy,
   type StorageStrategy
 } from '../models/file-storage';
-//import { FileRepository } from '../models/file-system';
-//import { LocalDiskStorageStrategy } from '../models/file-storage';
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
 import { UUIDGenerator } from '../models/id-generator';
-
-//temp fakerepository so file can be tested
-class FakeRepository {
-  saveFile(
-    file: Buffer,
-    metadata: Partial<FileRecord>,
-    strategy: StorageStrategy
-  ) {
-    void strategy;
-    if (!file) throw new Error('File buffer is required');
-
-    return new FileRecord(
-      metadata.id as string,
-      metadata.filename as string,
-      '/mock/path.jpg',
-      'image/jpeg',
-      new Date(),
-      {}
-    );
-  }
-
-  getFileById(id: string) {
-    void id;
-    return undefined;
-  }
-
-  getFileStream(id: string, strategy: StorageStrategy) {
-    void id;
-    void strategy;
-    throw new Error('getFileStream not implemented');
-  }
-}
-
-const fileRepo = new FakeRepository() as unknown as FileRepositoryOperator;
-const diskStrategy = new NoStorageStrategy();
-
-//uncomment when FileSystem is finished
-//const fileRepo = new FileRepository();
-//const diskStrategy = new LocalDiskStorageStrategy();
-const idGen = new UUIDGenerator();
 
 // format we will send to the frontend
 export interface TemplateData {
@@ -72,46 +30,63 @@ interface ImgflipResponse {
   };
 }
 
-// The Global Template Cache (array of templatedata objects)
-export const templateCache: TemplateData[] = [];
+export class TemplateService {
+  // Your cache becomes a property of the class
+  public templateCache: TemplateData[] = [];
 
-export async function bootstrapTemplates() {
-  templateCache.length = 0;
+  private fileRepo: FileRepositoryOperator;
+  private diskStrategy: StorageStrategy;
+  private idGen = new UUIDGenerator(); // Moved idGen to be a class property
 
-  try {
-    const response = await fetch('https://api.imgflip.com/get_memes');
-    const json = (await response.json()) as ImgflipResponse;
-    if (json.success) {
-      const memes = json.data.memes;
+  // 3. THE INJECTION: The constructor catches the real repo handed to it
+  constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+    this.fileRepo = realFileRepo;
+    this.diskStrategy = strategy;
+  }
 
-      for (const meme of memes) {
-        const newTemplateId = idGen.generate();
+  // The Global Template Cache (array of templatedata objects)
 
-        const imageBuffer =
-          diskStrategy instanceof NoStorageStrategy
-            ? Buffer.alloc(0)
-            : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
+  public async bootstrapTemplates() {
+    this.templateCache.length = 0;
 
-        const savedRecord = fileRepo.saveFile(
-          imageBuffer,
-          {
-            id: newTemplateId,
-            filename: meme.name
-          },
-          diskStrategy
+    try {
+      const response = await fetch('https://api.imgflip.com/get_memes');
+      const json = (await response.json()) as ImgflipResponse;
+
+      if (json.success) {
+        const memes = json.data.memes;
+
+        for (const meme of memes) {
+          const newTemplateId = this.idGen.generate();
+
+          const imageBuffer =
+            this.diskStrategy instanceof NoStorageStrategy
+              ? Buffer.alloc(0)
+              : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
+
+          const savedRecord = this.fileRepo.saveFile(
+            imageBuffer,
+            {
+              id: newTemplateId,
+              filename: meme.name
+            },
+            this.diskStrategy
+          );
+
+          this.templateCache.push({
+            id: savedRecord.id,
+            name: meme.name,
+            url: meme.url,
+            width: meme.width,
+            height: meme.height
+          });
+        }
+        console.log(
+          `Successfully loaded ${this.templateCache.length} templates.`
         );
-        //saving to cache
-        templateCache.push({
-          id: savedRecord.id,
-          name: meme.name,
-          url: meme.url,
-          width: meme.width,
-          height: meme.height
-        });
       }
-      console.log(`Successfully loaded ${templateCache.length} templates.`);
+    } catch (error) {
+      console.error('Failed to load Imgflip templates:', error);
     }
-  } catch (error) {
-    console.error('Failed to load Imgflip templates:', error);
   }
 }
