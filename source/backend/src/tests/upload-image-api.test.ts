@@ -1,6 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
+import { NoStorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 
 const FAKE_ID = 'test-uuid-1234';
@@ -19,7 +20,7 @@ describe('ImageController.uploadImg', () => {
     localPath: `/uploads/${FAKE_ID}.jpg`,
     type: 'image/jpeg',
     create: new Date(),
-    matedata: {}
+    metadata: {}
   };
 
   beforeEach(() => {
@@ -29,7 +30,10 @@ describe('ImageController.uploadImg', () => {
       getFileStream: jest.fn()
     };
 
-    imageController = new ImageController(mockFileRepo);
+    imageController = new ImageController(
+      mockFileRepo,
+      new NoStorageStrategy()
+    );
 
     mockRequest = {};
 
@@ -88,7 +92,8 @@ describe('ImageController.uploadImg', () => {
       expect.objectContaining({
         filename: 'photo.jpg',
         type: 'image/jpeg'
-      })
+      }),
+      expect.anything()
     );
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith({
