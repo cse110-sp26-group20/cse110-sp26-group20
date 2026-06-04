@@ -22,9 +22,9 @@ classDiagram
 
     class IStorageStrategy {
         <<interface>>
-        +write(uniqueFilename: String, fileStream: Buffer | Stream): String
-        +read(uniqueFilename: String): Stream
-        +resolvePath(id: String): String
+        +write(uniqueFilename: String, fileStream: Buffer | Stream): Promise<String>
+        +read(uniqueFilename: String): Promise<Stream>
+        +resolvePath(id: String): Promise<String>
     }
     class FileRepository {
         -Map~String, FileRecord~ inMemoryMap
@@ -32,10 +32,10 @@ classDiagram
         -IDGenerator idGenerator
         -String registryFilePath
         
-        +constructor(generator: IDGenerator, strategy: IStorageStrategy)
-        +saveFile(file: Buffer | Stream, metadata: Partial~FileRecord~): FileRecord
+        +constructor(generator: IDGenerator)
+        +saveFile(file: Buffer | Stream, metadata: Partial~FileRecord~ , strategy: IStorageStrategy): FileRecord
         +getFileById(id: String): FileRecord
-        +getFileStream(id: String): Stream
+        +getFileStream(id: String , strategy: IStorageStrategy): Stream
     }
     class IDGenerator{
         <<interface>>
