@@ -46,7 +46,7 @@ describe('ImageController', () => {
     jest.restoreAllMocks();
   });
 
-  test('if params has not id, return 400', async () => {
+  test('when id param is missing, returns 400', async () => {
     mockRequest.params = {};
 
     await imageController.getImg(
