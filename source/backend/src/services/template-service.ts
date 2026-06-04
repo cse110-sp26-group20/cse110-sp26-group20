@@ -35,13 +35,12 @@ export class TemplateService {
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
-  private idGen = new UUIDGenerator(); 
+  private idGen = new UUIDGenerator();
 
   constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
     this.fileRepo = realFileRepo;
     this.diskStrategy = strategy;
   }
-
 
   public async bootstrapTemplates() {
     this.templateCache.length = 0;
@@ -58,7 +57,7 @@ export class TemplateService {
 
           //determines if we download the image or fake it
           const imageBuffer =
-            this.diskStrategy instanceof NoStorageStrategy 
+            this.diskStrategy instanceof NoStorageStrategy
               ? Buffer.alloc(0)
               : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
 

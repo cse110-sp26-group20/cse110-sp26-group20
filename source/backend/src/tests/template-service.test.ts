@@ -1,22 +1,23 @@
 import type { Request, Response } from 'express';
+
 import { ImageController } from '../controllers/image.controller';
-import { TemplateService } from '../services/template-service';
 import { NoStorageStrategy } from '../models/file-storage';
-
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
-
+import { TemplateService } from '../services/template-service';
 
 const fakeRepo: jest.Mocked<FileRepositoryOperator> = {
-  saveFile: jest.fn().mockReturnValue(
-    new FileRecord(
-      '123', 
-      'fake.jpg', 
-      '/mock/path.jpg', 
-      'image/jpeg', 
-      new Date(), 
-      {}
-    )
-  ),
+  saveFile: jest
+    .fn()
+    .mockReturnValue(
+      new FileRecord(
+        '123',
+        'fake.jpg',
+        '/mock/path.jpg',
+        'image/jpeg',
+        new Date(),
+        {}
+      )
+    ),
   getFileById: jest.fn(),
   getFileStream: jest.fn()
 };

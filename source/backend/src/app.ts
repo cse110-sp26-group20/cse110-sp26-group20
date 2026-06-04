@@ -7,13 +7,11 @@ import express, {
 } from 'express';
 import { isHttpError } from 'http-errors';
 
-import { getImgRouter } from './routers/image.router';
 import { ImageController } from './controllers/image.controller';
-import { TemplateService } from './services/template-service';
-
 import { NoStorageStrategy } from './models/file-storage';
 import type { FileRepositoryOperator } from './models/file-system';
-
+import { getImgRouter } from './routers/image.router';
+import { TemplateService } from './services/template-service';
 
 const strategy = new NoStorageStrategy();
 
@@ -21,12 +19,17 @@ const strategy = new NoStorageStrategy();
 const tempFileRepo = {
   saveFile: () => ({ id: '123' }),
   getFileById: () => undefined,
-  getFileStream: () => { throw new Error('Not implemented'); }
+  getFileStream: () => {
+    throw new Error('Not implemented');
+  }
 } as unknown as FileRepositoryOperator;
 
 const templateService = new TemplateService(tempFileRepo, strategy);
-const imageController = new ImageController(tempFileRepo, strategy, templateService);
-
+const imageController = new ImageController(
+  tempFileRepo,
+  strategy,
+  templateService
+);
 
 const app = express();
 
