@@ -29,7 +29,7 @@ describe('FileRepository', () => {
     expect(buffer.length).toBe(0);
   });
 
-  test('CounterGenerator should produce increment int from 1', async () => {
+  test('CounterGenerator should produce increment int from 1', () => {
     const id1 = counterGenerator.generate();
     expect(id1).toEqual('1');
     for (let index = 0; index < 9; index++) {
@@ -39,17 +39,15 @@ describe('FileRepository', () => {
     expect(id2).toEqual('11');
   });
 
-  test('Ensure the reset() works counterGenerator.reset()', async () => {
-    const proxy = new ProxyGeneratorForTesting(counterGenerator);
-    proxy.reset();
-    const id1 = counterGenerator.generate();
-    expect(id1).toEqual('1');
-    proxy.reset();
+  test('CounterGenerator reset() should restart the sequence from 1', () => {
+    counterGenerator.generate();
+    counterGenerator.generate();
+    counterGenerator.reset();
+    const id = counterGenerator.generate();
+    expect(id).toEqual('1');
   });
 
-  test('FileRepository should save a file correct and return FileRecord with a correct ID and metadata', async () => {
-    new ProxyGeneratorForTesting(counterGenerator).reset();
-
+  test('FileRepository should save a file and return FileRecord with correct ID and metadata', () => {
     const buffer = Buffer.alloc(5);
     buffer.write('test\0');
     const record: Partial<FileRecord> = {};
@@ -63,22 +61,22 @@ describe('FileRepository', () => {
   });
 
   test('FileRepository should get a correct FileRecord by ID', async () => {
-    // assume '1' is used, and the new FileRepository should start from '2'.
-    new ProxyGeneratorForTesting(counterGenerator).startFrom(2);
+    // start from '2' to simulate ID '1' already being taken elsewhere
+    counterGenerator.startFrom(2);
 
-    // insert 100 element to file repository
+    // insert 100 elements into the file repository
     for (let index = 0; index < 100; index++) {
       const record: Partial<FileRecord> = {};
       record.type = 'image/png';
       fileRepository.saveFile(Readable.from([]), record, strategy);
     }
 
-    // Test ID '1' which is used and will not at the fileRepository.
+    // ID '1' was skipped, so it should not be in the repository
     const result1 = fileRepository.getFileById('1');
     expect(result1).toBeUndefined();
 
-    // Start from 2 to 101.
-    for (let index = 2; index < 101; index++) {
+    // IDs 2–101 should all be present
+    for (let index = 2; index < 102; index++) {
       const element = fileRepository.getFileById(index.toString());
       expect(element).toBeDefined();
       expect(element?.id).toBe(index.toString());
@@ -91,16 +89,15 @@ describe('FileRepository', () => {
       expect(buffer.length).toBe(0);
     }
 
-    // Test ID '103' which is not allocated and will not at the fileRepository.
+    // ID '103' was never allocated
     const result2 = fileRepository.getFileById('103');
     expect(result2).toBeUndefined();
   });
 
   test('FileRepository should throw an error if metadata is missing or type is empty', () => {
     const buffer = Buffer.from('dummy data');
-    const emptyRecord: Partial<FileRecord> = {}; // Missing 'type'
+    const emptyRecord: Partial<FileRecord> = {}; // missing 'type'
 
-    // saveFile() is synchronous and should throw immediately for invalid metadata
     expect(() => {
       fileRepository.saveFile(buffer, emptyRecord, strategy);
     }).toThrow(TypeError);
@@ -115,20 +112,3 @@ describe('FileRepository', () => {
     }).toThrow(UnsupportedMimeTypeError);
   });
 });
-
-class ProxyGeneratorForTesting extends CounterGenerator {
-  generator: CounterGenerator;
-  override generate(): string {
-    return this.generator.generate();
-  }
-  constructor(generator: CounterGenerator) {
-    super();
-    this.generator = generator;
-  }
-  reset() {
-    this.generator.count = 0;
-  }
-  startFrom(index: number) {
-    this.generator.count = index - 1;
-  }
-}

@@ -1,4 +1,3 @@
-// utils/mime-type.utils.ts
 import { UnsupportedMimeTypeError } from '../errors/unsupported-mime-type.error';
 
 /**

@@ -13,7 +13,7 @@ export class UUIDGenerator implements IDGenerator {
 }
 
 export class CounterGenerator implements IDGenerator {
-  count: number;
+  private count: number;
   constructor() {
     this.count = 0;
   }
@@ -24,5 +24,16 @@ export class CounterGenerator implements IDGenerator {
   generate(): string {
     this.count++;
     return this.count.toString();
+  }
+  /** resets the counter back to zero so the next generated ID will be `'1'`. */
+  reset(): void {
+    this.count = 0;
+  }
+  /**
+   * advances the counter so the next generated ID equals `index`.
+   * @param index - the next value that `generate()` should return.
+   */
+  startFrom(index: number): void {
+    this.count = index - 1;
   }
 }
