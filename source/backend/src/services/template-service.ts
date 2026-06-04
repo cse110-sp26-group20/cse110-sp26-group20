@@ -31,20 +31,17 @@ interface ImgflipResponse {
 }
 
 export class TemplateService {
-  // Your cache becomes a property of the class
   public templateCache: TemplateData[] = [];
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
-  private idGen = new UUIDGenerator(); // Moved idGen to be a class property
+  private idGen = new UUIDGenerator(); 
 
-  // 3. THE INJECTION: The constructor catches the real repo handed to it
   constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
     this.fileRepo = realFileRepo;
     this.diskStrategy = strategy;
   }
 
-  // The Global Template Cache (array of templatedata objects)
 
   public async bootstrapTemplates() {
     this.templateCache.length = 0;
@@ -59,8 +56,9 @@ export class TemplateService {
         for (const meme of memes) {
           const newTemplateId = this.idGen.generate();
 
+          //determines if we download the image or fake it
           const imageBuffer =
-            this.diskStrategy instanceof NoStorageStrategy
+            this.diskStrategy instanceof NoStorageStrategy 
               ? Buffer.alloc(0)
               : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
 
@@ -68,7 +66,8 @@ export class TemplateService {
             imageBuffer,
             {
               id: newTemplateId,
-              filename: meme.name
+              filename: meme.name,
+              type: 'image/jpeg'
             },
             this.diskStrategy
           );

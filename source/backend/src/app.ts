@@ -7,15 +7,33 @@ import express, {
 } from 'express';
 import { isHttpError } from 'http-errors';
 
-//import aiRouter from "./routers/ai.router";
-import imageRouter from './routers/image.router';
+import { getImgRouter } from './routers/image.router';
+import { ImageController } from './controllers/image.controller';
+import { TemplateService } from './services/template-service';
+
+import { NoStorageStrategy } from './models/file-storage';
+import type { FileRepositoryOperator } from './models/file-system';
+
+
+const strategy = new NoStorageStrategy();
+
+//temp mock repo
+const tempFileRepo = {
+  saveFile: () => ({ id: '123' }),
+  getFileById: () => undefined,
+  getFileStream: () => { throw new Error('Not implemented'); }
+} as unknown as FileRepositoryOperator;
+
+const templateService = new TemplateService(tempFileRepo, strategy);
+const imageController = new ImageController(tempFileRepo, strategy, templateService);
+
 
 const app = express();
 
 app.use(express.json());
 
 // app.use("/api/ai", aiRouter);
-app.use('/api/images', imageRouter);
+app.use('/api/images', getImgRouter(imageController));
 
 /**
  * Error handler; all errors thrown by server are handled here.
