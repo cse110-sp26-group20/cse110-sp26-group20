@@ -3,10 +3,12 @@ import type { NextFunction, Request, Response } from 'express';
 import { ImageController } from '../controllers/image.controller';
 import { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
+import type { IDGenerator } from '../models/id-generator';
 
 describe('ImageController', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
   let mockStorageStrategy: jest.Mocked<StorageStrategy>;
+  let mockIdGenerator: jest.Mocked<IDGenerator>;
   let imageController: ImageController;
 
   let mockRequest: Partial<Request>;
@@ -14,6 +16,9 @@ describe('ImageController', () => {
   let mockNext: jest.MockedFunction<NextFunction>;
 
   beforeEach(() => {
+    mockIdGenerator = {
+      generate: jest.fn().mockReturnValue('mock-id')
+    };
     mockFileRepo = {
       saveFile: jest.fn(),
       getFileById: jest.fn(),
@@ -26,7 +31,11 @@ describe('ImageController', () => {
       remove: jest.fn()
     };
 
-    imageController = new ImageController(mockFileRepo, mockStorageStrategy);
+    imageController = new ImageController(
+      mockFileRepo,
+      mockStorageStrategy,
+      mockIdGenerator
+    );
 
     mockRequest = {
       params: {}

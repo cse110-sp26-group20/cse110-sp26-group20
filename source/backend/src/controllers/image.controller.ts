@@ -2,14 +2,61 @@ import type { NextFunction, Request, Response } from 'express';
 
 import type { StorageStrategy } from '../models/file-storage';
 import type { FileRepositoryOperator } from '../models/file-system';
+import type { IDGenerator } from '../models/id-generator';
 
 export class ImageController {
   fileRepo: FileRepositoryOperator;
   strategy: StorageStrategy;
-  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+  idGenerator: IDGenerator;
+
+  constructor(
+    fileRepo: FileRepositoryOperator,
+    strategy: StorageStrategy,
+    idGenerator: IDGenerator
+  ) {
     this.fileRepo = fileRepo;
     this.strategy = strategy;
+    this.idGenerator = idGenerator;
   }
+
+  async uploadImg(req: Request, resp: Response, nextFunc: NextFunction) {
+    try {
+      if (!req.file) {
+        return resp.status(400).json({ error: 'No file provided.' });
+      }
+
+      const { originalname, mimetype, buffer } = req.file;
+      const ext = originalname.split('.').pop() ?? '';
+      const id = this.idGenerator.generate();
+      const storedFilename = `${id}.${ext}`;
+
+      const record = this.fileRepo.saveFile(
+        buffer,
+        {
+          id,
+          filename: storedFilename,
+          type: mimetype,
+          create: new Date()
+        },
+        this.strategy
+      );
+
+      await this.strategy.write(storedFilename, buffer);
+      const url = await this.strategy.resolvePath(storedFilename);
+
+      return resp.status(200).json({
+        success: true,
+        data: {
+          id: record.id,
+          url
+        }
+      });
+    } catch (error) {
+      console.error('Failed to upload image:', error);
+      nextFunc(error);
+    }
+  }
+
   async getImg(req: Request, resp: Response, nextFunc: NextFunction) {
     try {
       const imageID = req.params.id;
