@@ -35,7 +35,7 @@ classDiagram
         +constructor(generator: IDGenerator)
         +saveFile(file: Buffer | Stream, metadata: Partial~FileRecord~, strategy: IStorageStrategy): FileRecord
         +getFileById(id: String): FileRecord
-        +getFileStream(id: String , strategy: IStorageStrategy): Stream
+        +getFileStream(id: String, strategy: IStorageStrategy): Stream
     }
     class IDGenerator{
         <<interface>>
