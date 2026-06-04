@@ -47,18 +47,18 @@ describe('FileRepository', () => {
     proxy.reset();
   });
 
-  test('FileRepository should save a file correct and return FileRecord with a correct ID and matedata', async () => {
+  test('FileRepository should save a file correct and return FileRecord with a correct ID and metadata', async () => {
     new ProxyGeneratorForTesting(counterGenerator).reset();
 
     const buffer = Buffer.alloc(5);
     buffer.write('test\0');
     const record: Partial<FileRecord> = {};
-    record.matedata = { width: 100, height: 500 };
+    record.metadata = { width: 100, height: 500 };
     record.type = 'image/png';
     const result = fileRepository.saveFile(buffer, record, strategy);
     expect(result.id).toEqual('1');
-    expect(result.matedata['width']).toBe(100);
-    expect(result.matedata['height']).toBe(500);
+    expect(result.metadata['width']).toBe(100);
+    expect(result.metadata['height']).toBe(500);
     expect(result.filename).toBe('1.png');
   });
 

@@ -47,7 +47,7 @@ export class FileRepository implements FileRepositoryOperator {
       filename: filename,
       localPath: '',
       type: metadata.type,
-      matedata: metadata.matedata || {},
+      metadata: metadata.metadata || {},
       create: new Date()
     };
 
