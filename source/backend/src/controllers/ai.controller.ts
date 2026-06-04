@@ -3,7 +3,7 @@ import type { Request, Response } from 'express';
 
 import type { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
-import { ImagePrompt, ImagePrompt } from '../models/image-prompt';
+import { ImagePrompt } from '../models/image-prompt';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 export class AIController {
