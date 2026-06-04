@@ -17,6 +17,8 @@ describe('Open AI Generator', () => {
   test('generate() with prompt', async () => {
     const prompt = new ImagePrompt('This is an example!!! --width 512', {
       height: 512,
+      name: 'test.png',
+      type: 'image/png',
       img: Readable.from([]) // TODO: test with a real file
     });
     const imgResponse = await ai.generateImage(prompt);
