@@ -72,7 +72,7 @@ describe('TemplateService', () => {
   });
 });
 
-describe('ImageController', () => {
+describe('TemplateController', () => {
   let templateService: TemplateService;
   let imageController: TemplateController;
 
