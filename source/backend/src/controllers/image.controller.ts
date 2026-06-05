@@ -13,7 +13,7 @@ export class ImageController {
   }
 
   /**
-   * handles `POST /api/upload/image`.
+   * handles `POST /api/img`.
    *
    * expects a `multipart/form-data` request with a single `file` field
    * (populated by multer before this handler runs). delegates to the
