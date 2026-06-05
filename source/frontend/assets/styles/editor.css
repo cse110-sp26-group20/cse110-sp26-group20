@@ -234,7 +234,7 @@ textarea {
   font-size: 1.5rem;
   text-decoration: underline;
   color: var(--lab-white);
-  margin-top: 14px;
+  margin-top: 20px;
   margin-bottom: 10px;
 }
 
@@ -252,7 +252,6 @@ textarea {
 
 .text-input {
   width: 100%;
-  height: 3rem;
   padding: 9px 12px;
   background-color: var(--lab-white);
   border: 2px solid var(--lab-black);
@@ -557,7 +556,7 @@ textarea {
 }
 
 .tab-btn:hover:not(.active) {
-  color: var(--lab-white);
+  color: var(--lab-accent-hover);
 }
 
 .tab-icon {
@@ -595,6 +594,24 @@ textarea {
   right: -157px;
   pointer-events: none;
   scale: 0.8;
+}
+
+/* AI Generate tab */
+#ai-submit {
+  margin-top: 1rem;
+  padding: 12px;
+  font-size: 0.8rem;
+  background-color: var(--lab-white);
+  cursor: pointer;
+  border-radius: 15px;
+  border: 2px solid var(--lab-black);
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
+}
+
+#ai-submit:hover {
+  border-color: var(--lab-accent-hover);
 }
 
 /* Responsive mobile styles (≤ 768px) */

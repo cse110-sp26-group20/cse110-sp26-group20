@@ -101,13 +101,10 @@
       </section>
 
       <!-- RIGHT CONTROLS PANEL -->
-      <aside
-        class="controls-panel"
-        id="controls-panel"
-        aria-label="Text controls"
-      >
+      <aside class="controls-panel" id="controls-panel" aria-label="Text controls">
+
         <!-- TEXT PANEL -->
-        <div class="tool-panel active" id="text-panel" role="tabpanel">
+        <div class="tool-panel" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->
           <div class="panel-section desktop-only">
             <h2 class="section-title">Caption</h2>
@@ -118,6 +115,7 @@
                 type="text"
                 id="top-text"
                 class="text-input"
+                rows="2"
                 placeholder="Enter message..."
                 aria-label="Top caption text"
               />
@@ -129,6 +127,7 @@
                 type="text"
                 id="bottom-text"
                 class="text-input"
+                rows="2"
                 placeholder="Enter message..."
                 aria-label="Bottom caption text"
               />
@@ -322,6 +321,21 @@
             </div>
           </div>
         </div>
+
+        <!-- AI GENERATION PANEL -->
+        <div class="tool-panel active" id="ai-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">Prompt</h2>
+            <p>Ask anything to experiment on your meme</p>
+            <textarea
+              class="text-input"
+              placeholder="e.g. turn this meme into vemon dunking..."
+              rows="6"
+              aria-label="AI prompt"
+            ></textarea>
+            <button id="ai-submit" type="button">Generate</button>
+          </div>
+        </div>
       </aside>
     </div>
 
@@ -365,5 +379,6 @@
       class="hexagon-decor"
       alt=""
     />
+    <script src="editor.js"></script>
   </body>
 </html>
