@@ -1,4 +1,4 @@
-import { createTimerLogProxy } from '../proxies/ai-timer-proxy'; // 请替换为实际的路径
+import { createTimerLogProxy } from '../proxies/ai-timer-proxy';
 
 describe('createTimerLogProxy', () => {
   let consoleLogSpy: jest.SpyInstance;

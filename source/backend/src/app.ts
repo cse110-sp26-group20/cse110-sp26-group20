@@ -18,9 +18,9 @@ app.use(express.json());
 // app.use("/api/images", imageRouter);
 
 /**
- * using TimerLogProxy
+ * Example usage:
  * const coreImageService = new ImageGenerationService();
- * const proxiedImageService = new TimeTrackingProxy(coreImageService);
+ * const proxiedImageService = createTimerLogProxy(coreImageService, 'ImageGenerationService');
  * const imageController = new ImageController(proxiedImageService);
  */
 
