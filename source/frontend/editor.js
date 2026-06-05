@@ -67,7 +67,7 @@ generateBtn.addEventListener('click', () => {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' }, //specifies raw json post
               body: JSON.stringify({
-                id: snapshotId,
+                imageId: snapshotId,
                 prompt: prompt
               }) //stringify's object containing id and prompt to send to server
             })
