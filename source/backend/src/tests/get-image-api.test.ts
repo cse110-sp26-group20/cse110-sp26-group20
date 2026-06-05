@@ -3,6 +3,7 @@ import type { NextFunction, Request, Response } from 'express';
 import { ImageController } from '../controllers/image.controller';
 import type { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
+import { TemplateService } from '../services/template-service';
 
 describe('ImageController', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
@@ -27,7 +28,11 @@ describe('ImageController', () => {
       resolvePath: jest.fn()
     } as jest.Mocked<StorageStrategy>;
 
-    imageController = new ImageController(mockFileRepo, mockStrategy);
+    imageController = new ImageController(
+      mockFileRepo,
+      mockStrategy,
+      new TemplateService(mockFileRepo, mockStrategy)
+    );
 
     mockRequest = {
       params: {}

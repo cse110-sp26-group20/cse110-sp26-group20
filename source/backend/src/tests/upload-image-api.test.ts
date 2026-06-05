@@ -1,18 +1,21 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
-import { NoStorageStrategy } from '../models/file-storage';
+import { NoStorageStrategy, StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
+import { TemplateService } from '../services/template-service';
 
 const FAKE_ID = 'test-uuid-1234';
 
 describe('ImageController.uploadImg', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
-  let imageController: ImageController;
+  let mockStrategy: jest.Mocked<StorageStrategy>;
 
   let mockRequest: Partial<Request> & { file?: Express.Multer.File };
   let mockResponse: Partial<Response>;
   let mockNext: jest.MockedFunction<NextFunction>;
+
+  let imageController: ImageController;
 
   const fakeSavedRecord: FileRecord = {
     id: FAKE_ID,
@@ -30,9 +33,17 @@ describe('ImageController.uploadImg', () => {
       getFileStream: jest.fn()
     };
 
+    mockStrategy = {
+      write: jest.fn(),
+      read: jest.fn(),
+      remove: jest.fn(),
+      resolvePath: jest.fn()
+    };
+
     imageController = new ImageController(
       mockFileRepo,
-      new NoStorageStrategy()
+      mockStrategy,
+      new TemplateService(mockFileRepo, mockStrategy)
     );
 
     mockRequest = {};
