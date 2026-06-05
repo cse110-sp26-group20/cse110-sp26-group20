@@ -3,10 +3,8 @@ import os from 'os';
 import path from 'path';
 import { Readable } from 'stream';
 
-import {
-  LocalStorageStrategy,
-  NoStorageStrategy
-} from '../models/file-storage';
+import { NoStorageStrategy } from '../models/file-storage';
+import { LocalStorageStrategy } from '../services/local-storage-strategy';
 
 describe('LocalStorageStrategy', () => {
   let storageDir: string;
