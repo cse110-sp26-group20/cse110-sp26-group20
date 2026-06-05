@@ -67,7 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   closeModalBtn.addEventListener("click", () => {
-    if (event.target.closest(".share-modal-content")) return;
     shareModal.classList.add("hidden");
   });
 
