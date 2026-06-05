@@ -23,7 +23,11 @@ const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
-const imageController = new ImageController(fileRepository, storageStrategy, templateService);
+const imageController = new ImageController(
+  fileRepository,
+  storageStrategy,
+  templateService
+);
 
 templateService.bootstrapTemplates();
 
