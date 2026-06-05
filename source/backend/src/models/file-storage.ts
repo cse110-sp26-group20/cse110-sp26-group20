@@ -11,21 +11,25 @@ export abstract class StorageStrategy {
     filename: string,
     fileStream: Buffer | Stream
   ): Promise<string>;
+
   abstract read(filename: string): Promise<Stream>;
   abstract remove(filename: string): Promise<boolean>;
   abstract resolvePath(filename: string): Promise<string>;
 }
 
-export class NoStorageStrategy implements StorageStrategy {
+export class NoStorageStrategy extends StorageStrategy {
   async write(): Promise<string> {
     return '';
   }
+
   async read(): Promise<Stream> {
     return Readable.from([]);
   }
+
   async remove(): Promise<boolean> {
     return false;
   }
+
   async resolvePath(): Promise<string> {
     return '';
   }

@@ -1,5 +1,7 @@
 import 'dotenv/config';
 
+import { join } from 'path';
+import cors from 'cors';
 import express, {
   type NextFunction,
   type Request,
@@ -8,48 +10,52 @@ import express, {
 import { isHttpError } from 'http-errors';
 import { OpenAI } from 'openai';
 
-import config from './config';
-import { AIController } from './controllers/ai.controller';
-import { NoStorageStrategy } from './models/file-storage';
-import { FileRecord, type FileRepositoryOperator } from './models/file-system';
-import type { IUniversalAIProvider } from './models/universal-ai-provider';
-import { createAIRouter } from './routers/ai.router';
-import { OpenAIProvider } from './services/openai-provider';
+import { ImageController } from './controllers/image.controller';
+import { TemplateController } from './controllers/template.controller';
+import { UUIDGenerator } from './models/id-generator';
+import { InMemoryFileRepository } from './models/in-memory-file-repository';
+import { getImgRouter } from './routers/image.router';
+import { getTempRouter } from './routers/template.router';
+import { LocalStorageStrategy } from './services/local-storage-strategy';
+import { TemplateService } from './services/template-service';
+
+// resolve uploads directory relative to the process working directory so the
+// path stays consistent regardless of how the server is invoked
+const uploadDir = join(process.cwd(), 'uploads');
+
+const idGenerator = new UUIDGenerator();
+const storageStrategy = new LocalStorageStrategy(uploadDir);
+const fileRepository = new InMemoryFileRepository(idGenerator);
+const templateService = new TemplateService(fileRepository, storageStrategy);
+const imageController = new ImageController(fileRepository, storageStrategy);
+const tempController = new TemplateController(templateService);
+
+templateService.bootstrapTemplates();
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
-// IoC for aiController
-const aiGenerator: IUniversalAIProvider = new OpenAIProvider(
-  new OpenAI({ apiKey: config.openaiApiKey })
-);
-const fakeFileRepo = {
-  saveFile(_file, metadata, _strategy) {
-    console.log('do nothing!!!');
-    return metadata;
-  }
-} as FileRepositoryOperator;
-const aiController = new AIController(
-  aiGenerator,
-  fakeFileRepo,
-  new NoStorageStrategy()
-);
-const aiRouter = createAIRouter(aiController);
+// serve uploaded files as static assets under the same path that
+// resolvePath() returns, e.g. GET /uploads/abc123.jpg
+app.use('/uploads', express.static(uploadDir));
 
-app.use('/api/ai', aiRouter);
-// app.use("/api/images", imageRouter);
+app.use('/api/img', getImgRouter(imageController));
+app.use('/api/template', getTempRouter(tempController));
+
+/**
+ * Example usage:
+ * const coreImageService = new ImageGenerationService();
+ * const proxiedImageService = createTimerLogProxy(coreImageService, 'ImageGenerationService');
+ * const imageController = new ImageController(proxiedImageService);
+ */
 
 /**
  * Error handler; all errors thrown by server are handled here.
- * Explicit typings required here because TypeScript cannot infer the argument types.
- *
- * An eslint-disable is being used below because the "next" argument is never used. However,
- * it is still required for Express to recognize it as an error handler. For this reason, I've
- * disabled the eslint error. This should be used sparingly and only in situations where the lint
- * error cannot be fixed in another way.
+ * Explicit typings are required here because TypeScript cannot infer the argument types.
  */
-app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
   let statusCode = 500;
   let errorMessage = 'An error has occurred.';
 
