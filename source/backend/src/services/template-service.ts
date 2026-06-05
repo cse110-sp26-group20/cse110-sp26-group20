@@ -2,8 +2,7 @@ import {
   NoStorageStrategy,
   type StorageStrategy
 } from '../models/file-storage';
-import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
-import { UUIDGenerator } from '../models/id-generator';
+import { type FileRepositoryOperator } from '../models/file-system';
 
 // format we will send to the frontend
 export interface TemplateData {
@@ -35,7 +34,6 @@ export class TemplateService {
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
-  private idGen = new UUIDGenerator();
 
   constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
     this.fileRepo = realFileRepo;
@@ -53,8 +51,6 @@ export class TemplateService {
         const memes = json.data.memes;
 
         for (const meme of memes) {
-          const newTemplateId = this.idGen.generate();
-
           //determines if we download the image or fake it
           const imageBuffer =
             this.diskStrategy instanceof NoStorageStrategy
@@ -64,7 +60,6 @@ export class TemplateService {
           const savedRecord = this.fileRepo.saveFile(
             imageBuffer,
             {
-              id: newTemplateId,
               filename: meme.name,
               type: 'image/jpeg'
             },
