@@ -129,6 +129,10 @@ textarea {
     color 0.15s;
 }
 
+.hidden {
+    display: none;
+}
+
 .tool-btn svg {
   width: 2.5rem;
   height: 2rem;
@@ -173,6 +177,9 @@ textarea {
   flex: 1;
   overflow: hidden;
   padding: 16px;
+    flex: unset;
+    padding: 0 12px;
+    position: relative
 }
 
 #meme-canvas {
@@ -239,8 +246,24 @@ textarea {
 }
 
 /* Caption editor styles */
-.caption-editor {
-  margin-bottom: 10px;
+.caption-overlay {
+    position: absolute;
+    z-index: 1000;
+    width: 400px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-size: 60px;
+    font-family: Impact, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    transform: translateX(-50%);
+    text-shadow:
+        2px 2px 0 black,
+       -2px 2px 0 black,
+        2px -2px 0 black,
+       -2px -2px 0 black;
 }
 
 .caption-editor label {
@@ -670,20 +693,6 @@ textarea {
     min-height: 240px;
     justify-content: flex-start;
     padding-top: 12px;
-  }
-
-.caption-editor {
-    position: absolute;
-    z-index: 100;
-}
-
-.hidden {
-    display: none;
-}
-
-  .canvas-wrapper {
-    flex: unset;
-    padding: 0 12px;
   }
 
   /* Controls panel fills remaining width below canvas */

@@ -26,25 +26,6 @@ const textButton = document.querySelector('[data-tool="text"]');
 
 const editor = document.getElementById("caption-editor");
 
-// grabbing inputs from html
-const topInput = document.getElementById("top-text");
-const bottomInput = document.getElementById("bottom-text");
-
-canvas.addEventListener(
-    "click",
-    handleCanvasClick
-);
-
-topInput.addEventListener("input", (event) => {
-    topCaption.text = event.target.value;
-    renderCanvas();
-});
-
-bottomInput.addEventListener("input", (event) => {
-    bottomCaption.text = event.target.value;
-    renderCanvas();
-});
-
 textButton.addEventListener("click", () => {
     if (!textModeEnabled) {
         topCaption.text = "TOP TEXT";
@@ -62,10 +43,14 @@ canvas.addEventListener(
 function openEditor(caption) {
     editor.classList.remove("hidden");
     editor.value = caption.text;
+    editor.style.left = `${caption.x}px`;
+    editor.style.top = `${caption.y - 35}px`;
     editor.focus();
 }
 
 function handleCanvasClick(event) {
+    if (!textModeEnabled)
+        return;
     const y = event.offsetY;
     if (y < 150) {
         activeCaption = topCaption;
@@ -85,6 +70,10 @@ editor.addEventListener("input", () => {
         renderCanvas();
     }
 );
+
+editor.addEventListener("blur", () => {
+    editor.classList.add("hidden");
+});
 
 if (savedImage) {
     const img = new Image();
