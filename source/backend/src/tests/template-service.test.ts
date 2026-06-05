@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { ImageController } from '../controllers/image.controller';
+import { TemplateController } from '../controllers/template.controller';
 import { NoStorageStrategy } from '../models/file-storage';
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
 import { TemplateService } from '../services/template-service';
@@ -72,17 +72,13 @@ describe('TemplateService', () => {
   });
 });
 
-describe('ImageController', () => {
+describe('TemplateController', () => {
   let templateService: TemplateService;
-  let imageController: ImageController;
+  let tempController: TemplateController;
 
   beforeEach(() => {
     templateService = new TemplateService(fakeRepo, fakeStrategy);
-    imageController = new ImageController(
-      fakeRepo,
-      fakeStrategy,
-      templateService
-    );
+    tempController = new TemplateController(templateService);
   });
 
   test('getTemplates() returns 503 when cache is empty', () => {
@@ -93,7 +89,7 @@ describe('ImageController', () => {
 
     const req = {} as Request;
 
-    imageController.getTemplates(req, fakeResponse as Response);
+    tempController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(503);
   });
@@ -115,7 +111,7 @@ describe('ImageController', () => {
 
     const req = {} as Request;
 
-    imageController.getTemplates(req, fakeResponse as Response);
+    tempController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(200);
     expect(fakeResponse.json).toHaveBeenCalledWith([fake]);
