@@ -6,10 +6,18 @@ import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
 import type { IDGenerator } from '../models/id-generator';
 import { getValidImageExtension } from '../utils/mime-type.utils';
 
+/**
+ * In-memory file repository that tracks FileRecord entries and
+ * delegates actual read/write operations to a provided StorageStrategy.
+ */
 export class FileRepository implements FileRepositoryOperator {
   inMemoryMap = new Map<string, FileRecord>();
   generator: IDGenerator;
   constructor(generator: IDGenerator) {
+    /**
+     * Constructs a new FileRepository.
+     * @param generator - ID generator used to produce unique file IDs.
+     */
     this.generator = generator;
   }
   /**
@@ -30,7 +38,7 @@ export class FileRepository implements FileRepositoryOperator {
     file: Buffer | Stream,
     metadata: Partial<FileRecord>,
     strategy: StorageStrategy
-  ): FileRecord {
+  ): Promise<FileRecord> {
     if (!metadata || !metadata.type) {
       throw new TypeError(
         'Metadata is missing or does not contain a valid type.'
@@ -63,12 +71,29 @@ export class FileRepository implements FileRepositoryOperator {
 
     this.inMemoryMap.set(id, record);
 
-    return record;
+    return Promise.resolve(record);
   }
+  /**
+   * Retrieves a stored FileRecord by its identifier.
+   * @param id - The identifier of the file record to look up.
+   * @returns The matching FileRecord, or `undefined` if not found.
+   */
   getFileById(id: string): FileRecord | undefined {
     return this.inMemoryMap.get(id);
   }
-  getFileStream(id: string, strategy: StorageStrategy): Stream | undefined {
+  /**
+   * Returns a readable Stream for the file with the given id.
+   * The returned stream is a PassThrough proxy; the storage strategy
+   * performs the actual read asynchronously and pipes into the proxy.
+   * If the file is not present, `undefined` is returned.
+   * @param id - The identifier of the stored file.
+   * @param strategy - The storage strategy used to read the file.
+   * @returns A readable Stream proxying the file data, or `undefined`.
+   */
+  getFileStream(
+    id: string,
+    strategy: StorageStrategy
+  ): Promise<Stream | undefined> {
     if (this.inMemoryMap.has(id)) {
       const record = this.inMemoryMap.get(id);
       if (record && record.filename) {
@@ -83,9 +108,9 @@ export class FileRepository implements FileRepositoryOperator {
             proxyStream.destroy(err);
           });
 
-        return proxyStream;
+        return Promise.resolve(proxyStream);
       }
     }
-    return undefined;
+    return Promise.resolve(undefined);
   }
 }

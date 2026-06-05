@@ -1,5 +1,6 @@
 import 'dotenv/config';
 
+import { join } from 'path';
 import express, {
   type NextFunction,
   type Request,
@@ -8,44 +9,43 @@ import express, {
 import { isHttpError } from 'http-errors';
 
 import { ImageController } from './controllers/image.controller';
-import { NoStorageStrategy } from './models/file-storage';
-import type { FileRepositoryOperator } from './models/file-system';
+import { UUIDGenerator } from './models/id-generator';
+import { InMemoryFileRepository } from './models/in-memory-file-repository';
 import { getImgRouter } from './routers/image.router';
+import { LocalStorageStrategy } from './services/local-storage-strategy';
 import { TemplateService } from './services/template-service';
 
-const strategy = new NoStorageStrategy();
+// resolve uploads directory relative to the process working directory so the
+// path stays consistent regardless of how the server is invoked
+const uploadDir = join(process.cwd(), 'uploads');
 
-//temp mock repo
-const tempFileRepo = {
-  saveFile: () => ({ id: '123' }),
-  getFileById: () => undefined,
-  getFileStream: () => {
-    throw new Error('Not implemented');
-  }
-} as unknown as FileRepositoryOperator;
+const idGenerator = new UUIDGenerator();
+const storageStrategy = new LocalStorageStrategy(uploadDir);
+const fileRepository = new InMemoryFileRepository(idGenerator);
+const templateService = new TemplateService(fileRepository, storageStrategy);
+const imageController = new ImageController(fileRepository, storageStrategy, templateService);
 
-const templateService = new TemplateService(tempFileRepo, strategy);
-const imageController = new ImageController(
-  tempFileRepo,
-  strategy,
-  templateService
-);
+templateService.bootstrapTemplates();
 
 const app = express();
 
 app.use(express.json());
+// serve uploaded files as static assets under the same path that
+// resolvePath() returns, e.g. GET /uploads/abc123.jpg
+app.use('/uploads', express.static(uploadDir));
 
-// app.use("/api/ai", aiRouter);
 app.use('/api/images', getImgRouter(imageController));
 
 /**
+ * Example usage:
+ * const coreImageService = new ImageGenerationService();
+ * const proxiedImageService = createTimerLogProxy(coreImageService, 'ImageGenerationService');
+ * const imageController = new ImageController(proxiedImageService);
+ */
+
+/**
  * Error handler; all errors thrown by server are handled here.
- * Explicit typings required here because TypeScript cannot infer the argument types.
- *
- * An eslint-disable is being used below because the "next" argument is never used. However,
- * it is still required for Express to recognize it as an error handler. For this reason, I've
- * disabled the eslint error. This should be used sparingly and only in situations where the lint
- * error cannot be fixed in another way.
+ * Explicit typings are required here because TypeScript cannot infer the argument types.
  */
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   let statusCode = 500;
