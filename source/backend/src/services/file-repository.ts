@@ -38,7 +38,7 @@ export class FileRepository implements FileRepositoryOperator {
     file: Buffer | Stream,
     metadata: Partial<FileRecord>,
     strategy: StorageStrategy
-  ): FileRecord {
+  ): Promise<FileRecord> {
     if (!metadata || !metadata.type) {
       throw new TypeError(
         'Metadata is missing or does not contain a valid type.'
@@ -71,7 +71,7 @@ export class FileRepository implements FileRepositoryOperator {
 
     this.inMemoryMap.set(id, record);
 
-    return record;
+    return Promise.resolve(record);
   }
   /**
    * Retrieves a stored FileRecord by its identifier.
@@ -90,7 +90,10 @@ export class FileRepository implements FileRepositoryOperator {
    * @param strategy - The storage strategy used to read the file.
    * @returns A readable Stream proxying the file data, or `undefined`.
    */
-  getFileStream(id: string, strategy: StorageStrategy): Stream | undefined {
+  getFileStream(
+    id: string,
+    strategy: StorageStrategy
+  ): Promise<Stream | undefined> {
     if (this.inMemoryMap.has(id)) {
       const record = this.inMemoryMap.get(id);
       if (record && record.filename) {
@@ -105,9 +108,9 @@ export class FileRepository implements FileRepositoryOperator {
             proxyStream.destroy(err);
           });
 
-        return proxyStream;
+        return Promise.resolve(proxyStream);
       }
     }
-    return undefined;
+    return Promise.resolve(undefined);
   }
 }

@@ -1,10 +1,12 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
+import type { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 
 describe('ImageController', () => {
   let mockFileRepo: jest.Mocked<FileRepositoryOperator>;
+  let mockStrategy: jest.Mocked<StorageStrategy>;
   let imageController: ImageController;
 
   let mockRequest: Partial<Request>;
@@ -18,7 +20,14 @@ describe('ImageController', () => {
       getFileStream: jest.fn()
     };
 
-    imageController = new ImageController(mockFileRepo);
+    mockStrategy = {
+      write: jest.fn(),
+      read: jest.fn(),
+      remove: jest.fn(),
+      resolvePath: jest.fn()
+    } as jest.Mocked<StorageStrategy>;
+
+    imageController = new ImageController(mockFileRepo, mockStrategy);
 
     mockRequest = {
       params: {}
