@@ -3,12 +3,12 @@ import type { Request, Response } from 'express';
 import { TemplateService } from '../services/template-service';
 
 export class TemplateController {
-  templateServ: TemplateService;
+  service: TemplateService;
   constructor(templateServ: TemplateService) {
-    this.templateServ = templateServ;
+    this.service = templateServ;
   }
   getTemplates = (req: Request, res: Response) => {
-    const cache = this.templateServ.templateCache;
+    const cache = this.service.templateCache;
 
     if (cache.length === 0) {
       return res.status(503).json({ error: 'Cache empty' });
