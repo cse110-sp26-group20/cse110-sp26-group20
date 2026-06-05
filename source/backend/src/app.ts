@@ -41,7 +41,7 @@ app.use(express.json());
 app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/img', getImgRouter(imageController));
-app.use('app/template', getTempRouter(tempController));
+app.use('/api/template', getTempRouter(tempController));
 
 /**
  * Example usage:
