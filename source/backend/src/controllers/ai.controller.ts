@@ -6,6 +6,26 @@ import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 import { ImagePrompt } from '../models/image-prompt';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
+
+// jsdoc comment for the AIController class
+/**
+ * AIController is responsible for handling AI-related requests, specifically for generating images based on prompts. 
+ * It uses a Universal AI provider to generate images and a file repository to store the generated images. 
+ *
+ * @class AIController
+ * @constructor
+ * @param {IUniversalAIProvider} aiGenerator - An instance of a Universal AI provider for generating images.
+ * @param {FileRepositoryOperator} fileRepo - An instance of a file repository operator for managing file storage.
+ * @param {StorageStrategy} strategy - The storage strategy to use for saving generated images.
+ * @method generateResponse - Handles the incoming request to generate an image based on a prompt and returns the result.
+ * Request body should contain:
+ * - prompt: A string describing the image to be generated.
+ * - imageId: A string representing the ID of an existing image file to be used as a reference for generation.
+ * Response will contain:
+ * - id: The ID of the generated image file.
+ * - url: The URL or local path to access the generated image.
+ * Error handling is implemented to return appropriate status codes and messages for invalid input or server errors.
+*/
 export class AIController {
   // Use Dependency Injection for UniversalAI instead of the actual implementation.
   constructor(
@@ -13,16 +33,32 @@ export class AIController {
     private readonly fileRepo: FileRepositoryOperator,
     private readonly strategy: StorageStrategy
   ) {}
-  generateResponse = async (req: Request, res: Response) => {
+  async generateResponse(req: Request, res: Response) {
     try {
-      const { prompt } = req.body;
+      const { prompt, imageId} = req.body;
+      // check prompt
       if (typeof prompt !== 'string' || prompt.trim().length === 0) {
         return res.status(400).json({ error: 'Prompt is required' });
       }
 
+      // check file id of the passed image
+      if (!imageId || typeof imageId !== 'string') {
+        return res.status(400).json({ error: 'Valid imageId is required' });
+      }
+
+      const existingFile = this.fileRepo.getFileById(imageId);
+      if (!existingFile) {
+        return res.status(404).json({ error: 'Image not found' });
+      }
+
       const imagePrompt = new ImagePrompt(prompt);
+      imagePrompt.setArgument('img', this.fileRepo.getFileStream(imageId, this.strategy));
+      imagePrompt.setArgument('name', existingFile.filename);
+      imagePrompt.setArgument('type', existingFile.type); 
+      
       imagePrompt.parseRawPromptToArgs();
       const response = await this.aiGenerator.generateImage(imagePrompt);
+
       const file: Partial<FileRecord> = {};
       if (response && response.getImage()) {
         const img = response.getImage();
@@ -37,15 +73,9 @@ export class AIController {
         file.localPath = fileResult.localPath;
       }
 
-      // before sending the response, update the image buffer array to something the frontend can handle, such as a base64 string
       res.status(200).json({
         id: file.id,
         url: file.localPath || (await this.strategy.resolvePath(file.id || ''))
-        // image: Buffer.from(response.getImage().payload).toString('base64'), // ← convert here
-        // format: response.getImage().format,
-        // width: response.getImage().width,
-        // height: response.getImage().height,
-        // metadata: response.getMetadata()
       });
     } catch (error) {
       console.error('Failed to generate AI response', error);

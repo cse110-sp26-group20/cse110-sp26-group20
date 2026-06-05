@@ -13,13 +13,17 @@ import { FileRecord, type FileRepositoryOperator } from './models/file-system';
 import type { IUniversalAIProvider } from './models/universal-ai-provider';
 import { createAIRouter } from './routers/ai.router';
 import { OpenAIProvider } from './services/openai-provider';
+import { OpenAI } from 'openai';
+import config from './config';
 
 const app = express();
 
 app.use(express.json());
 
 // IoC for aiController
-const aiGenerator: IUniversalAIProvider = new OpenAIProvider();
+const aiGenerator: IUniversalAIProvider = new OpenAIProvider(
+  new OpenAI({ apiKey: config.openaiApiKey })
+);
 const fakeFileRepo = {
   saveFile(_file, metadata, _strategy) {
     console.log('do nothing!!!');

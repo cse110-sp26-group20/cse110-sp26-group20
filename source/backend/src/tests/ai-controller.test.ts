@@ -58,7 +58,7 @@ describe('AIController', () => {
   });
 
   it('should return 200 and image data on success', async () => {
-    mockReq.body = { prompt: 'a cute cat' };
+    mockReq.body = { prompt: 'a cute cat', imageId: 'existing-id' };
 
     const fakePayload = Buffer.from('fake-image-data');
     mockGenerator.generateImage.mockResolvedValueOnce({
@@ -70,6 +70,16 @@ describe('AIController', () => {
       }),
       getMetadata: () => ({ revised_prompt: 'a very cute cat' })
     } as unknown as ImageResponse);
+
+    mockFileRepo.getFileById.mockReturnValueOnce({
+      id: 'existing-id',
+      filename: 'input.png',
+      localPath: '/tmp/input.png',
+      type: 'image/png',
+      create: new Date(),
+      matedata: {}
+    } as unknown as FileRecord);
+    mockFileRepo.getFileStream.mockReturnValueOnce(undefined);
 
     mockFileRepo.saveFile.mockReturnValueOnce({
       id: '1',
