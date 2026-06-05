@@ -33,9 +33,9 @@ classDiagram
         -String registryFilePath
         
         +constructor(generator: IDGenerator)
-        +saveFile(file: Buffer | Stream, metadata: Partial~FileRecord~, strategy: IStorageStrategy): FileRecord
+        +saveFile(file: Buffer | Stream, metadata: Partial~FileRecord~, strategy: IStorageStrategy): Promise~FileRecord~
         +getFileById(id: String): FileRecord
-        +getFileStream(id: String, strategy: IStorageStrategy): Stream
+        +getFileStream(id: String, strategy: IStorageStrategy): Promise~Stream~
     }
     class IDGenerator{
         <<interface>>
