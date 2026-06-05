@@ -57,7 +57,7 @@ export class TemplateService {
               ? Buffer.alloc(0)
               : Buffer.from(await (await fetch(meme.url)).arrayBuffer());
 
-          const savedRecord = this.fileRepo.saveFile(
+          const savedRecord = await this.fileRepo.saveFile(
             imageBuffer,
             {
               filename: meme.name,
