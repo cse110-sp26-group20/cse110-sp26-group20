@@ -10,9 +10,11 @@ import express, {
 import { isHttpError } from 'http-errors';
 
 import { ImageController } from './controllers/image.controller';
+import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
 import { getImgRouter } from './routers/image.router';
+import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
 import { TemplateService } from './services/template-service';
 
@@ -24,11 +26,8 @@ const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
-const imageController = new ImageController(
-  fileRepository,
-  storageStrategy,
-  templateService
-);
+const imageController = new ImageController(fileRepository, storageStrategy);
+const tempController = new TemplateController(templateService);
 
 templateService.bootstrapTemplates();
 
@@ -42,6 +41,7 @@ app.use(express.json());
 app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/img', getImgRouter(imageController));
+app.use('/api/template', getTempRouter(tempController));
 
 /**
  * Example usage:
