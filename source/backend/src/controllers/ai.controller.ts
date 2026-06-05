@@ -6,11 +6,10 @@ import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 import { ImagePrompt } from '../models/image-prompt';
 import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
-
 // jsdoc comment for the AIController class
 /**
- * AIController is responsible for handling AI-related requests, specifically for generating images based on prompts. 
- * It uses a Universal AI provider to generate images and a file repository to store the generated images. 
+ * AIController is responsible for handling AI-related requests, specifically for generating images based on prompts.
+ * It uses a Universal AI provider to generate images and a file repository to store the generated images.
  *
  * @class AIController
  * @constructor
@@ -25,7 +24,7 @@ import type { IUniversalAIProvider } from '../models/universal-ai-provider';
  * - id: The ID of the generated image file.
  * - url: The URL or local path to access the generated image.
  * Error handling is implemented to return appropriate status codes and messages for invalid input or server errors.
-*/
+ */
 export class AIController {
   // Use Dependency Injection for UniversalAI instead of the actual implementation.
   constructor(
@@ -35,7 +34,7 @@ export class AIController {
   ) {}
   async generateResponse(req: Request, res: Response) {
     try {
-      const { prompt, imageId} = req.body;
+      const { prompt, imageId } = req.body;
       // check prompt
       if (typeof prompt !== 'string' || prompt.trim().length === 0) {
         return res.status(400).json({ error: 'Prompt is required' });
@@ -52,10 +51,13 @@ export class AIController {
       }
 
       const imagePrompt = new ImagePrompt(prompt);
-      imagePrompt.setArgument('img', this.fileRepo.getFileStream(imageId, this.strategy));
+      imagePrompt.setArgument(
+        'img',
+        this.fileRepo.getFileStream(imageId, this.strategy)
+      );
       imagePrompt.setArgument('name', existingFile.filename);
-      imagePrompt.setArgument('type', existingFile.type); 
-      
+      imagePrompt.setArgument('type', existingFile.type);
+
       imagePrompt.parseRawPromptToArgs();
       const response = await this.aiGenerator.generateImage(imagePrompt);
 
@@ -81,5 +83,5 @@ export class AIController {
       console.error('Failed to generate AI response', error);
       res.status(500).json({ error: 'Failed to generate AI response' });
     }
-  };
+  }
 }

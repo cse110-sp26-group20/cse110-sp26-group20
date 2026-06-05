@@ -6,15 +6,15 @@ import express, {
   type Response
 } from 'express';
 import { isHttpError } from 'http-errors';
+import { OpenAI } from 'openai';
 
+import config from './config';
 import { AIController } from './controllers/ai.controller';
 import { NoStorageStrategy } from './models/file-storage';
 import { FileRecord, type FileRepositoryOperator } from './models/file-system';
 import type { IUniversalAIProvider } from './models/universal-ai-provider';
 import { createAIRouter } from './routers/ai.router';
 import { OpenAIProvider } from './services/openai-provider';
-import { OpenAI } from 'openai';
-import config from './config';
 
 const app = express();
 

@@ -29,7 +29,7 @@ describe('Open AI Generator', () => {
     const fakeB64 = Buffer.from('fake-image-data').toString('base64');
     mockImages.edit.mockResolvedValueOnce({
       data: [{ b64_json: fakeB64 }]
-    } as any);
+    } satisfies { data: Array<{ b64_json: string }> });
 
     const prompt = new ImagePrompt('This is an example!!! --width 512', {
       height: 512,
@@ -40,8 +40,8 @@ describe('Open AI Generator', () => {
 
     const imgResponse = await ai.generateImage(prompt);
 
-    expect(mockClient.images.edit).toHaveBeenCalledTimes(1);
-    expect(mockClient.images.edit).toHaveBeenCalledWith(
+    expect(mockImages.edit).toHaveBeenCalledTimes(1);
+    expect(mockImages.edit).toHaveBeenCalledWith(
       expect.objectContaining({
         prompt: prompt.getRawPrompt(),
         model: 'gpt-image-1-mini'
