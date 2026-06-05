@@ -1,9 +1,8 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
-import { NoStorageStrategy, StorageStrategy } from '../models/file-storage';
+import { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
-import { TemplateService } from '../services/template-service';
 
 const FAKE_ID = 'test-uuid-1234';
 
@@ -40,11 +39,7 @@ describe('ImageController.uploadImg', () => {
       resolvePath: jest.fn()
     };
 
-    imageController = new ImageController(
-      mockFileRepo,
-      mockStrategy,
-      new TemplateService(mockFileRepo, mockStrategy)
-    );
+    imageController = new ImageController(mockFileRepo, mockStrategy);
 
     mockRequest = {};
 
