@@ -33,8 +33,9 @@ class MessagesViewController: MSMessagesAppViewController {
     /// from the compact view to the full-screen view (and vice versa).
     override func willTransition(to presentationStyle: MSMessagesAppPresentationStyle) {
         super.willTransition(to: presentationStyle)
-        
+
         // Force the web view to perfectly recalculate and snap to the new layout boundaries
+        guard let webView = webView else { return }
         webView.frame = self.view.bounds
     }
 }
