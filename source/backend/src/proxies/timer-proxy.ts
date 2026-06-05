@@ -26,16 +26,19 @@ export function createTimerLogProxy<T extends object>(
           const result = originalMethod.apply(receiver as T, args) as unknown;
 
           // Preserve sync return values while still timing async work.
-          if (result && typeof (result as Promise<unknown>).then === 'function') {
+          if (
+            result &&
+            typeof (result as Promise<unknown>).then === 'function'
+          ) {
             return (result as Promise<unknown>)
-              .then(value => {
+              .then((value) => {
                 const duration = Math.round(performance.now() - startTime);
                 console.log(
                   `[SUCCESS] [${loggerName}] ${methodName} - time: ${duration}ms`
                 );
                 return value;
               })
-              .catch(error => {
+              .catch((error) => {
                 const duration = Math.round(performance.now() - startTime);
                 console.error(
                   `[ERROR] [${loggerName}] ${methodName} - time: ${duration}ms`
@@ -51,7 +54,9 @@ export function createTimerLogProxy<T extends object>(
           return result;
         } catch (error) {
           const duration = Math.round(performance.now() - startTime);
-          console.error(`[ERROR] [${loggerName}] ${methodName} - time: ${duration}ms`);
+          console.error(
+            `[ERROR] [${loggerName}] ${methodName} - time: ${duration}ms`
+          );
           throw error;
         }
       };
