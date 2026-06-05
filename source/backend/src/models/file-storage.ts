@@ -7,23 +7,30 @@ export abstract class StorageStrategy {
    * @param fileStream stream
    * @return path/filename.ext
    */
-  abstract write(filename: string, fileStream: Buffer | Stream): string;
-  abstract read(filename: string): Stream;
-  abstract remove(filename: string): boolean;
-  abstract resolvePath(filename: string): string;
+  abstract write(
+    filename: string,
+    fileStream: Buffer | Stream
+  ): Promise<string>;
+
+  abstract read(filename: string): Promise<Stream>;
+  abstract remove(filename: string): Promise<boolean>;
+  abstract resolvePath(filename: string): Promise<string>;
 }
 
-export class NoStorageStrategy implements StorageStrategy {
-  write(): string {
+export class NoStorageStrategy extends StorageStrategy {
+  async write(): Promise<string> {
     return '';
   }
-  read(): Stream {
+
+  async read(): Promise<Stream> {
     return Readable.from([]);
   }
-  remove(): boolean {
+
+  async remove(): Promise<boolean> {
     return false;
   }
-  resolvePath(): string {
+
+  async resolvePath(): Promise<string> {
     return '';
   }
 }

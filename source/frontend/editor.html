@@ -5,20 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MemeLab Editor</title>
     <link rel="stylesheet" href="assets/styles/editor.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://kit.fontawesome.com/9f8f81d6ad.js" crossorigin="anonymous"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/9f8f81d6ad.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <header class="site-header">
       <!-- logo + navigation on single row -->
       <div class="header-top">
-        <a href="home.html" aria-label="MemeLab home">
-          <img src="assets/images/memelab_logo.svg" alt="MemeLab Logo" class="logo-image">
+        <a href="index.html" aria-label="MemeLab home">
+          <img
+            src="assets/images/memelab-logo.svg"
+            alt="MemeLab Logo"
+            class="logo-image"
+          />
         </a>
         <nav class="header-nav" aria-label="Main navigation">
           <a href="template.html" class="nav-link">Templates</a>
           <a href="export.html" class="nav-link">Export</a>
         </nav>
+      </div>
+
+      <!-- logo centered on separate row as navigation -->
+      <div class="header-subnav">
+        <a href="template.html" class="nav-link">&#8592; Templates</a>
+        <a href="export.html" class="nav-link">Export &#8594;</a>
       </div>
     </header>
 
@@ -38,7 +54,7 @@
           type="button"
           aria-pressed="true"
         >
-        <i class="fa-solid fa-t"></i>
+          <i class="fa-solid fa-t"></i>
           <span class="tool-label">Text</span>
         </button>
         <button
@@ -47,7 +63,7 @@
           type="button"
           aria-pressed="false"
         >
-         <i class="fa-regular fa-image"></i>
+          <i class="fa-regular fa-image"></i>
           <span class="tool-label">Images</span>
         </button>
         <button
@@ -56,7 +72,7 @@
           type="button"
           aria-pressed="false"
         >
-        <i class="fa-solid fa-sliders"></i>
+          <i class="fa-solid fa-sliders"></i>
           <span class="tool-label">Filters</span>
         </button>
         <button
@@ -65,7 +81,7 @@
           type="button"
           aria-pressed="false"
         >
-         <i class="fa-brands fa-openai"></i>
+          <i class="fa-brands fa-openai"></i>
           <span class="tool-label">AI Generation</span>
         </button>
       </aside>
@@ -91,7 +107,11 @@
       </section>
 
       <!-- RIGHT CONTROLS PANEL -->
-      <aside class="controls-panel" id="controls-panel" aria-label="Text controls">
+      <aside
+        class="controls-panel"
+        id="controls-panel"
+        aria-label="Text controls"
+      >
         <!-- TEXT PANEL -->
         <div class="tool-panel" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->
@@ -144,7 +164,11 @@
 
             <!-- Desktop: dropdown controls -->
             <div class="desktop-only">
-              <select id="font-family" class="select-input" aria-label="Font family">
+              <select
+                id="font-family"
+                class="select-input"
+                aria-label="Font family"
+              >
                 <option value="Times New Roman">Times New Roman</option>
                 <option value="Impact">Impact</option>
                 <option value="Arial">Arial</option>
@@ -156,7 +180,10 @@
 
               <div class="font-detail-row">
                 <select
-                  id="font-weight" class="select-input" aria-label="Font style">
+                  id="font-weight"
+                  class="select-input"
+                  aria-label="Font style"
+                >
                   <option value="bold">Bold</option>
                   <option value="normal">Normal</option>
                   <option value="italic">Italic</option>
@@ -183,10 +210,10 @@
               <div class="font-btn-row">
                 <label>Font</label>
                 <div class="font-btn-group">
-                  <button class="font-btn" type="button"> Impact </button>
-                  <button class="font-btn" type="button"> Arial </button>
-                  <button class="font-btn" type="button"> Comic </button>
-                  <button class="font-btn" type="button"> Times NR </button>
+                  <button class="font-btn" type="button">Impact</button>
+                  <button class="font-btn" type="button">Arial</button>
+                  <button class="font-btn" type="button">Comic</button>
+                  <button class="font-btn" type="button">Times NR</button>
                 </div>
               </div>
             </div>
@@ -205,8 +232,12 @@
                 style="background-color: #000000"
                 aria-label="Current color preview"
               >
-                <input type="color" id="color-picker-desktop"
-                  class="color-picker-hidden" value="#000000" />
+                <input
+                  type="color"
+                  id="color-picker-desktop"
+                  class="color-picker-hidden"
+                  value="#000000"
+                />
               </label>
               <input
                 type="text"
@@ -236,7 +267,7 @@
                 aria-label="Custom color"
                 title="Pick a custom color"
               >
-                <img src="assets/images/rainbow-beaker.svg" alt="">
+                <img src="assets/images/rainbow-beaker.svg" alt="" />
                 <input
                   type="color"
                   id="color-picker-input"
@@ -246,25 +277,53 @@
                 />
               </label>
 
-              
-
-              <button class="color-btn" data-color="#e03535" type="button" aria-label="Red">
-                <img src="assets/images/red-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#e03535"
+                type="button"
+                aria-label="Red"
+              >
+                <img src="assets/images/red-beaker.svg" alt="" />
               </button>
-              <button class="color-btn" data-color="#e07820" type="button" aria-label="Orange">
-                <img src="assets/images/orange-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#e07820"
+                type="button"
+                aria-label="Orange"
+              >
+                <img src="assets/images/orange-beaker.svg" alt="" />
               </button>
-              <button class="color-btn" data-color="#d4c020" type="button" aria-label="Yellow">
-                <img src="assets/images/yellow-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#d4c020"
+                type="button"
+                aria-label="Yellow"
+              >
+                <img src="assets/images/yellow-beaker.svg" alt="" />
               </button>
-              <button class="color-btn" data-color="#1aaa55" type="button" aria-label="Green">
-                <img src="assets/images/green-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#1aaa55"
+                type="button"
+                aria-label="Green"
+              >
+                <img src="assets/images/green-beaker.svg" alt="" />
               </button>
-              <button class="color-btn" data-color="#3355cc" type="button" aria-label="Blue">
-                <img src="assets/images/blue-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#3355cc"
+                type="button"
+                aria-label="Blue"
+              >
+                <img src="assets/images/blue-beaker.svg" alt="" />
               </button>
-              <button class="color-btn" data-color="#7733cc" type="button" aria-label="Purple">
-                <img src="assets/images/purple-beaker.svg" alt="">
+              <button
+                class="color-btn"
+                data-color="#7733cc"
+                type="button"
+                aria-label="Purple"
+              >
+                <img src="assets/images/purple-beaker.svg" alt="" />
               </button>
             </div>
           </div>
@@ -273,49 +332,83 @@
         <!-- FILTERS PANEL -->
         <div class="tool-panel active" id="filters-panel" role="tabpanel">
           <div class="filter" id="filter-1">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Normal</p>
           </div>
           <div class="filter" id="filter-2">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Black & White</p>
           </div>
           <div class="filter" id="filter-3">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Distorted</p>
           </div>
           <div class="filter" id="filter-4">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Toaster</p>
           </div>
           <div class="filter" id="filter-5">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up" >
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Low-Resolution</p>
           </div>
           <div class="filter" id="filter-6">
-            <img src="assets/images/baby-meme.jpg" alt="image of a baby holding his fist up">
+            <img
+              src="assets/images/baby-meme.jpg"
+              alt="image of a baby holding his fist up"
+            />
             <p>Glitch</p>
           </div>
-          
-        </div>  
+        </div>
 
-            <img src="assets/images/template-hexagons.svg" class="hexagon-decor" alt="">
-
+        <img
+          src="assets/images/template-hexagons.svg"
+          class="hexagon-decor"
+          alt=""
+        />
       </aside>
     </div>
 
     <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
     <nav class="mobile-tab-bar" aria-label="Editor tool tabs" role="tablist">
-      <button class="tab-btn" type="button" role="tab" aria-controls="text-panel">
+      <button
+        class="tab-btn"
+        type="button"
+        role="tab"
+        aria-controls="text-panel"
+      >
         <i class="fa-solid fa-t"></i>
         <span class="tab-label">Text</span>
       </button>
       <button
-        class="tab-btn" type="button" role="tab" aria-controls="stickers-panel">
+        class="tab-btn"
+        type="button"
+        role="tab"
+        aria-controls="stickers-panel"
+      >
         <i class="fa-regular fa-image"></i>
-        <span class="tab-label">Stickers</span>
+        <span class="tab-label">Images</span>
       </button>
-      <button class="tab-btn" type="button" role="tab" aria-controls="filters-panel">
+      <button
+        class="tab-btn"
+        type="button"
+        role="tab"
+        aria-controls="filters-panel"
+      >
         <i class="fa-solid fa-sliders"></i>
         <span class="tab-label">Filters</span>
       </button>
@@ -325,5 +418,10 @@
       </button>
     </nav>
 
+    <img
+      src="assets/images/template-hexagons.svg"
+      class="hexagon-decor"
+      alt=""
+    />
   </body>
 </html>

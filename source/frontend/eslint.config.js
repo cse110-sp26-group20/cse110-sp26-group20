@@ -5,18 +5,12 @@ import eslintConfigPrettier from 'eslint-config-prettier';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
 
-export default defineConfig(
-  js.configs.recommended,
-  eslintConfigPrettier,
-  {
-    files: ['**/*.js'],
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-      globals: globals.browser
-    }
-  },
-  {
-    ignores: ['node_modules/**']
+export default defineConfig(js.configs.recommended, eslintConfigPrettier, {
+  files: ['**/*.js'],
+  ignores: ['node_modules/**'],
+  languageOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    globals: globals.browser
   }
-);
+});

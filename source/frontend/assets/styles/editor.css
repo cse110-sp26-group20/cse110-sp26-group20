@@ -1,4 +1,4 @@
-@import "./global.css";
+@import './global.css';
 :root {
   --lab-panel: #252525;
   --lab-canvas: #8a8a8a;
@@ -134,8 +134,8 @@ textarea {
 }
 
 .tool-btn svg {
-  width: 2.5rem; 
-  height: 2rem;  
+  width: 2.5rem;
+  height: 2rem;
   display: block;
 }
 
@@ -424,9 +424,9 @@ textarea {
 }
 
 .color-btn {
-  display: flex;           
-  align-items: center;     
-  justify-content: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
   background: none;
   cursor: pointer;
@@ -438,7 +438,7 @@ textarea {
 }
 
 .color-btn img {
-  width: 50px;         
+  width: 50px;
   height: 50px;
 }
 
@@ -451,7 +451,7 @@ textarea {
 }
 
 .color-picker-hidden {
-  position: fixed;   
+  position: fixed;
   opacity: 0;
   pointer-events: none;
   border: none;
@@ -468,8 +468,8 @@ textarea {
 .size-slider {
   -webkit-appearance: none;
   appearance: none;
-  height: 4px; 
-  background: var(--lab-white); 
+  height: 4px;
+  background: var(--lab-white);
   border-radius: 2px;
   cursor: pointer;
   flex: 0.7;
@@ -606,7 +606,6 @@ textarea {
   scale: 0.8;
 }
 
-
 /*---------- FILTERS TAB -------------*/
 
 #filters-panel .filter img {
@@ -629,28 +628,27 @@ textarea {
   padding-top: 2rem;
 }
 
-#filters-panel .filter{
+#filters-panel .filter {
   padding-top: 1rem;
   position: relative;
   z-index: 1;
 }
 
 #filters-panel .filter:hover img {
-  outline: 2px solid var(--lab-accent-hover)
+  outline: 2px solid var(--lab-accent-hover);
 }
 
 #filters-panel .filter:hover p {
-  color: var(--lab-accent-hover)
+  color: var(--lab-accent-hover);
 }
 
 #filters-panel .filter.active img {
-  outline: 2px solid var(--lab-accent-hover)
+  outline: 2px solid var(--lab-accent-hover);
 }
 
 #filters-panel .filter.active p {
-  color: var(--lab-accent)
+  color: var(--lab-accent);
 }
-
 
 /* Responsive mobile styles (≤ 768px) */
 @media (max-width: 768px) {
@@ -768,13 +766,12 @@ textarea {
   }
 
   #filters-panel .filter img {
-  width: 125px;
-  height: 125px;
-  object-fit: cover;
-  object-position: 0rem;
-  display: block;
-  margin: 0 auto;
-  border-radius: 10px;
-}
-
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    object-position: 0rem;
+    display: block;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
 }

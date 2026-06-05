@@ -1,0 +1,123 @@
+import type { Request, Response } from 'express';
+
+import { ImageController } from '../controllers/image.controller';
+import { NoStorageStrategy } from '../models/file-storage';
+import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
+import { TemplateService } from '../services/template-service';
+
+const fakeRepo: jest.Mocked<FileRepositoryOperator> = {
+  saveFile: jest
+    .fn()
+    .mockReturnValue(
+      new FileRecord(
+        '123',
+        'fake.jpg',
+        '/mock/path.jpg',
+        'image/jpeg',
+        new Date(),
+        {}
+      )
+    ),
+  getFileById: jest.fn(),
+  getFileStream: jest.fn()
+};
+
+const fakeStrategy = new NoStorageStrategy();
+
+describe('TemplateService', () => {
+  const originalFetch = global.fetch;
+  let templateService: TemplateService;
+
+  //creates new instance of template service before every test
+  beforeEach(() => {
+    templateService = new TemplateService(fakeRepo, fakeStrategy);
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+  });
+  test('bootstrapTemplates() fetches and saves memes', async () => {
+    const fakeImgflipData = {
+      success: true,
+      data: {
+        memes: [
+          { id: '41242', name: 'Fake Meme', url: 'http', width: 10, height: 10 }
+        ]
+      }
+    };
+
+    const fakeNetworkResponse = {
+      json: async () => fakeImgflipData,
+      arrayBuffer: async () => new ArrayBuffer(0)
+    };
+
+    global.fetch = (() =>
+      Promise.resolve(fakeNetworkResponse)) as unknown as typeof fetch;
+
+    await templateService.bootstrapTemplates();
+
+    expect(templateService.templateCache.length).toBe(1);
+    expect(templateService.templateCache[0]?.name).toBe('Fake Meme');
+  });
+
+  test('bootstrapTemplates() leaves cache empty if API fails', async () => {
+    // network crashes, so api fails
+    global.fetch = async () => {
+      throw new Error('Network Down');
+    };
+
+    await templateService.bootstrapTemplates();
+
+    expect(templateService.templateCache.length).toBe(0);
+  });
+});
+
+describe('ImageController', () => {
+  let templateService: TemplateService;
+  let imageController: ImageController;
+
+  beforeEach(() => {
+    templateService = new TemplateService(fakeRepo, fakeStrategy);
+    imageController = new ImageController(
+      fakeRepo,
+      fakeStrategy,
+      templateService
+    );
+  });
+
+  test('getTemplates() returns 503 when cache is empty', () => {
+    const fakeResponse: Partial<Response> = {
+      status: jest.fn().mockReturnThis(), //jest.fn() records info like status code or meme data
+      json: jest.fn().mockReturnThis() //mockReturnThis() returns an actual object
+    };
+
+    const req = {} as Request;
+
+    imageController.getTemplates(req, fakeResponse as Response);
+
+    expect(fakeResponse.status).toHaveBeenCalledWith(503);
+  });
+
+  test('push a fake meme, getTemplates() returns 200 when cache contains data', () => {
+    const fake = {
+      id: '11423',
+      name: 'Fake Meme',
+      url: 'http',
+      width: 500,
+      height: 500
+    };
+    templateService.templateCache.push(fake);
+
+    const fakeResponse: Partial<Response> = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn().mockReturnThis()
+    };
+
+    const req = {} as Request;
+
+    imageController.getTemplates(req, fakeResponse as Response);
+
+    expect(fakeResponse.status).toHaveBeenCalledWith(200);
+    expect(fakeResponse.json).toHaveBeenCalledWith([fake]);
+  });
+});
