@@ -44,7 +44,7 @@ function openEditor(caption) {
     editor.classList.remove("hidden");
     editor.value = caption.text;
     editor.style.left = `${canvas.offsetLeft + caption.x}px`;
-    editor.style.top = `${canvas.offsetTop + caption.y - 10}px`;
+    editor.style.top = `${canvas.offsetTop + caption.y - 25}px`;
     editor.focus();
 }
 
