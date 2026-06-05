@@ -672,6 +672,15 @@ textarea {
     padding-top: 12px;
   }
 
+.caption-editor {
+    position: absolute;
+    z-index: 100;
+}
+
+.hidden {
+    display: none;
+}
+
   .canvas-wrapper {
     flex: unset;
     padding: 0 12px;

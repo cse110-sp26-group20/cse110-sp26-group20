@@ -6,7 +6,7 @@ const savedImage = sessionStorage.getItem('uploadedImage');
 
 // text captions
 let currentImage = null;
-
+let activeCaption = null;
 let textModeEnabled = false;
 
 const topCaption = {
@@ -22,14 +22,18 @@ const bottomCaption = {
 };
 
 // text tool button
-const textButton =
-    document.querySelector(
-        '[data-tool="text"]'
-    );
+const textButton = document.querySelector('[data-tool="text"]');
+
+const editor = document.getElementById("caption-editor");
 
 // grabbing inputs from html
 const topInput = document.getElementById("top-text");
 const bottomInput = document.getElementById("bottom-text");
+
+canvas.addEventListener(
+    "click",
+    handleCanvasClick
+);
 
 topInput.addEventListener("input", (event) => {
     topCaption.text = event.target.value;
@@ -49,6 +53,38 @@ textButton.addEventListener("click", () => {
         renderCanvas();
     }
 });
+
+canvas.addEventListener(
+    "click",
+    handleCanvasClick
+);
+
+function openEditor(caption) {
+    editor.classList.remove("hidden");
+    editor.value = caption.text;
+    editor.focus();
+}
+
+function handleCanvasClick(event) {
+    const y = event.offsetY;
+    if (y < 150) {
+        activeCaption = topCaption;
+        openEditor(topCaption);
+    } else if (
+        y > canvas.height - 150
+    ) {
+        activeCaption = bottomCaption;
+
+        openEditor(bottomCaption);
+    }
+}
+
+editor.addEventListener("input", () => {
+        if (!activeCaption) return;
+        activeCaption.text = editor.value;
+        renderCanvas();
+    }
+);
 
 if (savedImage) {
     const img = new Image();
@@ -73,7 +109,6 @@ if (savedImage) {
 }
 
 function renderCanvas() {
-
     context.clearRect(
         0,
         0,
@@ -97,13 +132,14 @@ function renderCanvas() {
 
 function drawCaption(caption) {
 
+    if (!caption.text) return;
+
     context.font = "bold 60px Impact";
 
     context.fillStyle = "white";
     context.strokeStyle = "black";
 
     context.lineWidth = 4;
-
     context.textAlign = "center";
 
     context.strokeText(
