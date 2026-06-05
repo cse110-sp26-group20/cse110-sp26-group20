@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
 
 import { ImageController } from '../controllers/image.controller';
-import { StorageStrategy } from '../models/file-storage';
+import type { StorageStrategy } from '../models/file-storage';
 import type { FileRecord, FileRepositoryOperator } from '../models/file-system';
 
 const FAKE_ID = 'test-uuid-1234';
