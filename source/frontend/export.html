@@ -5,15 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="assets/styles/export.css" />
-    <script src="https://kit.fontawesome.com/9f8f81d6ad.js" crossorigin="anonymous"></script>
-</head>
+    <script
+      src="https://kit.fontawesome.com/9f8f81d6ad.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<body>
+  <body>
     <header class="export-header">
       <!-- logo + navigation on single row -->
       <div class="header-top">
         <a href="index.html" aria-label="MemeLab home">
-          <img src="assets/images/memelab-logo.svg" alt="MemeLab Logo" class="logo-image">
+          <img
+            src="assets/images/memelab-logo.svg"
+            alt="MemeLab Logo"
+            class="logo-image"
+          />
         </a>
         <nav class="header-nav" aria-label="Main navigation">
           <a href="index.html" class="nav-link">Home</a>
@@ -22,66 +29,58 @@
     </header>
 
     <main class="export-page">
-        <section class="export-caption">
-            <h1 class="page-title">Lab-tested: Meme Approved!</h1>
-        </section>
+      <section class="export-caption">
+        <h1 class="page-title">Lab-tested: Meme Approved!</h1>
+      </section>
 
-        <section class="preview-section">
-            <div class="preview-container">
-                <img id="meme-img" alt="Generated Meme Preview">
-            </div>
-        </section>
+      <section class="preview-section">
+        <div class="preview-container">
+          <img id="meme-img" alt="Generated Meme Preview" />
+        </div>
+      </section>
 
-        <section class="export-actions">
-             <button class="download-btn" id="download-btn">
-                <i class="fa-solid fa-download"></i>
-                <span>Download</span>
-            </button>
+      <section class="export-actions">
+        <button class="download-btn" id="download-btn">
+          <i class="fa-solid fa-download"></i>
+          <span>Download</span>
+        </button>
 
-            <button class="share-btn" id="share-btn">
-                <i class="fa-solid fa-share-nodes"></i>
-                <span>Share</span>
-            </button>
-        </section>
-        <div id="export-status" class="export-status" aria-live="polite"></div>
+        <button class="share-btn" id="share-btn">
+          <i class="fa-solid fa-share-nodes"></i>
+          <span>Share</span>
+        </button>
+      </section>
+      <div id="export-status" class="export-status" aria-live="polite"></div>
     </main>
 
     <!-- Share Modal -->
     <div id="share-modal" class="share-modal hidden">
+      <div class="share-modal-content">
+        <h2>Share Meme</h2>
 
-        <div class="share-modal-content">
+        <p>Your browser doesn't support direct file sharing.</p>
 
-            <h2>Share Meme</h2>
+        <div class="share-options">
+          <button id="download-fallback-btn" class="share-option">
+            <i class="fa-solid fa-download"></i>
+            Download Image
+          </button>
 
-            <p>
-            Your browser doesn't support direct file sharing.
-            </p>
+          <button id="open-image-btn" class="share-option">
+            <i class="fa-solid fa-up-right-from-square"></i>
+            Open Image
+          </button>
 
-            <div class="share-options">
-
-            <button id="download-fallback-btn" class="share-option">
-                <i class="fa-solid fa-download"></i>
-                Download Image
-            </button>
-
-            <button id="open-image-btn" class="share-option">
-                <i class="fa-solid fa-up-right-from-square"></i>
-                Open Image
-            </button>
-
-            <button id="copy-image-url-btn" class="share-option">
-                <i class="fa-solid fa-link"></i>
-                Copy Image URL
-            </button>
-
-            </div>
-
-            <button id="close-modal-btn" class="close-modal-btn">Close</button>
-
+          <button id="copy-image-url-btn" class="share-option">
+            <i class="fa-solid fa-link"></i>
+            Copy Image URL
+          </button>
         </div>
 
+        <button id="close-modal-btn" class="close-modal-btn">Close</button>
+      </div>
     </div>
 
     <script src="assets/scripts/export.js" type="module" defer></script>
-</body>
+  </body>
 </html>

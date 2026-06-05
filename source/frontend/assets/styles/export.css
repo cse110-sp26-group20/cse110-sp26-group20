@@ -1,14 +1,13 @@
 @import './global.css';
-:root{
-    --lab-canvas: #8a8a8a;
-    --purple-gradient-black: rgba(123, 44, 255, 0);
-    --purple-gradient-light: rgba(123, 44, 255, 0.7);
-    --purple-gradient-dark: rgba(123, 44, 255, 0.25);
+:root {
+  --lab-canvas: #8a8a8a;
+  --purple-gradient-black: rgba(123, 44, 255, 0);
+  --purple-gradient-light: rgba(123, 44, 255, 0.7);
+  --purple-gradient-dark: rgba(123, 44, 255, 0.25);
 
-    --green-gradient-black:rgba(46, 204, 113, 0);
-    --green-gradeint-light: rgba(46, 204, 113, 0.7);
-    --green-gradient-dark:rgba(46, 204, 113, 0.25);
-
+  --green-gradient-black: rgba(46, 204, 113, 0);
+  --green-gradeint-light: rgba(46, 204, 113, 0.7);
+  --green-gradient-dark: rgba(46, 204, 113, 0.25);
 }
 
 * {
@@ -24,7 +23,6 @@ body {
   flex-direction: column;
   overflow: hidden;
 }
-
 
 .export-header {
   display: flex;
@@ -47,7 +45,6 @@ body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  
 }
 
 .header-nav {
@@ -73,35 +70,32 @@ body {
   object-fit: contain;
 }
 
-
-.export-page{
-    align-items: center;
-
+.export-page {
+  align-items: center;
 }
 
-.export-caption{
-    width: 100%;
-    max-width: 900px;
+.export-caption {
+  width: 100%;
+  max-width: 900px;
 
-    margin: 3rem auto 2rem;
-    padding: 0 1rem;
+  margin: 3rem auto 2rem;
+  padding: 0 1rem;
 
-    text-align: center;
+  text-align: center;
 
-    color: var(--lab-purple);
+  color: var(--lab-purple);
 
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 700;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
 
-    text-shadow: 0 0 12px rgba(195, 176, 232, 0.25);
-
+  text-shadow: 0 0 12px rgba(195, 176, 232, 0.25);
 }
 
 .page-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0;
 }
 
 .preview-section {
@@ -128,17 +122,14 @@ body {
   background-color: var(--lab-canvas);
 
   border-radius: 32px;
-  border: 2px solid rgba(255,255,255,0.08);
-
+  border: 2px solid rgba(255, 255, 255, 0.08);
 
   box-shadow:
-    inset 0 0 10px rgba(0,0,0,0.2),
-    0 4px 12px rgba(0,0,0,0.25);
+    inset 0 0 10px rgba(0, 0, 0, 0.2),
+    0 4px 12px rgba(0, 0, 0, 0.25);
 
   overflow: hidden;
 }
-
-
 
 #meme-img {
   display: block;
@@ -151,7 +142,6 @@ body {
 
   object-fit: contain;
 }
-
 
 .export-actions {
   display: flex;
@@ -188,7 +178,7 @@ body {
   transition: all 0.2s ease;
 
   color: var(--lab-white);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
 
 .download-btn {
@@ -200,14 +190,14 @@ body {
 
   box-shadow:
     0 0 18px var(--purple-gradient-dark),
-    0 10px 25px rgba(0,0,0,0.4);
+    0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
 .download-btn:hover {
   transform: translateY(-2px);
   box-shadow:
     0 0 25px var(--purple-gradient-light),
-    0 12px 30px rgba(0,0,0,0.5);
+    0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .share-btn {
@@ -219,15 +209,14 @@ body {
 
   box-shadow:
     0 0 18px var(--green-gradient-dark),
-    0 10px 25px rgba(0,0,0,0.4);
+    0 10px 25px rgba(0, 0, 0, 0.4);
 }
-
 
 .share-btn:hover {
   transform: translateY(-2px);
   box-shadow:
     0 0 25px var(--green-gradeint-light),
-    0 12px 30px rgba(0,0,0,0.5);
+    0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .share-modal {
@@ -238,7 +227,7 @@ body {
   align-items: center;
   justify-content: center;
 
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(6px);
 
   z-index: 1000;
@@ -263,7 +252,7 @@ body {
 
   gap: 1.2rem;
 
-  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
 }
 
 .share-modal-content h2 {
@@ -331,11 +320,7 @@ body {
   color: var(--lab-white);
 }
 
-
-
-
 @media (max-width: 768px) {
-
   .export-header {
     height: auto;
     padding: 12px 0;
@@ -356,7 +341,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
   .preview-container {
     min-height: 250px;
     padding: 1rem;
@@ -365,5 +349,4 @@ body {
   #meme-img {
     max-height: 50vh;
   }
-
 }
