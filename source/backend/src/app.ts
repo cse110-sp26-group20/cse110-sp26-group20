@@ -14,6 +14,7 @@ import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
 import { getImgRouter } from './routers/image.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
+import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
 // path stays consistent regardless of how the server is invoked
@@ -22,7 +23,14 @@ const uploadDir = join(process.cwd(), 'uploads');
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
-const imageController = new ImageController(fileRepository, storageStrategy);
+const templateService = new TemplateService(fileRepository, storageStrategy);
+const imageController = new ImageController(
+  fileRepository,
+  storageStrategy,
+  templateService
+);
+
+templateService.bootstrapTemplates();
 
 const app = express();
 
@@ -33,7 +41,7 @@ app.use(express.json());
 // resolvePath() returns, e.g. GET /uploads/abc123.jpg
 app.use('/uploads', express.static(uploadDir));
 
-app.use('/api/img', getImgRouter(imageController));
+app.use('/api/images', getImgRouter(imageController));
 
 /**
  * Example usage:
