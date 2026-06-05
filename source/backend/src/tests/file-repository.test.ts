@@ -47,13 +47,13 @@ describe('FileRepository', () => {
     expect(id).toEqual('1');
   });
 
-  test('FileRepository should save a file and return FileRecord with correct ID and metadata', () => {
+  test('FileRepository should save a file and return FileRecord with correct ID and metadata', async () => {
     const buffer = Buffer.alloc(5);
     buffer.write('test\0');
     const record: Partial<FileRecord> = {};
     record.metadata = { width: 100, height: 500 };
     record.type = 'image/png';
-    const result = fileRepository.saveFile(buffer, record, strategy);
+    const result = await fileRepository.saveFile(buffer, record, strategy);
     expect(result.id).toEqual('1');
     expect(result.metadata['width']).toBe(100);
     expect(result.metadata['height']).toBe(500);
@@ -68,7 +68,7 @@ describe('FileRepository', () => {
     for (let index = 0; index < 100; index++) {
       const record: Partial<FileRecord> = {};
       record.type = 'image/png';
-      fileRepository.saveFile(Readable.from([]), record, strategy);
+      await fileRepository.saveFile(Readable.from([]), record, strategy);
     }
 
     // ID '1' was skipped, so it should not be in the repository
@@ -81,10 +81,10 @@ describe('FileRepository', () => {
       expect(element).toBeDefined();
       expect(element?.id).toBe(index.toString());
 
-      const stream = fileRepository.getFileStream(
+      const stream = (await fileRepository.getFileStream(
         index.toString(),
         strategy
-      ) as Readable;
+      )) as Readable;
       const buffer = await streamToBuffer(stream);
       expect(buffer.length).toBe(0);
     }
