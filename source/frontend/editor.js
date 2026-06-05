@@ -7,6 +7,8 @@ const savedImage = sessionStorage.getItem('uploadedImage');
 // text captions
 let currentImage = null;
 
+let textModeEnabled = false;
+
 const topCaption = {
     text: "",
     x: 0,
@@ -18,6 +20,12 @@ const bottomCaption = {
     x: 0,
     y: 0
 };
+
+// text tool button
+const textButton =
+    document.querySelector(
+        '[data-tool="text"]'
+    );
 
 // grabbing inputs from html
 const topInput = document.getElementById("top-text");
@@ -33,12 +41,23 @@ bottomInput.addEventListener("input", (event) => {
     renderCanvas();
 });
 
+textButton.addEventListener("click", () => {
+    if (!textModeEnabled) {
+        topCaption.text = "TOP TEXT";
+        bottomCaption.text = "BOTTOM TEXT";
+        textModeEnabled = true;
+        renderCanvas();
+    }
+});
+
 if (savedImage) {
     const img = new Image();
     img.src = savedImage; //assigns chosen image to image element & decodes base64 url
     
     //once img is decoded, draw image to canvas with context object
     img.onload = () => {
+        currentImage = img;
+
         canvas.width = img.width;
         canvas.height = img.height;
 
