@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import { ImageController } from '../controllers/image.controller';
+import { TemplateController } from '../controllers/template.controller';
 import { NoStorageStrategy } from '../models/file-storage';
 import { FileRecord, type FileRepositoryOperator } from '../models/file-system';
 import { TemplateService } from '../services/template-service';
@@ -74,15 +74,11 @@ describe('TemplateService', () => {
 
 describe('ImageController', () => {
   let templateService: TemplateService;
-  let imageController: ImageController;
+  let imageController: TemplateController;
 
   beforeEach(() => {
     templateService = new TemplateService(fakeRepo, fakeStrategy);
-    imageController = new ImageController(
-      fakeRepo,
-      fakeStrategy,
-      templateService
-    );
+    imageController = new TemplateController(templateService);
   });
 
   test('getTemplates() returns 503 when cache is empty', () => {

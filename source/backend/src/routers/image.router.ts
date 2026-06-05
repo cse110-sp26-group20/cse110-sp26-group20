@@ -25,7 +25,6 @@ const upload = multer({
  */
 export function getImgRouter(controller: ImageController) {
   const router = Router();
-  router.get('/templates', controller.getTemplates);
   router.get('/:id', controller.getImg.bind(controller));
   router.post(
     '/',
