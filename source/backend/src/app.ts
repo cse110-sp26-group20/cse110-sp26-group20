@@ -24,7 +24,6 @@ app.use(express.json());
  * const imageController = new ImageController(proxiedImageService);
  */
 
-
 /**
  * Error handler; all errors thrown by server are handled here.
  * Explicit typings required here because TypeScript cannot infer the argument types.
