@@ -74,11 +74,11 @@ describe('TemplateService', () => {
 
 describe('TemplateController', () => {
   let templateService: TemplateService;
-  let imageController: TemplateController;
+  let tempController: TemplateController;
 
   beforeEach(() => {
     templateService = new TemplateService(fakeRepo, fakeStrategy);
-    imageController = new TemplateController(templateService);
+    tempController = new TemplateController(templateService);
   });
 
   test('getTemplates() returns 503 when cache is empty', () => {
@@ -89,7 +89,7 @@ describe('TemplateController', () => {
 
     const req = {} as Request;
 
-    imageController.getTemplates(req, fakeResponse as Response);
+    tempController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(503);
   });
@@ -111,7 +111,7 @@ describe('TemplateController', () => {
 
     const req = {} as Request;
 
-    imageController.getTemplates(req, fakeResponse as Response);
+    tempController.getTemplates(req, fakeResponse as Response);
 
     expect(fakeResponse.status).toHaveBeenCalledWith(200);
     expect(fakeResponse.json).toHaveBeenCalledWith([fake]);

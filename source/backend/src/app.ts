@@ -40,7 +40,7 @@ app.use(express.json());
 // resolvePath() returns, e.g. GET /uploads/abc123.jpg
 app.use('/uploads', express.static(uploadDir));
 
-app.use('/api/ima', getImgRouter(imageController));
+app.use('/api/img', getImgRouter(imageController));
 app.use('app/template', getTempRouter(tempController));
 
 /**
