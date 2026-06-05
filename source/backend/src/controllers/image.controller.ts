@@ -2,14 +2,20 @@ import type { NextFunction, Request, Response } from 'express';
 
 import type { StorageStrategy } from '../models/file-storage';
 import type { FileRepositoryOperator } from '../models/file-system';
+import { TemplateService } from '../services/template-service';
 
 export class ImageController {
   fileRepo: FileRepositoryOperator;
   strategy: StorageStrategy;
-
-  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+  templateServ: TemplateService;
+  constructor(
+    fileRepo: FileRepositoryOperator,
+    strategy: StorageStrategy,
+    templateServ: TemplateService
+  ) {
     this.fileRepo = fileRepo;
     this.strategy = strategy;
+    this.templateServ = templateServ;
   }
 
   /**
@@ -74,4 +80,14 @@ export class ImageController {
       nextFunc(error);
     }
   }
+
+  getTemplates = (req: Request, res: Response) => {
+    const cache = this.templateServ.templateCache;
+
+    if (cache.length === 0) {
+      return res.status(503).json({ error: 'Cache empty' });
+    }
+
+    return res.status(200).json(cache);
+  };
 }
