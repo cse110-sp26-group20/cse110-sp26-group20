@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import { join } from 'path';
+import cors from 'cors';
 import express, {
   type NextFunction,
   type Request,
@@ -32,6 +33,8 @@ const imageController = new ImageController(
 templateService.bootstrapTemplates();
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 // serve uploaded files as static assets under the same path that
