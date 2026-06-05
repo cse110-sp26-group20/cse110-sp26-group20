@@ -1,6 +1,7 @@
 import 'dotenv/config';
 
 import { join } from 'path';
+import cors from 'cors';
 import express, {
   type NextFunction,
   type Request,
@@ -24,6 +25,8 @@ const fileRepository = new InMemoryFileRepository(idGenerator);
 const imageController = new ImageController(fileRepository, storageStrategy);
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 // serve uploaded files as static assets under the same path that
