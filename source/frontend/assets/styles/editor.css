@@ -258,7 +258,8 @@ textarea {
     font-family: Impact, sans-serif;
     font-weight: bold;
     text-align: center;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+    border: 1px solid red;
     text-shadow:
         2px 2px 0 black,
        -2px 2px 0 black,

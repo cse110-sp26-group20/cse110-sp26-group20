@@ -43,8 +43,8 @@ canvas.addEventListener(
 function openEditor(caption) {
     editor.classList.remove("hidden");
     editor.value = caption.text;
-    editor.style.left = `${caption.x}px`;
-    editor.style.top = `${caption.y - 35}px`;
+    editor.style.left = `${canvas.offsetLeft + caption.x}px`;
+    editor.style.top = `${canvas.offsetTop + caption.y - 10}px`;
     editor.focus();
 }
 
@@ -87,10 +87,10 @@ if (savedImage) {
         canvas.height = img.height;
 
         topCaption.x = canvas.width / 2;
-        topCaption.y = 80;
+        topCaption.y = canvas.height * 0.15;
 
         bottomCaption.x = canvas.width / 2;
-        bottomCaption.y = canvas.height - 40;
+        bottomCaption.y = canvas.height * 0.95;
 
         renderCanvas();
         sessionStorage.removeItem('uploadedImage');
