@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MemeLab Editor</title>
     <link rel="stylesheet" href="assets/styles/editor.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -124,6 +125,7 @@
                 type="text"
                 id="top-text"
                 class="text-input"
+                rows="2"
                 placeholder="Enter message..."
                 aria-label="Top caption text"
               />
@@ -135,6 +137,7 @@
                 type="text"
                 id="bottom-text"
                 class="text-input"
+                rows="2"
                 placeholder="Enter message..."
                 aria-label="Bottom caption text"
               />
@@ -329,8 +332,24 @@
           </div>
         </div>
 
+        <!-- AI GENERATION PANEL -->
+        <div class="tool-panel active" id="ai-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">Prompt</h2>
+            <p>Ask anything to experiment on your meme</p>
+            <textarea
+              id="ai-prompt"
+              class="text-input"
+              placeholder="e.g. turn this meme into vemon dunking..."
+              rows="6"
+              aria-label="AI prompt"
+            ></textarea>
+            <button id="ai-submit" type="button">Generate</button>
+          </div>
+        </div>
+
         <!-- FILTERS PANEL -->
-        <div class="tool-panel active" id="filters-panel" role="tabpanel">
+        <div class="tool-panel" id="filters-panel" role="tabpanel">
           <div class="filter" id="filter-1">
             <img
               src="assets/images/baby-meme.jpg"
@@ -423,6 +442,7 @@
       class="hexagon-decor"
       alt=""
     />
+    <script src="editor.js" defer></script>
     <script src="assets/scripts/meme-session-storage.js" defer></script>
   </body>
 </html>

@@ -10,9 +10,11 @@ import express, {
 import { isHttpError } from 'http-errors';
 
 import { ImageController } from './controllers/image.controller';
+import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
 import { getImgRouter } from './routers/image.router';
+import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
 import { TemplateService } from './services/template-service';
 
@@ -24,24 +26,22 @@ const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
-const imageController = new ImageController(
-  fileRepository,
-  storageStrategy,
-  templateService
-);
+const imageController = new ImageController(fileRepository, storageStrategy);
+const tempController = new TemplateController(templateService);
 
 templateService.bootstrapTemplates();
 
 const app = express();
 
 app.use(cors());
-
 app.use(express.json());
+
 // serve uploaded files as static assets under the same path that
 // resolvePath() returns, e.g. GET /uploads/abc123.jpg
 app.use('/uploads', express.static(uploadDir));
 
-app.use('/api/images', getImgRouter(imageController));
+app.use('/api/img', getImgRouter(imageController));
+app.use('/api/template', getTempRouter(tempController));
 
 /**
  * Example usage:
@@ -54,7 +54,7 @@ app.use('/api/images', getImgRouter(imageController));
  * Error handler; all errors thrown by server are handled here.
  * Explicit typings are required here because TypeScript cannot infer the argument types.
  */
-app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
   let statusCode = 500;
   let errorMessage = 'An error has occurred.';
 
