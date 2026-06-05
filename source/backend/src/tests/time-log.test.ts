@@ -1,4 +1,4 @@
-import { createTimerLogProxy } from '../proxies/ai-timer-proxy';
+import { createTimerLogProxy } from '../proxies/timer-proxy';
 
 describe('createTimerLogProxy', () => {
   let consoleLogSpy: jest.SpyInstance;
