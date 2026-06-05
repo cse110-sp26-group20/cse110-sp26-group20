@@ -66,14 +66,15 @@ describe('TemplateService', () => {
       throw new Error('Network Down');
     };
 
-    const consoleSpy = jest
-      .spyOn(console, 'error')
-      .mockImplementation(() => {});
+    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
 
-    await templateService.bootstrapTemplates();
+    try {
+      await templateService.bootstrapTemplates();
+    } finally {
+      consoleSpy.mockRestore();
+    }
 
-    consoleSpy.mockRestore();
-
+    expect(templateService.templateCache.length).toBe(0);
     expect(templateService.templateCache.length).toBe(0);
   });
 });
