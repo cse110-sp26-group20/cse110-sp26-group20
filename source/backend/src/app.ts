@@ -18,6 +18,13 @@ app.use(express.json());
 // app.use("/api/images", imageRouter);
 
 /**
+ * Example usage:
+ * const coreImageService = new ImageGenerationService();
+ * const proxiedImageService = createTimerLogProxy(coreImageService, 'ImageGenerationService');
+ * const imageController = new ImageController(proxiedImageService);
+ */
+
+/**
  * Error handler; all errors thrown by server are handled here.
  * Explicit typings required here because TypeScript cannot infer the argument types.
  *
