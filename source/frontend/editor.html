@@ -28,21 +28,21 @@
         </a>
         <nav class="header-nav" aria-label="Main navigation">
           <a href="template.html" class="nav-link">Templates</a>
-          <a href="export.html" class="nav-link">Export</a>
+          <a href="export.html" class="nav-link export-trigger">Export</a>
         </nav>
       </div>
 
       <!-- logo centered on separate row as navigation -->
       <div class="header-subnav">
         <a href="template.html" class="nav-link">&#8592; Templates</a>
-        <a href="export.html" class="nav-link">Export &#8594;</a>
+        <a href="export.html" class="nav-link export-trigger">Export &#8594;</a>
       </div>
     </header>
 
     <!-- Mobile subnav row (Templates / Export) — separate from header so each can have its own shadow -->
     <div class="header-subnav">
       <a href="template.html" class="nav-link">&#8592; Templates</a>
-      <a href="export.html" class="nav-link">Export &#8594;</a>
+      <a href="export.html" class="nav-link export-trigger">Export &#8594;</a>
     </div>
 
     <!-- Editor layout -->
@@ -442,6 +442,7 @@
       class="hexagon-decor"
       alt=""
     />
-    <script src="editor.js"></script>
+    <script src="editor.js" defer></script>
+    <script src="assets/scripts/meme-session-storage.js" defer></script>
   </body>
 </html>
