@@ -10,6 +10,7 @@ import express, {
 import { isHttpError } from 'http-errors';
 import { OpenAI } from 'openai';
 
+
 import { ImageController } from './controllers/image.controller';
 import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
@@ -18,6 +19,9 @@ import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
 import { TemplateService } from './services/template-service';
+import { OpenAIProvider } from './services/openai-provider';
+import config from './config';
+import { AIController } from './controllers/ai.controller';
 
 // resolve uploads directory relative to the process working directory so the
 // path stays consistent regardless of how the server is invoked
@@ -29,6 +33,12 @@ const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
 const imageController = new ImageController(fileRepository, storageStrategy);
 const tempController = new TemplateController(templateService);
+
+// IoC for aiController
+// const aiGenerator = new OpenAIProvider(
+//   new OpenAI({ apiKey: config.openaiApiKey })
+// );
+// const aiController = new AIController(aiGenerator,fileRepository,storageStrategy);
 
 templateService.bootstrapTemplates();
 
