@@ -44,7 +44,7 @@
       <!-- left tool sidebar for desktop -->
       <aside class="tool-sidebar" aria-label="Editor tools">
         <button
-          class="tool-btn"
+          class="tool-btn active"
           data-tool="text"
           type="button"
           aria-pressed="true"
@@ -108,7 +108,7 @@
         aria-label="Text controls"
       >
         <!-- TEXT PANEL -->
-        <div class="tool-panel" id="text-panel" role="tabpanel">
+        <div class="tool-panel active" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->
           <div class="panel-section desktop-only">
             <h2 class="section-title">Caption</h2>
@@ -343,7 +343,7 @@
         </div>
 
         <!-- IMAGES PANEL -->
-        <div class="tool-panel active" id="images-panel" role="tabpanel">
+        <div class="tool-panel" id="images-panel" role="tabpanel">
           <div class="panel-section">
             <h2 class="section-title">Images</h2>
             <div class="image-upload-options">
@@ -418,7 +418,7 @@
     <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
     <nav class="mobile-tab-bar" aria-label="Editor tool tabs" role="tablist">
       <button
-        class="tab-btn"
+        class="tab-btn active"
         type="button"
         role="tab"
         aria-controls="text-panel"
@@ -455,6 +455,6 @@
       class="hexagon-decor"
       alt=""
     />
-    <script src="editor.js"></script>
+    <script src="assets/scripts/editor.js"></script>
   </body>
 </html>
