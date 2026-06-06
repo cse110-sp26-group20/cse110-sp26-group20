@@ -144,12 +144,14 @@ textarea {
   height: 1.5rem;
 }
 
-.tool-btn:hover {
-  background-color: var(--lab-accent-hover);
+.tool-btn:hover,
+.tool-btn:hover .tool-label {
+  color: var(--lab-accent-hover);
 }
 
-.tool-btn.active {
-  background-color: var(--lab-accent);
+.tool-btn.active,
+.tool-btn.active .tool-label {
+  color: var(--lab-accent);
 }
 
 .tool-label {
@@ -623,6 +625,44 @@ textarea {
   border-color: var(--lab-accent-hover);
 }
 
+/*---------- IMAGES TAB -------------*/
+.image-upload-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.image-upload-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background-color: var(--lab-input);
+  border: 2px solid var(--lab-border);
+  border-radius: var(--radius-md);
+  color: var(--lab-white);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.image-upload-btn:hover {
+  background-color: var(--lab-accent);
+  border-color: var(--lab-accent);
+  transform: scale(1.02);
+}
+
+.image-upload-btn i {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
 /*---------- FILTERS TAB -------------*/
 #filters-panel .filter img {
   width: 150px;
@@ -767,7 +807,7 @@ textarea {
     display: none;
   }
 
-  #filters-panel {
+  #filters-panel.active {
     display: flex;
     flex-direction: row;
     overflow-x: auto;

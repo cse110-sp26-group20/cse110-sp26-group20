@@ -1,3 +1,36 @@
+//tab switching
+const toolBtns = document.querySelectorAll('.tool-btn');
+const tabBtns = document.querySelectorAll('.tab-btn');
+const toolPanels = document.querySelectorAll('.tool-panel');
+
+function switchPanel(panelId) {
+  toolPanels.forEach((p) => p.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+
+  toolBtns.forEach((btn) => {
+    const isActive = `${btn.dataset.tool}-panel` === panelId;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive);
+  });
+
+  tabBtns.forEach((btn) => {
+    btn.classList.toggle(
+      'active',
+      btn.getAttribute('aria-controls') === panelId
+    );
+  });
+}
+
+toolBtns.forEach((btn) => {
+  btn.addEventListener('click', () => switchPanel(`${btn.dataset.tool}-panel`));
+});
+
+tabBtns.forEach((btn) => {
+  btn.addEventListener('click', () =>
+    switchPanel(btn.getAttribute('aria-controls'))
+  );
+});
+
 //gets the canvas element and opens the drawing content object
 const canvas = document.getElementById('meme-canvas');
 const context = canvas.getContext('2d');
@@ -16,6 +49,25 @@ if (savedImage) {
     sessionStorage.removeItem('uploadedImage');
   };
 }
+
+function loadImageOntoCanvas(file) {
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+document
+  .getElementById('upload-library-input')
+  .addEventListener('change', (e) => {
+    loadImageOntoCanvas(e.target.files[0]);
+  });
 
 //gets the generate button from the AI editor tab
 const generateBtn = document.getElementById('ai-submit');
