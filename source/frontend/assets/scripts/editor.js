@@ -1,3 +1,36 @@
+//tab switching
+const toolBtns = document.querySelectorAll('.tool-btn');
+const tabBtns = document.querySelectorAll('.tab-btn');
+const toolPanels = document.querySelectorAll('.tool-panel');
+
+function switchPanel(panelId) {
+  toolPanels.forEach((p) => p.classList.remove('active'));
+  document.getElementById(panelId).classList.add('active');
+
+  toolBtns.forEach((btn) => {
+    const isActive = `${btn.dataset.tool}-panel` === panelId;
+    btn.classList.toggle('active', isActive);
+    btn.setAttribute('aria-pressed', isActive);
+  });
+
+  tabBtns.forEach((btn) => {
+    btn.classList.toggle(
+      'active',
+      btn.getAttribute('aria-controls') === panelId
+    );
+  });
+}
+
+toolBtns.forEach((btn) => {
+  btn.addEventListener('click', () => switchPanel(`${btn.dataset.tool}-panel`));
+});
+
+tabBtns.forEach((btn) => {
+  btn.addEventListener('click', () =>
+    switchPanel(btn.getAttribute('aria-controls'))
+  );
+});
+
 //gets the canvas element and opens the drawing content object
 const canvas = document.getElementById('meme-canvas');
 const context = canvas.getContext('2d');

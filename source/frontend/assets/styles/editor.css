@@ -144,16 +144,14 @@ textarea {
   height: 1.5rem;
 }
 
-.tool-btn:hover {
-  color: var(--lab-accent-hover);
-}
-
+.tool-btn:hover,
 .tool-btn:hover .tool-label {
   color: var(--lab-accent-hover);
 }
 
-.tool-btn.active {
-  background-color: var(--lab-accent);
+.tool-btn.active,
+.tool-btn.active .tool-label {
+  color: var(--lab-accent);
 }
 
 .tool-label {
