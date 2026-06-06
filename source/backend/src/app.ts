@@ -10,18 +10,18 @@ import express, {
 import { isHttpError } from 'http-errors';
 import { OpenAI } from 'openai';
 
-
+import config from './config';
+import { AIController } from './controllers/ai.controller';
 import { ImageController } from './controllers/image.controller';
 import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
+import { createAIRouter } from './routers/ai.router';
 import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
-import { TemplateService } from './services/template-service';
 import { OpenAIProvider } from './services/openai-provider';
-import config from './config';
-import { AIController } from './controllers/ai.controller';
+import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
 // path stays consistent regardless of how the server is invoked
@@ -53,6 +53,7 @@ app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/img', getImgRouter(imageController));
 app.use('/api/template', getTempRouter(tempController));
+// app.use('/api/template', createAIRouter(aiController));
 
 /**
  * Example usage:
