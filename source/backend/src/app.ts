@@ -8,14 +8,19 @@ import express, {
   type Response
 } from 'express';
 import { isHttpError } from 'http-errors';
+import { OpenAI } from 'openai';
 
+import config from './config';
+import { AIController } from './controllers/ai.controller';
 import { ImageController } from './controllers/image.controller';
 import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
 import { InMemoryFileRepository } from './models/in-memory-file-repository';
+import { createAIRouter } from './routers/ai.router';
 import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
+import { OpenAIProvider } from './services/openai-provider';
 import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
@@ -28,6 +33,12 @@ const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
 const imageController = new ImageController(fileRepository, storageStrategy);
 const tempController = new TemplateController(templateService);
+
+// IoC for aiController
+// const aiGenerator = new OpenAIProvider(
+//   new OpenAI({ apiKey: config.openaiApiKey })
+// );
+// const aiController = new AIController(aiGenerator,fileRepository,storageStrategy);
 
 templateService.bootstrapTemplates();
 
@@ -42,6 +53,7 @@ app.use('/uploads', express.static(uploadDir));
 
 app.use('/api/img', getImgRouter(imageController));
 app.use('/api/template', getTempRouter(tempController));
+// app.use('/api/template', createAIRouter(aiController));
 
 /**
  * Example usage:
