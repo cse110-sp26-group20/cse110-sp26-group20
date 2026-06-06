@@ -18,8 +18,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
   constructor(private readonly client: OpenAI) {}
 
   async generateImage(prompt: ImagePrompt): Promise<ImageResponse> {
-    const startTime = Date.now(); // start timer before API call
-
+    
     // TODO: Use argument read the real file base on what you need.
     // More see the `ai-openai-provider.test.ts`
     // const imageFile = 'src/meme.png';
@@ -72,7 +71,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
     );
 
     const metaData = new ResponseMetadata(
-      Date.now() - startTime,
+      0, // it should be the time of AI run. If ai did support it, remain it 0
       'gpt-image-1-mini',
       'success'
     );
