@@ -17,6 +17,25 @@ if (savedImage) {
   };
 }
 
+function loadImageOntoCanvas(file) {
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    URL.revokeObjectURL(url);
+  };
+  img.src = url;
+}
+
+document
+  .getElementById('upload-library-input')
+  .addEventListener('change', (e) => {
+    loadImageOntoCanvas(e.target.files[0]);
+  });
+
 //gets the generate button from the AI editor tab
 const generateBtn = document.getElementById('ai-submit');
 
