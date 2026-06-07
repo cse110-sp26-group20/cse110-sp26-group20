@@ -65,11 +65,11 @@ export class TemplateService {
             },
             this.diskStrategy
           );
-
+          //console.log('Saved Record:', savedRecord);
           this.templateCache.push({
             id: savedRecord.id,
             name: meme.name,
-            url: savedRecord.localPath,
+            url: `/static/${savedRecord.filename}`,
             width: meme.width,
             height: meme.height
           });
