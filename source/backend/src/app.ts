@@ -8,19 +8,19 @@ import express, {
   type Response
 } from 'express';
 import { isHttpError } from 'http-errors';
-import { OpenAI } from 'openai';
+// import { OpenAI } from 'openai';
 
-import config from './config';
-import { AIController } from './controllers/ai.controller';
+// import config from './config';
+// import { AIController } from './controllers/ai.controller';
 import { ImageController } from './controllers/image.controller';
 import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
-import { createAIRouter } from './routers/ai.router';
+// import { createAIRouter } from './routers/ai.router';
 import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
 import { FileRepository } from './services/file-repository';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
-import { OpenAIProvider } from './services/openai-provider';
+// import { OpenAIProvider } from './services/openai-provider';
 import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
