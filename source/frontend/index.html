@@ -12,6 +12,16 @@
   </head>
   <body>
     <main class="home-page">
+      <img
+        src="./assets/images/home-hexagon1.svg"
+        class="home-hex home-hex--tl"
+        alt=""
+      />
+      <img
+        src="./assets/images/home-hexagon2.svg"
+        class="home-hex home-hex--br"
+        alt=""
+      />
       <div class="content">
         <header>
           <img
@@ -24,30 +34,36 @@
         <div class="lattice-bg">
           <img class="lattice" src="./assets/images/lattice.svg" alt="" />
         </div>
-        <section class="upload-image">
-          <h2>Create your own experiment</h2>
-          <p>Turn your photo into a meme</p>
-          <button class="upload-btn">
-            <input
-              type="file"
-              id="choose-img"
-              accept="image/*"
-              style="display: none"
-            />
-            Upload from camera roll
-          </button>
-          <script src="index.js"></script>
-        </section>
+        <div class="cards-row">
+          <section class="upload-image">
+            <h2>Create your own experiment</h2>
+            <p>Turn your photo into a meme</p>
+            <button class="upload-btn">
+              <input
+                type="file"
+                id="choose-img"
+                accept="image/*"
+                style="display: none"
+              />
+              Upload Image &nbsp;&nbsp;<i class="fa-solid fa-upload"></i>
+            </button>
+            <script src="index.js"></script>
+          </section>
 
-        <div class="divider">
-          <div class="particle-layer"></div>
+          <div class="divider">
+            <div class="particle-layer"></div>
+          </div>
+
+          <section class="browse-template">
+            <h2>Select specimen from the Lab</h2>
+            <p>Start from our library of templates</p>
+            <a class="template-btn" href="template.html"
+              >Browse Templates &nbsp;&nbsp;<i
+                class="fa-regular fa-folder-open"
+              ></i
+            ></a>
+          </section>
         </div>
-
-        <section class="browse-template">
-          <h2>Select specimen from the Lab</h2>
-          <p>Start from our library of templates</p>
-          <a class="template-btn" href="template.html">Browse Templates</a>
-        </section>
 
         <script>
           const layer = document.querySelector('.particle-layer');
@@ -60,11 +76,12 @@
             const p = document.createElement('div');
 
             const size = rand(3, 10);
-            const startX = rand(0, window.innerWidth);
+            const startX = rand(0, layer.offsetWidth);
+            const startY = rand(0, layer.offsetHeight);
 
             p.style.position = 'absolute';
             p.style.left = startX + 'px';
-            p.style.top = '50%';
+            p.style.top = startY + 'px';
 
             p.style.width = size + 'px';
             p.style.height = size + 'px';
