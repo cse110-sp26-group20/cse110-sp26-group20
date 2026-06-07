@@ -36,7 +36,11 @@ export class TemplateService {
   private diskStrategy: StorageStrategy;
   staticPath: string;
 
-  constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy, staticPath: string) {
+  constructor(
+    realFileRepo: FileRepositoryOperator,
+    strategy: StorageStrategy,
+    staticPath: string
+  ) {
     this.fileRepo = realFileRepo;
     this.diskStrategy = strategy;
     this.staticPath = staticPath;
@@ -67,7 +71,7 @@ export class TemplateService {
             },
             this.diskStrategy
           );
-          
+
           this.templateCache.push({
             id: savedRecord.id,
             name: meme.name,
