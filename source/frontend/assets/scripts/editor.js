@@ -34,6 +34,57 @@ tabBtns.forEach((btn) => {
 //gets the canvas element and opens the drawing content object
 const canvas = document.getElementById('meme-canvas');
 const context = canvas.getContext('2d');
+let currentImg = null;
+let activeFilter = 'none';
+
+function redrawCanvas() {
+  if (!currentImg) return;
+  canvas.width = currentImg.width;
+  canvas.height = currentImg.height;
+  context.filter = activeFilter;
+  context.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
+  context.filter = 'none';
+}
+
+document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
+  const previewImg = filterDiv.querySelector('.filter-preview');
+  previewImg.style.filter = filterDiv.dataset.filter;
+});
+
+function updateFilterPreviews() {
+  if (!currentImg) return;
+  const size = 150;
+  const imgAspect = currentImg.width / currentImg.height;
+  let sx, sy, sw, sh;
+  if (imgAspect > 1) {
+    sh = currentImg.height; sw = sh; sx = (currentImg.width - sw) / 2; sy = 0;
+  } else {
+    sw = currentImg.width; sh = sw; sx = 0; sy = (currentImg.height - sh) / 2;
+  }
+  document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
+    const previewImg = filterDiv.querySelector('.filter-preview');
+    const thumbCanvas = document.createElement('canvas');
+    thumbCanvas.width = size;
+    thumbCanvas.height = size;
+    const thumbCtx = thumbCanvas.getContext('2d');
+    thumbCtx.filter = filterDiv.dataset.filter;
+    thumbCtx.drawImage(currentImg, sx, sy, sw, sh, 0, 0, size, size);
+    thumbCtx.filter = 'none';
+    previewImg.src = thumbCanvas.toDataURL();
+    previewImg.style.filter = 'none';
+  });
+}
+
+document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
+  filterDiv.addEventListener('click', () => {
+    document
+      .querySelectorAll('#filters-panel .filter')
+      .forEach((f) => f.classList.remove('active'));
+    filterDiv.classList.add('active');
+    activeFilter = filterDiv.dataset.filter;
+    redrawCanvas();
+  });
+});
 
 const savedImage = sessionStorage.getItem('uploadedImage');
 
@@ -43,10 +94,12 @@ if (savedImage) {
 
   //once img is decoded, draw image to canvas with context object
   img.onload = () => {
+    currentImg = img;
     canvas.width = img.width;
     canvas.height = img.height;
     context.drawImage(img, 0, 0, canvas.width, canvas.height);
     sessionStorage.removeItem('uploadedImage');
+    updateFilterPreviews();
   };
 }
 
@@ -55,10 +108,14 @@ function loadImageOntoCanvas(file) {
   const url = URL.createObjectURL(file);
   const img = new Image();
   img.onload = () => {
+    currentImg = img;
     canvas.width = img.width;
     canvas.height = img.height;
+    context.filter = activeFilter;
     context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    context.filter = 'none';
     URL.revokeObjectURL(url);
+    updateFilterPreviews();
   };
   img.src = url;
 }
@@ -139,8 +196,10 @@ generateBtn.addEventListener('click', () => {
                 const resultImg = new Image();
                 resultImg.src = aiData.url; //the sent back url from server
                 resultImg.onload = () => {
+                  currentImg = resultImg;
                   canvas.width = resultImg.width;
                   canvas.height = resultImg.height;
+                  context.filter = activeFilter;
                   context.drawImage(
                     resultImg,
                     0,
@@ -148,6 +207,8 @@ generateBtn.addEventListener('click', () => {
                     canvas.width,
                     canvas.height
                   );
+                  context.filter = 'none';
+                  updateFilterPreviews();
                 };
 
                 //check if error occurred during new image processing
