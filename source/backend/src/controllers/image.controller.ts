@@ -7,8 +7,12 @@ import { TemplateService } from '../services/template-service';
 export class ImageController {
   fileRepo: FileRepositoryOperator;
   strategy: StorageStrategy;
-  imgRelativePath:string;
-  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy, path: string) {
+  imgRelativePath: string;
+  constructor(
+    fileRepo: FileRepositoryOperator,
+    strategy: StorageStrategy,
+    path: string
+  ) {
     this.fileRepo = fileRepo;
     this.strategy = strategy;
     this.imgRelativePath = path;

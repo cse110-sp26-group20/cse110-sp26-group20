@@ -28,13 +28,17 @@ import { TemplateService } from './services/template-service';
 const uploadDir = join(process.cwd(), 'uploads');
 
 // static files
-let imgRelativePath = '/static' 
+const imgRelativePath = '/static';
 
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
-const imageController = new ImageController(fileRepository, storageStrategy,imgRelativePath);
+const imageController = new ImageController(
+  fileRepository,
+  storageStrategy,
+  imgRelativePath
+);
 const tempController = new TemplateController(templateService);
 
 // IoC for aiController

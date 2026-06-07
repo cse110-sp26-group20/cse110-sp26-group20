@@ -13,7 +13,7 @@ describe('ImageController', () => {
   let mockResponse: Partial<Response>;
   let mockNext: jest.MockedFunction<NextFunction>;
 
-  let imgRelativePath = '/uploads'
+  const imgRelativePath = '/uploads';
 
   beforeEach(() => {
     mockFileRepo = {
@@ -29,8 +29,11 @@ describe('ImageController', () => {
       resolvePath: jest.fn()
     } as jest.Mocked<StorageStrategy>;
 
-
-    imageController = new ImageController(mockFileRepo, mockStrategy, imgRelativePath);
+    imageController = new ImageController(
+      mockFileRepo,
+      mockStrategy,
+      imgRelativePath
+    );
 
     mockRequest = {
       params: {}
