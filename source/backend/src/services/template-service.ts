@@ -69,7 +69,7 @@ export class TemplateService {
           this.templateCache.push({
             id: savedRecord.id,
             name: meme.name,
-            url: meme.url,
+            url: savedRecord.localPath,
             width: meme.width,
             height: meme.height
           });

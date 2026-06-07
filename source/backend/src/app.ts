@@ -20,7 +20,7 @@ import { createAIRouter } from './routers/ai.router';
 import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
-import { OpenAIProvider } from './services/openai-provider';
+//import { OpenAIProvider } from './services/openai-provider';
 import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
