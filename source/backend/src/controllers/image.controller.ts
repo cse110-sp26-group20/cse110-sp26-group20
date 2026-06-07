@@ -7,9 +7,11 @@ import { TemplateService } from '../services/template-service';
 export class ImageController {
   fileRepo: FileRepositoryOperator;
   strategy: StorageStrategy;
-  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+  imgRelativePath:string;
+  constructor(fileRepo: FileRepositoryOperator, strategy: StorageStrategy, path: string) {
     this.fileRepo = fileRepo;
     this.strategy = strategy;
+    this.imgRelativePath = path;
   }
 
   /**
@@ -67,7 +69,7 @@ export class ImageController {
 
       return resp.status(200).json({
         id: record.id,
-        url: record.localPath
+        url: `${this.imgRelativePath}/${record.filename}`
       });
     } catch (error) {
       console.error('Failed to get the picture:', error);
