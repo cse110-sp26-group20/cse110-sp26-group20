@@ -8,19 +8,20 @@ import express, {
   type Response
 } from 'express';
 import { isHttpError } from 'http-errors';
-import { OpenAI } from 'openai';
 
-import config from './config';
-import { AIController } from './controllers/ai.controller';
+// import { OpenAI } from 'openai';
+
+// import config from './config';
+// import { AIController } from './controllers/ai.controller';
 import { ImageController } from './controllers/image.controller';
 import { TemplateController } from './controllers/template.controller';
 import { UUIDGenerator } from './models/id-generator';
-import { InMemoryFileRepository } from './models/in-memory-file-repository';
-import { createAIRouter } from './routers/ai.router';
+// import { createAIRouter } from './routers/ai.router';
 import { getImgRouter } from './routers/image.router';
 import { getTempRouter } from './routers/template.router';
+import { FileRepository } from './services/file-repository';
 import { LocalStorageStrategy } from './services/local-storage-strategy';
-import { OpenAIProvider } from './services/openai-provider';
+// import { OpenAIProvider } from './services/openai-provider';
 import { TemplateService } from './services/template-service';
 
 // resolve uploads directory relative to the process working directory so the
@@ -32,7 +33,7 @@ const imgRelativePath = '/static';
 
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
-const fileRepository = new InMemoryFileRepository(idGenerator);
+const fileRepository = new FileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
 const imageController = new ImageController(
   fileRepository,
