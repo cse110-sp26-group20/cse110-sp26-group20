@@ -27,11 +27,18 @@ import { TemplateService } from './services/template-service';
 // path stays consistent regardless of how the server is invoked
 const uploadDir = join(process.cwd(), 'uploads');
 
+// static files
+const imgRelativePath = '/static';
+
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new InMemoryFileRepository(idGenerator);
 const templateService = new TemplateService(fileRepository, storageStrategy);
-const imageController = new ImageController(fileRepository, storageStrategy);
+const imageController = new ImageController(
+  fileRepository,
+  storageStrategy,
+  imgRelativePath
+);
 const tempController = new TemplateController(templateService);
 
 // IoC for aiController
@@ -49,7 +56,7 @@ app.use(express.json());
 
 // serve uploaded files as static assets under the same path that
 // resolvePath() returns, e.g. GET /uploads/abc123.jpg
-app.use('/uploads', express.static(uploadDir));
+app.use(imgRelativePath, express.static(uploadDir));
 
 app.use('/api/img', getImgRouter(imageController));
 app.use('/api/template', getTempRouter(tempController));

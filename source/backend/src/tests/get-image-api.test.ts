@@ -13,6 +13,8 @@ describe('ImageController', () => {
   let mockResponse: Partial<Response>;
   let mockNext: jest.MockedFunction<NextFunction>;
 
+  const imgRelativePath = '/uploads';
+
   beforeEach(() => {
     mockFileRepo = {
       saveFile: jest.fn(),
@@ -27,7 +29,11 @@ describe('ImageController', () => {
       resolvePath: jest.fn()
     } as jest.Mocked<StorageStrategy>;
 
-    imageController = new ImageController(mockFileRepo, mockStrategy);
+    imageController = new ImageController(
+      mockFileRepo,
+      mockStrategy,
+      imgRelativePath
+    );
 
     mockRequest = {
       params: {}
@@ -86,7 +92,7 @@ describe('ImageController', () => {
     const mockRecord: FileRecord = {
       id: '1',
       filename: `1.png`,
-      localPath: '/uploads/1.png',
+      localPath: 'C://uploads/1.png',
       type: '',
       create: new Date(),
       metadata: {}
@@ -102,7 +108,7 @@ describe('ImageController', () => {
     expect(mockResponse.status).toHaveBeenCalledWith(200);
     expect(mockResponse.json).toHaveBeenCalledWith({
       id: '1',
-      url: '/uploads/1.png'
+      url: `${imgRelativePath}/1.png`
     });
   });
 
