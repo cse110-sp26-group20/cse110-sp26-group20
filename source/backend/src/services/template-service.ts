@@ -34,10 +34,12 @@ export class TemplateService {
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
+  staticPath: string;
 
-  constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+  constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy, staticPath: string) {
     this.fileRepo = realFileRepo;
     this.diskStrategy = strategy;
+    this.staticPath = staticPath;
   }
 
   public async bootstrapTemplates() {
@@ -65,11 +67,11 @@ export class TemplateService {
             },
             this.diskStrategy
           );
-          //console.log('Saved Record:', savedRecord);
+          
           this.templateCache.push({
             id: savedRecord.id,
             name: meme.name,
-            url: `/static/${savedRecord.filename}`,
+            url: `${this.staticPath}/${savedRecord.filename}`,
             width: meme.width,
             height: meme.height
           });
