@@ -51,7 +51,7 @@ describe('Open AI Generator', () => {
     expect(imgResponse.getImage()).toMatchObject({
       width: 512,
       height: 512,
-      format: 'png'
+      format: 'image/png'
     });
   });
 });

@@ -1,6 +1,5 @@
 import { Readable } from 'stream';
 import { OpenAI, toFile } from 'openai';
-import fs from 'fs';
 
 import { ImagePrompt } from '../models/image-prompt';
 import {
@@ -19,9 +18,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
   constructor(private readonly client: OpenAI) {}
 
   async generateImage(prompt: ImagePrompt): Promise<ImageResponse> {
-    
-    // TODO: Use argument read the real file base on what you need.
-    // More see the `ai-openai-provider.test.ts`
+    // Parse the prompt to extract necessary arguments for image generation
     prompt.parseRawPromptToArgs();
     const imageStream = prompt.getArgument<Readable>('img');
 
@@ -67,7 +64,7 @@ export class OpenAIProvider implements IUniversalAIProvider {
     // fetch the image data as bytes using the base64 string, and construct the ImageResponse object to return
     const imageData = new ImageData(
       Buffer.from(b64, 'base64'),
-      'png',
+      'image/png',
       width,
       height
     );
