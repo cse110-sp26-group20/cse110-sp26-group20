@@ -57,9 +57,15 @@ function updateFilterPreviews() {
   const imgAspect = currentImg.width / currentImg.height;
   let sx, sy, sw, sh;
   if (imgAspect > 1) {
-    sh = currentImg.height; sw = sh; sx = (currentImg.width - sw) / 2; sy = 0;
+    sh = currentImg.height;
+    sw = sh;
+    sx = (currentImg.width - sw) / 2;
+    sy = 0;
   } else {
-    sw = currentImg.width; sh = sw; sx = 0; sy = (currentImg.height - sh) / 2;
+    sw = currentImg.width;
+    sh = sw;
+    sx = 0;
+    sy = (currentImg.height - sh) / 2;
   }
   document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
     const previewImg = filterDiv.querySelector('.filter-preview');

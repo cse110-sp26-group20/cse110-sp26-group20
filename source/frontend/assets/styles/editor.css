@@ -714,7 +714,6 @@ textarea {
   color: var(--lab-accent);
 }
 
-
 /* Responsive mobile styles (≤ 768px) */
 @media (max-width: 768px) {
   .site-header {
