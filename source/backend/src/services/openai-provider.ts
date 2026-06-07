@@ -1,5 +1,6 @@
 import { Readable } from 'stream';
 import { OpenAI, toFile } from 'openai';
+import fs from 'fs';
 
 import { ImagePrompt } from '../models/image-prompt';
 import {
@@ -11,7 +12,7 @@ import type { IUniversalAIProvider } from '../models/universal-ai-provider';
 
 /**
  * OpenAIProvider is an implementation of the IUniversalAIProvider interface.
- * It simulates generating an image based on a given prompt and returns a structured response.
+ * It generates an edited version of the passed image based on a given prompt and returns a structured response.
  * This class interacts with the OpenAI API to generate images.
  */
 export class OpenAIProvider implements IUniversalAIProvider {
@@ -21,8 +22,9 @@ export class OpenAIProvider implements IUniversalAIProvider {
     
     // TODO: Use argument read the real file base on what you need.
     // More see the `ai-openai-provider.test.ts`
-    // const imageFile = 'src/meme.png';
+    prompt.parseRawPromptToArgs();
     const imageStream = prompt.getArgument<Readable>('img');
+
     if (!imageStream || !(imageStream instanceof Readable)) {
       throw new Error('Image argument is missing or not a Readable Stream.');
     }
