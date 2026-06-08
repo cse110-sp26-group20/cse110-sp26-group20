@@ -65,7 +65,7 @@ let currentImg = null;
 let activeFilter = 'none';
 
 function redrawCanvas() {
-    renderCanvas();
+  renderCanvas();
 }
 
 document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
@@ -238,11 +238,11 @@ generateBtn.addEventListener('click', () => {
                 const resultImg = new Image();
                 resultImg.src = aiData.url; //the sent back url from server
                 resultImg.onload = () => {
-                    topCaption.x = canvas.width / 2;
-                    topCaption.y = canvas.height * 0.15;
+                  topCaption.x = canvas.width / 2;
+                  topCaption.y = canvas.height * 0.15;
 
-                    bottomCaption.x = canvas.width / 2;
-                    bottomCaption.y = canvas.height * 0.95;
+                  bottomCaption.x = canvas.width / 2;
+                  bottomCaption.y = canvas.height * 0.95;
                   currentImg = resultImg;
                   canvas.width = resultImg.width;
                   canvas.height = resultImg.height;
@@ -343,13 +343,7 @@ function renderCanvas() {
   if (currentImg) {
     context.filter = activeFilter;
 
-    context.drawImage(
-      currentImg,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+    context.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
 
     context.filter = 'none';
   }
