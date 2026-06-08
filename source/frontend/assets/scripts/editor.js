@@ -178,7 +178,7 @@ generateBtn.addEventListener('click', () => {
             const snapshotId = data.data.id; //gets img id from response
 
             // send id + prompt to the AI endpoint
-            fetch(`${config.apiBase}/api/ai/generate`, {
+            fetch(`${config.apiBase}/api/ai`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' }, //specifies raw json post
               body: JSON.stringify({
