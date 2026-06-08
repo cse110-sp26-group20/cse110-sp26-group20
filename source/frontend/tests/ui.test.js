@@ -100,7 +100,7 @@ describe('End-to-end user flow for meme generation', () => {
         console.log('Uploading image...');
 
         const input = await page.$('#upload-library-input');
-        await input.uploadFile('./test-assets/sample.jpg');
+        await input.uploadFile('./test-assets/sample.jpeg');
         expect(input).not.toBeNull();
     });
 
