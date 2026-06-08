@@ -40,6 +40,7 @@ npm install
 | `npm run lint:fix`     | Lint and auto-fix where possible             |
 | `npm run format:check` | Fail if source is not formatted (used by CI) |
 | `npm run format`       | Format all workspace source code             |
+| `npm test`             | Run all workspace tests                      |
 
 ### Before opening a PR
 
