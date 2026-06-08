@@ -200,7 +200,7 @@ generateBtn.addEventListener('click', () => {
 
                 //draw the new generated image on the canvas
                 const resultImg = new Image();
-                resultImg.src = aiData.url; //the sent back url from server
+                resultImg.src = `${config.apiBase}${aiData.url}`;
                 resultImg.onload = () => {
                   currentImg = resultImg;
                   canvas.width = resultImg.width;

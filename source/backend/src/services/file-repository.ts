@@ -113,4 +113,8 @@ export class FileRepository implements FileRepositoryOperator {
     }
     return Promise.resolve(undefined);
   }
+
+  getAllFiles(): FileRecord[] {
+    return Array.from(this.inMemoryMap.values());
+  }
 }
