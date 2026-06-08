@@ -113,193 +113,192 @@
                 Click text on the meme to edit
             </p>
             </div> -->
+        </div>
+
+        <!-- Mobile: Text section header + size slider -->
+        <div class="panel-section mobile-only">
+          <h2 class="section-title">Text</h2>
+          <div class="size-row">
+            <label for="font-size-slider">Size</label>
+            <input
+              type="range"
+              id="font-size-slider"
+              class="size-slider"
+              min="10"
+              max="200"
+              value="80"
+              aria-label="Font size"
+            />
           </div>
+        </div>
 
-          <!-- Mobile: Text section header + size slider -->
-          <div class="panel-section mobile-only">
-            <h2 class="section-title">Text</h2>
-            <div class="size-row">
-              <label for="font-size-slider">Size</label>
-              <input
-                type="range"
-                id="font-size-slider"
-                class="size-slider"
-                min="10"
-                max="200"
-                value="80"
-                aria-label="Font size"
-              />
-            </div>
-          </div>
+        <!-- FONT SECTION -->
+        <div class="panel-section">
+          <h2 class="section-title desktop-only">Font</h2>
 
-          <!-- FONT SECTION -->
-          <div class="panel-section">
-            <h2 class="section-title desktop-only">Font</h2>
+          <!-- Desktop: dropdown controls -->
+          <div class="desktop-only">
+            <select
+              id="font-family"
+              class="select-input"
+              aria-label="Font family"
+            >
+              <option value="Times New Roman">Times New Roman</option>
+              <option value="Impact">Impact</option>
+              <option value="Arial">Arial</option>
+              <option value="Comic Sans MS">Comic Sans MS</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Helvetica">Helvetica</option>
+              <option value="Verdana">Verdana</option>
+            </select>
 
-            <!-- Desktop: dropdown controls -->
-            <div class="desktop-only">
+            <div class="font-detail-row">
               <select
-                id="font-family"
+                id="font-weight"
                 class="select-input"
-                aria-label="Font family"
+                aria-label="Font style"
               >
-                <option value="Times New Roman">Times New Roman</option>
-                <option value="Impact">Impact</option>
-                <option value="Arial">Arial</option>
-                <option value="Comic Sans MS">Comic Sans MS</option>
-                <option value="Georgia">Georgia</option>
-                <option value="Helvetica">Helvetica</option>
-                <option value="Verdana">Verdana</option>
+                <option value="bold">Bold</option>
+                <option value="normal">Normal</option>
+                <option value="italic">Italic</option>
+                <option value="bold italic">Bold Italic</option>
               </select>
 
-              <div class="font-detail-row">
-                <select
-                  id="font-weight"
-                  class="select-input"
-                  aria-label="Font style"
-                >
-                  <option value="bold">Bold</option>
-                  <option value="normal">Normal</option>
-                  <option value="italic">Italic</option>
-                  <option value="bold italic">Bold Italic</option>
-                </select>
-
-                <div class="font-size-group">
-                  <input
-                    type="number"
-                    id="font-size"
-                    class="font-size-input"
-                    value="140"
-                    min="10"
-                    max="300"
-                    aria-label="Font size in pixels"
-                  />
-                  <span class="unit-label">px</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Mobile: preset font buttons -->
-            <div class="mobile-only">
-              <div class="font-btn-row">
-                <label>Font</label>
-                <div class="font-btn-group">
-                  <button class="font-btn" type="button">Impact</button>
-                  <button class="font-btn" type="button">Arial</button>
-                  <button class="font-btn" type="button">Comic</button>
-                  <button class="font-btn" type="button">Times NR</button>
-                </div>
+              <div class="font-size-group">
+                <input
+                  type="number"
+                  id="font-size"
+                  class="font-size-input"
+                  value="140"
+                  min="10"
+                  max="300"
+                  aria-label="Font size in pixels"
+                />
+                <span class="unit-label">px</span>
               </div>
             </div>
           </div>
 
-          <!-- COLOR SECTION -->
-          <div class="panel-section">
-            <h2 class="section-title">Color</h2>
-
-            <!-- Desktop: hex + opacity display row -->
-            <div class="color-display-row">
-              <label
-                class="color-preview"
-                id="color-preview"
-                for="color-picker-desktop"
-                style="background-color: #000000"
-                aria-label="Current color preview"
-              >
-                <input
-                  type="color"
-                  id="color-picker-desktop"
-                  class="color-picker-hidden"
-                  value="#000000"
-                />
-              </label>
-              <input
-                type="text"
-                id="color-hex"
-                class="hex-input"
-                value="000000"
-                maxlength="6"
-                aria-label="Hex color value"
-              />
-              <span style="color: var(--lab-muted)">|</span>
-              <input
-                type="number"
-                id="opacity-input"
-                class="opacity-input"
-                value="100"
-                min="0"
-                max="100"
-                aria-label="Opacity percentage"
-              />
-              <span class="opacity-pct">%</span>
+          <!-- Mobile: preset font buttons -->
+          <div class="mobile-only">
+            <div class="font-btn-row">
+              <label>Font</label>
+              <div class="font-btn-group">
+                <button class="font-btn" type="button">Impact</button>
+                <button class="font-btn" type="button">Arial</button>
+                <button class="font-btn" type="button">Comic</button>
+                <button class="font-btn" type="button">Times NR</button>
+              </div>
             </div>
+          </div>
+        </div>
 
-            <!-- Color buttons (both) -->
-            <div class="color-btn-group" aria-label="Color presets">
-              <label
-                class="color-btn color-btn--rainbow mobile-only"
-                aria-label="Custom color"
-                title="Pick a custom color"
-              >
-                <img src="assets/images/rainbow-beaker.svg" alt="" />
-                <input
-                  type="color"
-                  id="color-picker-input"
-                  class="color-picker-hidden"
-                  value="#000000"
-                  aria-label="Color picker"
-                />
-              </label>
+        <!-- COLOR SECTION -->
+        <div class="panel-section">
+          <h2 class="section-title">Color</h2>
 
-              <button
-                class="color-btn"
-                data-color="#e03535"
-                type="button"
-                aria-label="Red"
-              >
-                <img src="assets/images/red-beaker.svg" alt="" />
-              </button>
-              <button
-                class="color-btn"
-                data-color="#e07820"
-                type="button"
-                aria-label="Orange"
-              >
-                <img src="assets/images/orange-beaker.svg" alt="" />
-              </button>
-              <button
-                class="color-btn"
-                data-color="#d4c020"
-                type="button"
-                aria-label="Yellow"
-              >
-                <img src="assets/images/yellow-beaker.svg" alt="" />
-              </button>
-              <button
-                class="color-btn"
-                data-color="#1aaa55"
-                type="button"
-                aria-label="Green"
-              >
-                <img src="assets/images/green-beaker.svg" alt="" />
-              </button>
-              <button
-                class="color-btn"
-                data-color="#3355cc"
-                type="button"
-                aria-label="Blue"
-              >
-                <img src="assets/images/blue-beaker.svg" alt="" />
-              </button>
-              <button
-                class="color-btn"
-                data-color="#7733cc"
-                type="button"
-                aria-label="Purple"
-              >
-                <img src="assets/images/purple-beaker.svg" alt="" />
-              </button>
-            </div>
+          <!-- Desktop: hex + opacity display row -->
+          <div class="color-display-row">
+            <label
+              class="color-preview"
+              id="color-preview"
+              for="color-picker-desktop"
+              style="background-color: #000000"
+              aria-label="Current color preview"
+            >
+              <input
+                type="color"
+                id="color-picker-desktop"
+                class="color-picker-hidden"
+                value="#000000"
+              />
+            </label>
+            <input
+              type="text"
+              id="color-hex"
+              class="hex-input"
+              value="000000"
+              maxlength="6"
+              aria-label="Hex color value"
+            />
+            <span style="color: var(--lab-muted)">|</span>
+            <input
+              type="number"
+              id="opacity-input"
+              class="opacity-input"
+              value="100"
+              min="0"
+              max="100"
+              aria-label="Opacity percentage"
+            />
+            <span class="opacity-pct">%</span>
+          </div>
+
+          <!-- Color buttons (both) -->
+          <div class="color-btn-group" aria-label="Color presets">
+            <label
+              class="color-btn color-btn--rainbow mobile-only"
+              aria-label="Custom color"
+              title="Pick a custom color"
+            >
+              <img src="assets/images/rainbow-beaker.svg" alt="" />
+              <input
+                type="color"
+                id="color-picker-input"
+                class="color-picker-hidden"
+                value="#000000"
+                aria-label="Color picker"
+              />
+            </label>
+
+            <button
+              class="color-btn"
+              data-color="#e03535"
+              type="button"
+              aria-label="Red"
+            >
+              <img src="assets/images/red-beaker.svg" alt="" />
+            </button>
+            <button
+              class="color-btn"
+              data-color="#e07820"
+              type="button"
+              aria-label="Orange"
+            >
+              <img src="assets/images/orange-beaker.svg" alt="" />
+            </button>
+            <button
+              class="color-btn"
+              data-color="#d4c020"
+              type="button"
+              aria-label="Yellow"
+            >
+              <img src="assets/images/yellow-beaker.svg" alt="" />
+            </button>
+            <button
+              class="color-btn"
+              data-color="#1aaa55"
+              type="button"
+              aria-label="Green"
+            >
+              <img src="assets/images/green-beaker.svg" alt="" />
+            </button>
+            <button
+              class="color-btn"
+              data-color="#3355cc"
+              type="button"
+              aria-label="Blue"
+            >
+              <img src="assets/images/blue-beaker.svg" alt="" />
+            </button>
+            <button
+              class="color-btn"
+              data-color="#7733cc"
+              type="button"
+              aria-label="Purple"
+            >
+              <img src="assets/images/purple-beaker.svg" alt="" />
+            </button>
           </div>
         </div>
 
