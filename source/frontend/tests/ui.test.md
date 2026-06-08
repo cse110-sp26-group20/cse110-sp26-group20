@@ -1,3 +1,14 @@
+# UI (E2E) Tests
+
+## Usage
+In one terminal, run `npx http-server .` to run a local server that puppeteer will use.
+In a second terminal, within `source/frontend`, run `npm test`.
+
+*Common causes of configuration errors:*
+- Installed versions of Jest and puppeteer are incompatible. Version 30 of Jest is not compatible currently, so install an earlier, compatible version such as 29.
+- Port used by created server does not match the `goto` in `ui.test.js`. Update the `goto` if so.
+- Chrome is not successfully opened by puppeteer. Configure system settings to allow Visual Studio Code (or other IDE) to update/open other applications.
+
 # Flow Covered by UI (E2E) Tests
 
 ### Assumptions
