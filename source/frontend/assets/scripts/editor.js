@@ -16,6 +16,9 @@ let fontWeight = 'bold';
 let textColor = '#ffffff';
 let strokeColor = '#000000';
 
+let currentImg = null;
+let activeFilter = 'none';
+
 // text captions
 let activeCaption = null;
 let textModeEnabled = false;
@@ -115,40 +118,74 @@ document.querySelectorAll('.font-btn').forEach((btn) => {
 });
 
 /* =========================
-   DESKTOP COLOR PICKER
+   COLOR CONTROLS
 ========================= */
 
 const desktopColorPicker = document.getElementById('color-picker-desktop');
+const mobileColorPicker = document.getElementById('color-picker-input');
+const colorHexInput = document.getElementById('color-hex');
+const opacityInputEl = document.getElementById('opacity-input');
+const colorPreviewEl = document.getElementById('color-preview');
+
+function applyColor(hex, opacity) {
+  const alpha = opacity / 100;
+  if (alpha < 1) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    textColor = `rgba(${r},${g},${b},${alpha})`;
+  } else {
+    textColor = hex;
+  }
+  renderCanvas();
+}
+
+function syncColorUI(hex) {
+  if (desktopColorPicker) desktopColorPicker.value = hex;
+  if (colorHexInput) colorHexInput.value = hex.slice(1).toUpperCase();
+  if (colorPreviewEl) colorPreviewEl.style.backgroundColor = hex;
+  const opacity = opacityInputEl ? Number(opacityInputEl.value) : 100;
+  applyColor(hex, opacity);
+}
+
+// initialize UI to match the default textColor
+syncColorUI('#ffffff');
 
 if (desktopColorPicker) {
   desktopColorPicker.addEventListener('input', (e) => {
-    textColor = e.target.value;
-    renderCanvas();
+    syncColorUI(e.target.value);
   });
 }
-
-/* =========================
-   MOBILE RAINBOW PICKER
-========================= */
-
-const mobileColorPicker = document.getElementById('color-picker-input');
 
 if (mobileColorPicker) {
   mobileColorPicker.addEventListener('input', (e) => {
-    textColor = e.target.value;
-    renderCanvas();
+    syncColorUI(e.target.value);
   });
 }
 
-/* =========================
-   PRESET COLOR BUTTONS
-========================= */
+if (colorHexInput) {
+  colorHexInput.addEventListener('input', (e) => {
+    const raw = e.target.value.replace(/[^0-9a-fA-F]/g, '');
+    if (raw.length === 6) {
+      const hex = `#${raw}`;
+      if (desktopColorPicker) desktopColorPicker.value = hex;
+      if (colorPreviewEl) colorPreviewEl.style.backgroundColor = hex;
+      const opacity = opacityInputEl ? Number(opacityInputEl.value) : 100;
+      applyColor(hex, opacity);
+    }
+  });
+}
+
+if (opacityInputEl) {
+  opacityInputEl.addEventListener('input', () => {
+    const hex = desktopColorPicker ? desktopColorPicker.value : '#ffffff';
+    applyColor(hex, Number(opacityInputEl.value));
+  });
+}
 
 document.querySelectorAll('.color-btn[data-color]').forEach((btn) => {
   btn.addEventListener('click', () => {
-    textColor = btn.dataset.color;
-
-    renderCanvas();
+    syncColorUI(btn.dataset.color);
   });
 });
 
@@ -179,10 +216,6 @@ tabBtns.forEach((btn) => {
     switchPanel(btn.getAttribute('aria-controls'))
   );
 });
-
-//gets the canvas element and opens the drawing content object
-let currentImg = null;
-let activeFilter = 'none';
 
 document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
   const previewImg = filterDiv.querySelector('.filter-preview');
