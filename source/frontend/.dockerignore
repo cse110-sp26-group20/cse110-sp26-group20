@@ -1,2 +1,10 @@
 node_modules
 .git
+.DS_Store
+.vscode
+.dockerignore
+Dockerfile
+nginx.conf
+eslint.config.js
+package.json
+package-lock.json
