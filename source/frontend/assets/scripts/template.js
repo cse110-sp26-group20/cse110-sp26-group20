@@ -22,18 +22,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const a = document.createElement('a');
             a.href = '#';
             a.setAttribute('aria-label', `Use ${template.name} template`);
-            
+
             const img = document.createElement('img');
             // Ensure the URL is absolute by prepending apiBase if it's a relative path from the backend
-            const imageUrl = template.url.startsWith('http') 
-              ? template.url 
+            const imageUrl = template.url.startsWith('http')
+              ? template.url
               : `${config.apiBase}${template.url}`;
-            
+
             img.src = imageUrl;
             img.alt = template.name;
 
             a.appendChild(img);
-            
+
             a.addEventListener('click', (e) => {
               e.preventDefault();
               sessionStorage.setItem('uploadedImage', imageUrl);
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     .catch((err) => {
       console.error('Error loading templates:', err);
-      templateSection.innerHTML = '<p>Error loading templates. Please try again later.</p>';
+      templateSection.innerHTML =
+        '<p>Error loading templates. Please try again later.</p>';
     });
 });
