@@ -86,7 +86,10 @@
           <canvas id="meme-canvas" width="800" height="500">
             Your browser does not support the HTML canvas element.
           </canvas>
-          <input id="caption-editor" class="caption-overlay hidden"/>
+        </div>
+
+        <div id="text-popup" class="text-popup hidden">
+          <input id="popup-input" type="text" class="popup-input" />
         </div>
 
         <!-- Mobile only: single caption input below canvas -->
@@ -102,8 +105,11 @@
       </section>
 
       <!-- RIGHT CONTROLS PANEL -->
-      <aside class="controls-panel" id="controls-panel" aria-label="Text controls">
-
+      <aside
+        class="controls-panel"
+        id="controls-panel"
+        aria-label="Text controls"
+      >
         <!-- TEXT PANEL -->
         <div class="tool-panel" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->

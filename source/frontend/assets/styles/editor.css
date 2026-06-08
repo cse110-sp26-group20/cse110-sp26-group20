@@ -130,7 +130,7 @@ textarea {
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 .tool-btn svg {
@@ -177,9 +177,9 @@ textarea {
   flex: 1;
   overflow: hidden;
   padding: 16px;
-    flex: unset;
-    padding: 0 12px;
-    position: relative
+  flex: unset;
+  padding: 0 12px;
+  position: relative;
 }
 
 #meme-canvas {
@@ -247,24 +247,23 @@ textarea {
 
 /* Caption editor styles */
 .caption-overlay {
-    position: absolute;
-    z-index: 1000;
-    width: 400px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: white;
-    font-size: 60px;
-    font-family: Impact, sans-serif;
-    font-weight: bold;
-    text-align: center;
-    transform: translate(-50%, -50%);
-    border: 1px solid red;
-    text-shadow:
-        2px 2px 0 black,
-       -2px 2px 0 black,
-        2px -2px 0 black,
-       -2px -2px 0 black;
+  position: absolute;
+  z-index: 1000;
+  width: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  font-size: 60px;
+  font-family: Impact, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(255, 0, 0, 0.15);
+  text-shadow:
+    2px 2px 0 black,
+    -2px 2px 0 black,
+    2px -2px 0 black,
+    -2px -2px 0 black;
 }
 
 .caption-editor label {
@@ -272,6 +271,46 @@ textarea {
   font-size: 1rem;
   color: var(--lab-white);
   margin-bottom: 5px;
+}
+
+.text-popup {
+  position: fixed;
+
+  top: 20px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 1000;
+
+  background: #222;
+  border: 2px solid white;
+
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.popup-input {
+  width: 300px;
+
+  font-size: 24px;
+  padding: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .text-popup {
+    width: 90vw;
+    max-width: 500px;
+  }
+
+  .popup-input {
+    width: 100%;
+    font-size: 20px;
+  }
 }
 
 .text-input {

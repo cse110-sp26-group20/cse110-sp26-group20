@@ -8,138 +8,134 @@ const savedImage = sessionStorage.getItem('uploadedImage');
 let currentImage = null;
 let activeCaption = null;
 let textModeEnabled = false;
+const textButton = document.querySelector('[data-tool="text"]');
+
+const mobileTextButton = document.querySelector('.mobile-tab-bar .tab-btn');
 
 const topCaption = {
-    text: "",
-    x: 0,
-    y: 0
+  text: '',
+  x: 0,
+  y: 0
 };
 
 const bottomCaption = {
-    text: "",
-    x: 0,
-    y: 0
+  text: '',
+  x: 0,
+  y: 0
 };
 
+const popup = document.getElementById('text-popup');
+
+const popupInput = document.getElementById('popup-input');
+
+function enableTextMode() {
+  if (textModeEnabled) return;
+
+  topCaption.text = 'TOP TEXT';
+  bottomCaption.text = 'BOTTOM TEXT';
+
+  textModeEnabled = true;
+
+  renderCanvas();
+}
+
+textButton.addEventListener('click', enableTextMode);
+
+mobileTextButton.addEventListener('click', enableTextMode);
+
 // text tool button
-const textButton = document.querySelector('[data-tool="text"]');
 
-const editor = document.getElementById("caption-editor");
+canvas.addEventListener('click', handleCanvasClick);
 
-textButton.addEventListener("click", () => {
-    if (!textModeEnabled) {
-        topCaption.text = "TOP TEXT";
-        bottomCaption.text = "BOTTOM TEXT";
-        textModeEnabled = true;
-        renderCanvas();
-    }
+popupInput.addEventListener('input', () => {
+  if (!activeCaption) return;
+
+  activeCaption.text = popupInput.value;
+
+  renderCanvas();
 });
 
-canvas.addEventListener(
-    "click",
-    handleCanvasClick
-);
+popupInput.addEventListener('blur', () => {
+  popup.classList.add('hidden');
+});
 
 function openEditor(caption) {
-    editor.classList.remove("hidden");
-    editor.value = caption.text;
-    editor.style.left = `${canvas.offsetLeft + caption.x}px`;
-    editor.style.top = `${canvas.offsetTop + caption.y - 25}px`;
-    editor.focus();
+  activeCaption = caption;
+
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popup.classList.remove('hidden');
+  popupInput.value = caption.text;
+
+  popup.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
+
+  popup.style.top = `${canvasRect.top - 70}px`;
+
+  popupInput.focus();
+  popupInput.select();
 }
 
 function handleCanvasClick(event) {
-    if (!textModeEnabled)
-        return;
-    const y = event.offsetY;
-    if (y < 150) {
-        activeCaption = topCaption;
-        openEditor(topCaption);
-    } else if (
-        y > canvas.height - 150
-    ) {
-        activeCaption = bottomCaption;
+  if (!textModeEnabled) return;
 
-        openEditor(bottomCaption);
-    }
+  const distanceToTop = Math.abs(event.offsetY - topCaption.y);
+
+  const distanceToBottom = Math.abs(event.offsetY - bottomCaption.y);
+
+  if (distanceToTop < 75) {
+    activeCaption = topCaption;
+    openEditor(topCaption);
+  } else if (distanceToBottom < 75) {
+    activeCaption = bottomCaption;
+    openEditor(bottomCaption);
+  }
 }
 
-editor.addEventListener("input", () => {
-        if (!activeCaption) return;
-        activeCaption.text = editor.value;
-        renderCanvas();
-    }
-);
-
-editor.addEventListener("blur", () => {
-    editor.classList.add("hidden");
-});
-
 if (savedImage) {
-    const img = new Image();
-    img.src = savedImage; //assigns chosen image to image element & decodes base64 url
-    
-    //once img is decoded, draw image to canvas with context object
-    img.onload = () => {
-        currentImage = img;
+  const img = new Image();
+  img.src = savedImage; //assigns chosen image to image element & decodes base64 url
 
-        canvas.width = img.width;
-        canvas.height = img.height;
+  //once img is decoded, draw image to canvas with context object
+  img.onload = () => {
+    currentImage = img;
 
-        topCaption.x = canvas.width / 2;
-        topCaption.y = canvas.height * 0.15;
+    canvas.width = img.width;
+    canvas.height = img.height;
 
-        bottomCaption.x = canvas.width / 2;
-        bottomCaption.y = canvas.height * 0.95;
+    topCaption.x = canvas.width / 2;
+    topCaption.y = canvas.height * 0.15;
 
-        renderCanvas();
-        sessionStorage.removeItem('uploadedImage');
-    };
+    bottomCaption.x = canvas.width / 2;
+    bottomCaption.y = canvas.height * 0.95;
+
+    renderCanvas();
+    sessionStorage.removeItem('uploadedImage');
+  };
 }
 
 function renderCanvas() {
-    context.clearRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+  context.clearRect(0, 0, canvas.width, canvas.height);
 
-    if (currentImage) {
-        context.drawImage(
-            currentImage,
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
-    }
+  if (currentImage) {
+    context.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+  }
 
-    drawCaption(topCaption);
-    drawCaption(bottomCaption);
+  drawCaption(topCaption);
+  drawCaption(bottomCaption);
 }
 
 function drawCaption(caption) {
+  if (!caption.text) return;
 
-    if (!caption.text) return;
+  context.font = 'bold 60px Impact';
 
-    context.font = "bold 60px Impact";
+  context.fillStyle = 'white';
+  context.strokeStyle = 'black';
 
-    context.fillStyle = "white";
-    context.strokeStyle = "black";
+  context.lineWidth = 4;
+  context.textAlign = 'center';
 
-    context.lineWidth = 4;
-    context.textAlign = "center";
+  context.strokeText(caption.text, caption.x, caption.y);
 
-    context.strokeText(
-        caption.text,
-        caption.x,
-        caption.y
-    );
-
-    context.fillText(
-        caption.text,
-        caption.x,
-        caption.y
-    );
+  context.fillText(caption.text, caption.x, caption.y);
 }
