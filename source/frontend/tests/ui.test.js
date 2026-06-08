@@ -134,4 +134,12 @@ describe('End-to-end user flow for meme generation', () => {
 
         expect(page.url()).toContain('export.html');
     });
+
+    // Export Page
+    it('Preview image has a source', async () => {
+        console.log('Checking image source...');
+
+        const src = await page.$eval('#meme-img', el => el.getAttribute('src'));
+        expect(src).toBeTruthy();
+    });
 });

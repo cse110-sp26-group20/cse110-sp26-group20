@@ -26,3 +26,6 @@ Click a template --> Editor Page
 - Upload image
 - Give AI prompt
 - Click Export --> Export Page
+
+## Export Page
+Preview image displayed
