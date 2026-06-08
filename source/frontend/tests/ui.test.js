@@ -1,145 +1,138 @@
 describe('End-to-end user flow for meme generation', () => {
-    beforeAll(async () => {
-        await page.goto('http://localhost:8080/index.html');
-    });
+  beforeAll(async () => {
+    await page.goto('http://localhost:8080/index.html');
+  });
 
-    // Home Page
+  // Home Page
 
-    it('Home page loads correctly', async () => {
-        console.log('Checking homepage load...');
+  it('Home page loads correctly', async () => {
+    console.log('Checking homepage load...');
 
-        const title = await page.title();
-        expect(title).toContain('MemeLab');
-    });
+    const title = await page.title();
+    expect(title).toContain('MemeLab');
+  });
 
-    it('Homepage shows both entry points', async () => {
-        console.log('Checking homepage UI elements...');
+  it('Homepage shows both entry points', async () => {
+    console.log('Checking homepage UI elements...');
 
-        const uploadBtn = await page.$('.upload-btn');
-        const templateBtn = await page.$('.template-btn');
+    const uploadBtn = await page.$('.upload-btn');
+    const templateBtn = await page.$('.template-btn');
 
-        expect(uploadBtn).not.toBeNull();
-        expect(templateBtn).not.toBeNull();
-    });
-    
-    it('Template button navigates to templates page', async () => {
-        console.log('Testing templates page navigation...');
+    expect(uploadBtn).not.toBeNull();
+    expect(templateBtn).not.toBeNull();
+  });
 
-        await Promise.all([
-            page.waitForNavigation(),
-            page.click('.template-btn')
-        ]);
+  it('Template button navigates to templates page', async () => {
+    console.log('Testing templates page navigation...');
 
-        expect(page.url()).toContain('template.html');
-    });
+    await Promise.all([page.waitForNavigation(), page.click('.template-btn')]);
 
-    // Templates Page
+    expect(page.url()).toContain('template.html');
+  });
 
-    it('Template grid loads', async () => {
-        console.log('Checking template grid...');
-        const section = await page.$('.template-section');
-        expect(section).not.toBeNull();
-    });
+  // Templates Page
 
-    it('Each template links to editor page', async () => {
-        console.log('Validating template links...');
+  it('Template grid loads', async () => {
+    console.log('Checking template grid...');
+    const section = await page.$('.template-section');
+    expect(section).not.toBeNull();
+  });
 
-        const links = await page.$$eval(
-            '.template-section a',
-            anchors => anchors.map(a => a.getAttribute('href'))
-        );
+  it('Each template links to editor page', async () => {
+    console.log('Validating template links...');
 
-        const allGoToEditor = links.every(href => href === 'editor.html');
-        expect(allGoToEditor).toBe(true);
-    });
+    const links = await page.$$eval('.template-section a', (anchors) =>
+      anchors.map((a) => a.getAttribute('href'))
+    );
 
-    it('Clicking a template navigates to editor page', async () => {
-        console.log('Testing template click navigation...');
+    const allGoToEditor = links.every((href) => href === 'editor.html');
+    expect(allGoToEditor).toBe(true);
+  });
 
-        const firstTemplate = await page.$('.template-section a');
+  it('Clicking a template navigates to editor page', async () => {
+    console.log('Testing template click navigation...');
 
-        await Promise.all([
-            page.waitForNavigation(),
-            firstTemplate.click()
-        ]);
+    const firstTemplate = await page.$('.template-section a');
 
-        expect(page.url()).toContain('editor.html');
-    });
+    await Promise.all([page.waitForNavigation(), firstTemplate.click()]);
 
-    // Editor Page
+    expect(page.url()).toContain('editor.html');
+  });
 
-    it('Editor page loads correctly', async () => {
-        console.log('Checking editor page...');
+  // Editor Page
 
-        expect(page.url()).toContain('editor.html');
-        const canvas = await page.$('#meme-canvas');
-        expect(canvas).not.toBeNull();
-    });
+  it('Editor page loads correctly', async () => {
+    console.log('Checking editor page...');
 
-    it('Can enter top and bottom text', async () => {
-        console.log('Typing meme text...');
+    expect(page.url()).toContain('editor.html');
+    const canvas = await page.$('#meme-canvas');
+    expect(canvas).not.toBeNull();
+  });
 
-        await page.type('#top-text', 'TOP TEXT');
-        await page.type('#bottom-text', 'BOTTOM TEXT');
+  it('Can enter top and bottom text', async () => {
+    console.log('Typing meme text...');
 
-        const top = await page.$eval('#top-text', el => el.value);
-        const bottom = await page.$eval('#bottom-text', el => el.value);
+    await page.type('#top-text', 'TOP TEXT');
+    await page.type('#bottom-text', 'BOTTOM TEXT');
 
-        expect(top).toBe('TOP TEXT');
-        expect(bottom).toBe('BOTTOM TEXT');
-    });
+    const top = await page.$eval('#top-text', (el) => el.value);
+    const bottom = await page.$eval('#bottom-text', (el) => el.value);
 
-    it('Tool sidebar contains all tools', async () => {
-        console.log('Checking tools...');
+    expect(top).toBe('TOP TEXT');
+    expect(bottom).toBe('BOTTOM TEXT');
+  });
 
-        const tools = await page.$$('.tool-btn');
-        expect(tools.length).toBe(4);
-    });
+  it('Tool sidebar contains all tools', async () => {
+    console.log('Checking tools...');
 
-     it('Can upload image from library input', async () => {
-        console.log('Uploading image...');
+    const tools = await page.$$('.tool-btn');
+    expect(tools.length).toBe(4);
+  });
 
-        const input = await page.$('#upload-library-input');
-        await input.uploadFile('./test-assets/sample.jpeg');
-        expect(input).not.toBeNull();
-    });
+  it('Can upload image from library input', async () => {
+    console.log('Uploading image...');
 
-    it('Filters are present', async () => {
-        console.log('Checking filters...');
+    const input = await page.$('#upload-library-input');
+    await input.uploadFile('./test-assets/sample.jpeg');
+    expect(input).not.toBeNull();
+  });
 
-        const filters = await page.$$('.filter');
-        expect(filters.length).toBeGreaterThan(0);
-    });
+  it('Filters are present', async () => {
+    console.log('Checking filters...');
 
-    it('AI panel loads and accepts input', async () => {
-        console.log('Testing AI panel...');
+    const filters = await page.$$('.filter');
+    expect(filters.length).toBeGreaterThan(0);
+  });
 
-        const aiBtn = await page.$('.tool-btn[data-tool="ai"]');
-        await aiBtn.click();
+  it('AI panel loads and accepts input', async () => {
+    console.log('Testing AI panel...');
 
-        await page.type('#ai-prompt', 'Make this meme Shakespearean');
+    const aiBtn = await page.$('.tool-btn[data-tool="ai"]');
+    await aiBtn.click();
 
-        const value = await page.$eval('#ai-prompt', el => el.value);
+    await page.type('#ai-prompt', 'Make this meme Shakespearean');
 
-        expect(value).toBe('Make this meme Shakespearean');
-    });
+    const value = await page.$eval('#ai-prompt', (el) => el.value);
 
-    it('Can navigate to export page from editor', async () => {
-        console.log('Navigating to export...');
+    expect(value).toBe('Make this meme Shakespearean');
+  });
 
-        await Promise.all([
-            page.waitForNavigation(),
-            page.click('a.export-trigger')
-        ]);
+  it('Can navigate to export page from editor', async () => {
+    console.log('Navigating to export...');
 
-        expect(page.url()).toContain('export.html');
-    });
+    await Promise.all([
+      page.waitForNavigation(),
+      page.click('a.export-trigger')
+    ]);
 
-    // Export Page
-    it('Preview image has a source', async () => {
-        console.log('Checking image source...');
+    expect(page.url()).toContain('export.html');
+  });
 
-        const src = await page.$eval('#meme-img', el => el.getAttribute('src'));
-        expect(src).toBeTruthy();
-    });
+  // Export Page
+  it('Preview image has a source', async () => {
+    console.log('Checking image source...');
+
+    const src = await page.$eval('#meme-img', (el) => el.getAttribute('src'));
+    expect(src).toBeTruthy();
+  });
 });
