@@ -5,6 +5,16 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-puppeteer": "^10.1.4",
+    "puppeteer": "^22.15.0"
+  },
+  "jest": {
+    "preset": "jest-puppeteer",
+    "verbose": true
   }
 }
