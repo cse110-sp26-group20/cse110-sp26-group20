@@ -70,7 +70,6 @@ app.use(imgRelativePath, express.static(uploadDir));
 app.use('/api/img', getImgRouter(imageController));
 app.use('/api/template', getTempRouter(tempController));
 app.use('/api/ai', createAIRouter(aiController));
-// app.use('/api/template', createAIRouter(aiController));
 
 /**
  * Example usage:
