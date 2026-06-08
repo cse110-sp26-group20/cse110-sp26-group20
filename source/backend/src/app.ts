@@ -52,7 +52,8 @@ const aiGenerator = new OpenAIProvider(
 const aiController = new AIController(
   aiGenerator,
   fileRepository,
-  storageStrategy
+  storageStrategy,
+  imgRelativePath
 );
 
 // this part was needed for backend testing too see the file ids generated on startup

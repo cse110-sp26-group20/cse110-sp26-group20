@@ -42,7 +42,7 @@ describe('AIController', () => {
       getFileStream: jest.fn()
     } as unknown as jest.Mocked<FileRepositoryOperator>;
 
-    aiController = new AIController(mockGenerator, mockFileRepo, noStrategy);
+    aiController = new AIController(mockGenerator, mockFileRepo, noStrategy, '/static');
   });
 
   afterEach(async () => {
@@ -143,6 +143,7 @@ describe('AIController', () => {
 
       mockFileRepo.saveFile.mockResolvedValueOnce({
         id: 'newID',
+        filename: 'newID.png',
         localPath: '/tmp/new.png'
       } as FileRecord);
 
@@ -160,6 +161,7 @@ describe('AIController', () => {
       expect(mockFileRepo.saveFile).toHaveBeenCalledWith(
         Buffer.from(playload),
         {
+          filename: `image.${makeFakeImageResponse().getImage().format}`,
           type: makeFakeImageResponse().getImage().format
         },
         noStrategy
@@ -172,7 +174,7 @@ describe('AIController', () => {
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.json).toHaveBeenCalledWith({
         id: 'newID',
-        url: '/tmp/new.png'
+        url: '/static/newID.png'
       });
       expect(mockFileRepo.saveFile).toHaveBeenCalledTimes(1);
     });
