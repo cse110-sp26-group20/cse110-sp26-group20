@@ -1,6 +1,6 @@
 describe('End-to-end user flow for meme generation', () => {
     beforeAll(async () => {
-        await page.goto('http://localhost:8000/index.html');
+        await page.goto('http://localhost:8080/index.html');
     });
 
     // Home Page
