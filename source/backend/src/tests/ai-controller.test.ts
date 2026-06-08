@@ -42,7 +42,12 @@ describe('AIController', () => {
       getFileStream: jest.fn()
     } as unknown as jest.Mocked<FileRepositoryOperator>;
 
-    aiController = new AIController(mockGenerator, mockFileRepo, noStrategy, '/static');
+    aiController = new AIController(
+      mockGenerator,
+      mockFileRepo,
+      noStrategy,
+      '/static'
+    );
   });
 
   afterEach(async () => {
