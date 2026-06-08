@@ -34,7 +34,7 @@ export class TemplateService {
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
-  staticPath: string;
+  private readonly staticPath: string;
 
   constructor(
     realFileRepo: FileRepositoryOperator,
