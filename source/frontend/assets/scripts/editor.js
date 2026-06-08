@@ -3,6 +3,192 @@ const toolBtns = document.querySelectorAll('.tool-btn');
 const tabBtns = document.querySelectorAll('.tab-btn');
 const toolPanels = document.querySelectorAll('.tool-panel');
 
+//gets the canvas element and opens the drawing content object
+const canvas = document.getElementById('meme-canvas');
+const context = canvas.getContext('2d');
+
+const savedImage = sessionStorage.getItem('uploadedImage');
+
+let fontSize = 60;
+let fontFamily = 'Impact';
+let fontWeight = 'bold';
+
+let textColor = '#ffffff';
+let strokeColor = '#000000';
+
+let currentImg = null;
+let activeFilter = 'none';
+
+// text captions
+let activeCaption = null;
+let textModeEnabled = false;
+const textButton = document.querySelector('[data-tool="text"]');
+
+const mobileTextButton = document.querySelector('.mobile-tab-bar .tab-btn');
+
+const topCaption = {
+  text: '',
+  x: 0,
+  y: 0
+};
+
+const bottomCaption = {
+  text: '',
+  x: 0,
+  y: 0
+};
+
+const popup = document.getElementById('text-popup');
+
+const popupInput = document.getElementById('popup-input');
+
+const fontFamilySelect = document.getElementById('font-family');
+
+if (fontFamilySelect) {
+  fontFamilySelect.addEventListener('change', (e) => {
+    fontFamily = e.target.value;
+    renderCanvas();
+  });
+}
+
+/* =========================
+   FONT WEIGHT (DESKTOP)
+========================= */
+
+const fontWeightSelect = document.getElementById('font-weight');
+
+if (fontWeightSelect) {
+  fontWeightSelect.addEventListener('change', (e) => {
+    fontWeight = e.target.value;
+    renderCanvas();
+  });
+}
+
+/* =========================
+   FONT SIZE (DESKTOP)
+========================= */
+
+const fontSizeInput = document.getElementById('font-size');
+
+if (fontSizeInput) {
+  fontSizeInput.addEventListener('input', (e) => {
+    fontSize = Number(e.target.value);
+    renderCanvas();
+  });
+}
+
+/* =========================
+   FONT SIZE (MOBILE)
+========================= */
+
+const mobileSizeSlider = document.getElementById('font-size-slider');
+
+if (mobileSizeSlider) {
+  mobileSizeSlider.addEventListener('input', (e) => {
+    fontSize = Number(e.target.value);
+    renderCanvas();
+  });
+}
+
+/* =========================
+   MOBILE FONT BUTTONS
+========================= */
+
+const fontMap = {
+  Impact: 'Impact',
+  Arial: 'Arial',
+  Comic: '"Comic Sans MS"',
+  'Times NR': '"Times New Roman"'
+};
+
+document.querySelectorAll('.font-btn').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    document
+      .querySelectorAll('.font-btn')
+      .forEach((b) => b.classList.remove('active'));
+
+    btn.classList.add('active');
+
+    const label = btn.textContent.trim();
+
+    fontFamily = fontMap[label] || label;
+
+    renderCanvas();
+  });
+});
+
+/* =========================
+   COLOR CONTROLS
+========================= */
+
+const desktopColorPicker = document.getElementById('color-picker-desktop');
+const mobileColorPicker = document.getElementById('color-picker-input');
+const colorHexInput = document.getElementById('color-hex');
+const opacityInputEl = document.getElementById('opacity-input');
+const colorPreviewEl = document.getElementById('color-preview');
+
+function applyColor(hex, opacity) {
+  const alpha = opacity / 100;
+  if (alpha < 1) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    textColor = `rgba(${r},${g},${b},${alpha})`;
+  } else {
+    textColor = hex;
+  }
+  renderCanvas();
+}
+
+function syncColorUI(hex) {
+  if (desktopColorPicker) desktopColorPicker.value = hex;
+  if (colorHexInput) colorHexInput.value = hex.slice(1).toUpperCase();
+  if (colorPreviewEl) colorPreviewEl.style.backgroundColor = hex;
+  const opacity = opacityInputEl ? Number(opacityInputEl.value) : 100;
+  applyColor(hex, opacity);
+}
+
+// initialize UI to match the default textColor
+syncColorUI('#ffffff');
+
+if (desktopColorPicker) {
+  desktopColorPicker.addEventListener('input', (e) => {
+    syncColorUI(e.target.value);
+  });
+}
+
+if (mobileColorPicker) {
+  mobileColorPicker.addEventListener('input', (e) => {
+    syncColorUI(e.target.value);
+  });
+}
+
+if (colorHexInput) {
+  colorHexInput.addEventListener('input', (e) => {
+    const raw = e.target.value.replace(/[^0-9a-fA-F]/g, '');
+    if (raw.length === 6) {
+      const hex = `#${raw}`;
+      if (desktopColorPicker) desktopColorPicker.value = hex;
+      if (colorPreviewEl) colorPreviewEl.style.backgroundColor = hex;
+      const opacity = opacityInputEl ? Number(opacityInputEl.value) : 100;
+      applyColor(hex, opacity);
+    }
+  });
+}
+
+if (opacityInputEl) {
+  opacityInputEl.addEventListener('input', () => {
+    const hex = desktopColorPicker ? desktopColorPicker.value : '#ffffff';
+    applyColor(hex, Number(opacityInputEl.value));
+  });
+}
+
+document.querySelectorAll('.color-btn[data-color]').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    syncColorUI(btn.dataset.color);
+  });
+});
+
 function switchPanel(panelId) {
   toolPanels.forEach((p) => p.classList.remove('active'));
   document.getElementById(panelId).classList.add('active');
@@ -30,21 +216,6 @@ tabBtns.forEach((btn) => {
     switchPanel(btn.getAttribute('aria-controls'))
   );
 });
-
-//gets the canvas element and opens the drawing content object
-const canvas = document.getElementById('meme-canvas');
-const context = canvas.getContext('2d');
-let currentImg = null;
-let activeFilter = 'none';
-
-function redrawCanvas() {
-  if (!currentImg) return;
-  canvas.width = currentImg.width;
-  canvas.height = currentImg.height;
-  context.filter = activeFilter;
-  context.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
-  context.filter = 'none';
-}
 
 document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
   const previewImg = filterDiv.querySelector('.filter-preview');
@@ -88,11 +259,9 @@ document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
       .forEach((f) => f.classList.remove('active'));
     filterDiv.classList.add('active');
     activeFilter = filterDiv.dataset.filter;
-    redrawCanvas();
+    renderCanvas();
   });
 });
-
-const savedImage = sessionStorage.getItem('uploadedImage');
 
 if (savedImage) {
   const img = new Image();
@@ -101,9 +270,18 @@ if (savedImage) {
   //once img is decoded, draw image to canvas with context object
   img.onload = () => {
     currentImg = img;
+
     canvas.width = img.width;
     canvas.height = img.height;
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+    topCaption.x = canvas.width / 2;
+    topCaption.y = canvas.height * 0.15;
+
+    bottomCaption.x = canvas.width / 2;
+    bottomCaption.y = canvas.height * 0.95;
+
+    renderCanvas();
+
     sessionStorage.removeItem('uploadedImage');
     updateFilterPreviews();
   };
@@ -115,11 +293,16 @@ function loadImageOntoCanvas(file) {
   const img = new Image();
   img.onload = () => {
     currentImg = img;
+
     canvas.width = img.width;
     canvas.height = img.height;
-    context.filter = activeFilter;
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-    context.filter = 'none';
+
+    topCaption.x = canvas.width / 2;
+    topCaption.y = canvas.height * 0.15;
+
+    bottomCaption.x = canvas.width / 2;
+    bottomCaption.y = canvas.height * 0.95;
+    renderCanvas();
     URL.revokeObjectURL(url);
     updateFilterPreviews();
   };
@@ -202,18 +385,15 @@ generateBtn.addEventListener('click', () => {
                 const resultImg = new Image();
                 resultImg.src = `${config.apiBase}${aiData.url}`;
                 resultImg.onload = () => {
+                  topCaption.x = canvas.width / 2;
+                  topCaption.y = canvas.height * 0.15;
+
+                  bottomCaption.x = canvas.width / 2;
+                  bottomCaption.y = canvas.height * 0.95;
                   currentImg = resultImg;
                   canvas.width = resultImg.width;
                   canvas.height = resultImg.height;
-                  context.filter = activeFilter;
-                  context.drawImage(
-                    resultImg,
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                  );
-                  context.filter = 'none';
+                  renderCanvas();
                   updateFilterPreviews();
                 };
 
@@ -232,3 +412,97 @@ generateBtn.addEventListener('click', () => {
     })
     .catch((err) => console.error('Config error:', err));
 });
+
+function enableTextMode() {
+  if (textModeEnabled) return;
+
+  topCaption.text = 'TOP TEXT';
+  bottomCaption.text = 'BOTTOM TEXT';
+
+  textModeEnabled = true;
+
+  renderCanvas();
+}
+
+textButton.addEventListener('click', enableTextMode);
+
+mobileTextButton.addEventListener('click', enableTextMode);
+
+// text tool button
+
+canvas.addEventListener('click', handleCanvasClick);
+
+popupInput.addEventListener('input', () => {
+  if (!activeCaption) return;
+
+  activeCaption.text = popupInput.value;
+
+  renderCanvas();
+});
+
+popupInput.addEventListener('blur', () => {
+  popup.classList.add('hidden');
+});
+
+function openEditor(caption) {
+  activeCaption = caption;
+
+  const canvasRect = canvas.getBoundingClientRect();
+
+  popup.classList.remove('hidden');
+  popupInput.value = caption.text;
+
+  popup.style.left = `${canvasRect.left + canvasRect.width / 2}px`;
+
+  popup.style.top = `${canvasRect.top - 70}px`;
+
+  popupInput.focus();
+  popupInput.select();
+}
+
+function handleCanvasClick(event) {
+  if (!textModeEnabled) return;
+
+  const distanceToTop = Math.abs(event.offsetY - topCaption.y);
+
+  const distanceToBottom = Math.abs(event.offsetY - bottomCaption.y);
+
+  if (distanceToTop < 100) {
+    activeCaption = topCaption;
+    openEditor(topCaption);
+  } else if (distanceToBottom < 100) {
+    activeCaption = bottomCaption;
+    openEditor(bottomCaption);
+  }
+}
+
+function renderCanvas() {
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (currentImg) {
+    context.filter = activeFilter;
+
+    context.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
+
+    context.filter = 'none';
+  }
+
+  drawCaption(topCaption);
+  drawCaption(bottomCaption);
+}
+
+function drawCaption(caption) {
+  if (!caption.text) return;
+
+  context.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
+
+  context.fillStyle = textColor;
+  context.strokeStyle = strokeColor;
+
+  context.lineWidth = 4;
+  context.textAlign = 'center';
+
+  context.strokeText(caption.text, caption.x, caption.y);
+
+  context.fillText(caption.text, caption.x, caption.y);
+}
