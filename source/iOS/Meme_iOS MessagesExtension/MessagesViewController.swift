@@ -23,7 +23,7 @@ class MessagesViewController: MSMessagesAppViewController {
         self.view.addSubview(webView)
         
         //replace imgflip url to our project url once available
-        if let url = URL(string: "https://imgflip.com") {
+        if let url = URL(string: "https://memelab.aelew.dev/") {
             let request = URLRequest(url: url)
             webView.load(request)
         }
