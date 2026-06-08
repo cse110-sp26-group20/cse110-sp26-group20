@@ -65,4 +65,73 @@ describe('End-to-end user flow for meme generation', () => {
 
         expect(page.url()).toContain('editor.html');
     });
+
+    // Editor Page
+
+    it('Editor page loads correctly', async () => {
+        console.log('Checking editor page...');
+
+        expect(page.url()).toContain('editor.html');
+        const canvas = await page.$('#meme-canvas');
+        expect(canvas).not.toBeNull();
+    });
+
+    it('Can enter top and bottom text', async () => {
+        console.log('Typing meme text...');
+
+        await page.type('#top-text', 'TOP TEXT');
+        await page.type('#bottom-text', 'BOTTOM TEXT');
+
+        const top = await page.$eval('#top-text', el => el.value);
+        const bottom = await page.$eval('#bottom-text', el => el.value);
+
+        expect(top).toBe('TOP TEXT');
+        expect(bottom).toBe('BOTTOM TEXT');
+    });
+
+    it('Tool sidebar contains all tools', async () => {
+        console.log('Checking tools...');
+
+        const tools = await page.$$('.tool-btn');
+        expect(tools.length).toBe(4);
+    });
+
+     it('Can upload image from library input', async () => {
+        console.log('Uploading image...');
+
+        const input = await page.$('#upload-library-input');
+        await input.uploadFile('./test-assets/sample.jpg');
+        expect(input).not.toBeNull();
+    });
+
+    it('Filters are present', async () => {
+        console.log('Checking filters...');
+
+        const filters = await page.$$('.filter');
+        expect(filters.length).toBeGreaterThan(0);
+    });
+
+    it('AI panel loads and accepts input', async () => {
+        console.log('Testing AI panel...');
+
+        const aiBtn = await page.$('.tool-btn[data-tool="ai"]');
+        await aiBtn.click();
+
+        await page.type('#ai-prompt', 'Make this meme Shakespearean');
+
+        const value = await page.$eval('#ai-prompt', el => el.value);
+
+        expect(value).toBe('Make this meme Shakespearean');
+    });
+
+    it('Can navigate to export page from editor', async () => {
+        console.log('Navigating to export...');
+
+        await Promise.all([
+            page.waitForNavigation(),
+            page.click('a.export-trigger')
+        ]);
+
+        expect(page.url()).toContain('export.html');
+    });
 });
