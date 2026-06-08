@@ -39,7 +39,11 @@ describe('ImageController.uploadImg', () => {
       resolvePath: jest.fn()
     };
 
-    imageController = new ImageController(mockFileRepo, mockStrategy);
+    imageController = new ImageController(
+      mockFileRepo,
+      mockStrategy,
+      '/uploads'
+    );
 
     mockRequest = {};
 

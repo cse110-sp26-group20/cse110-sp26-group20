@@ -18,6 +18,16 @@ We follow automated code standards: Prettier for formatting and ESLint for linti
 - `/source` - Source code for the application.
 - `/specs` - Project specifications and requirements.
 
+## Deployment
+
+The app can be deployed using Docker Compose. From the repository root, make sure you have backend environment variables set or a `.env` file under `source/backend/` (see `source/backend/.env.example`), then run:
+
+```bash
+docker compose up -d --build
+```
+
+This starts the frontend (nginx, port 8080) and backend (internal network only) containers. The frontend proxies all `/api/*` requests to the backend automatically.
+
 ## Linting and formatting
 
 We use [ESLint](https://eslint.org/) to catch code issues and [Prettier](https://prettier.io/) to keep formatting consistent. ESLint handles lint rules, and Prettier handles style (quotes, line breaks, import order).

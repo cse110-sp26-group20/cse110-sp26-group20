@@ -33,7 +33,11 @@ const imgRelativePath = '/static';
 const idGenerator = new UUIDGenerator();
 const storageStrategy = new LocalStorageStrategy(uploadDir);
 const fileRepository = new FileRepository(idGenerator);
-const templateService = new TemplateService(fileRepository, storageStrategy);
+const templateService = new TemplateService(
+  fileRepository,
+  storageStrategy,
+  imgRelativePath
+);
 const imageController = new ImageController(
   fileRepository,
   storageStrategy,
