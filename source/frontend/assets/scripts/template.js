@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           templates.forEach((template) => {
             const a = document.createElement('a');
-            a.href = '#';
+            a.href = 'editor.html';
             a.setAttribute('aria-label', `Use ${template.name} template`);
 
             const img = document.createElement('img');
