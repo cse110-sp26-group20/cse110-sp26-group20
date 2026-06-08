@@ -8,6 +8,10 @@
   --green-gradient-black: rgba(46, 204, 113, 0);
   --green-gradeint-light: rgba(46, 204, 113, 0.7);
   --green-gradient-dark: rgba(46, 204, 113, 0.25);
+
+  --gray-gradient-black: rgba(200, 200, 200, 0);
+  --gray-gradient-light: rgba(200, 200, 200, 0.7);
+  --gray-gradient-dark: rgba(200, 200, 200, 0.25);
 }
 
 * {
@@ -156,7 +160,8 @@ body {
 }
 
 .download-btn,
-.share-btn {
+.share-btn,
+.back-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,6 +221,25 @@ body {
   transform: translateY(-2px);
   box-shadow:
     0 0 25px var(--green-gradeint-light),
+    0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.back-btn {
+  background: linear-gradient(
+    to right,
+    var(--gray-gradient-dark),
+    var(--gray-gradient-light)
+  );
+
+  box-shadow:
+    0 0 18px var(--gray-gradient-dark),
+    0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 25px var(--gray-gradient-light),
     0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
