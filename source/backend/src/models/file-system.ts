@@ -31,13 +31,13 @@ export interface FileRepositoryOperator {
    * @param file - The file content as a Buffer or readable Stream.
    * @param metadata - Partial metadata for the file (must include `type`).
    * @param strategy - Strategy responsible for writing the file to storage.
-   * @returns The created FileRecord for the stored file.
+   * @returns A promise that resolves to the created FileRecord for the stored file.
    */
   saveFile(
     file: Buffer | Stream,
     metadata: Partial<FileRecord>,
     strategy: StorageStrategy
-  ): FileRecord;
+  ): Promise<FileRecord>;
   /**
    * Retrieve the in-memory FileRecord for a given id.
    * @param id - The identifier of the file record.
@@ -48,7 +48,10 @@ export interface FileRepositoryOperator {
    * Obtain a readable stream for the file using the provided strategy.
    * @param id - The identifier of the stored file.
    * @param strategy - Storage strategy used to read the underlying file.
-   * @returns A readable Stream with the file data, or `undefined` if not found.
+   * @returns A promise that resolves to a readable Stream with the file data, or `undefined` if not found.
    */
-  getFileStream(id: string, strategy: StorageStrategy): Stream | undefined;
+  getFileStream(
+    id: string,
+    strategy: StorageStrategy
+  ): Promise<Stream | undefined>;
 }

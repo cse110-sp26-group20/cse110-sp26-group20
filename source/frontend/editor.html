@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MemeLab Editor</title>
     <link rel="stylesheet" href="assets/styles/editor.css" />
+    <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -27,23 +28,23 @@
         </a>
         <nav class="header-nav" aria-label="Main navigation">
           <a href="template.html" class="nav-link">Templates</a>
-          <a href="export.html" class="nav-link">Export</a>
+          <a href="export.html" class="nav-link export-trigger">Export</a>
         </nav>
       </div>
-
-      <!-- logo centered on separate row as navigation -->
-      <div class="header-subnav">
-        <a href="template.html" class="nav-link">&#8592; Templates</a>
-        <a href="export.html" class="nav-link">Export &#8594;</a>
-      </div>
     </header>
+
+    <!-- Mobile subnav row (Templates / Export) — separate from header so each can have its own shadow -->
+    <div class="header-subnav">
+      <a href="template.html" class="nav-link">&#8592; Templates</a>
+      <a href="export.html" class="nav-link export-trigger">Export &#8594;</a>
+    </div>
 
     <!-- Editor layout -->
     <div class="editor-layout">
       <!-- left tool sidebar for desktop -->
       <aside class="tool-sidebar" aria-label="Editor tools">
         <button
-          class="tool-btn"
+          class="tool-btn active"
           data-tool="text"
           type="button"
           aria-pressed="true"
@@ -53,12 +54,12 @@
         </button>
         <button
           class="tool-btn"
-          data-tool="stickers"
+          data-tool="images"
           type="button"
           aria-pressed="false"
         >
           <i class="fa-regular fa-image"></i>
-          <span class="tool-label">Stickers</span>
+          <span class="tool-label">Images</span>
         </button>
         <button
           class="tool-btn"
@@ -111,7 +112,7 @@
         aria-label="Text controls"
       >
         <!-- TEXT PANEL -->
-        <div class="tool-panel" id="text-panel" role="tabpanel">
+        <div class="tool-panel active" id="text-panel" role="tabpanel">
           <!-- Desktop: separate Top Text / Bottom Text inputs -->
           <div class="panel-section desktop-only">
             <h2 class="section-title">Caption</h2>
@@ -330,11 +331,12 @@
         </div>
 
         <!-- AI GENERATION PANEL -->
-        <div class="tool-panel active" id="ai-panel" role="tabpanel">
+        <div class="tool-panel" id="ai-panel" role="tabpanel">
           <div class="panel-section">
             <h2 class="section-title">Prompt</h2>
             <p>Ask anything to experiment on your meme</p>
             <textarea
+              id="ai-prompt"
               class="text-input"
               placeholder="e.g. turn this meme into vemon dunking..."
               rows="6"
@@ -343,13 +345,106 @@
             <button id="ai-submit" type="button">Generate</button>
           </div>
         </div>
+
+        <!-- IMAGES PANEL -->
+        <div class="tool-panel" id="images-panel" role="tabpanel">
+          <div class="panel-section">
+            <h2 class="section-title">Images</h2>
+            <div class="image-upload-options">
+              <label class="image-upload-btn" for="upload-library-input">
+                <i class="fa-solid fa-image"></i>
+                <span>Upload from Library</span>
+                <input
+                  type="file"
+                  id="upload-library-input"
+                  accept="image/*"
+                  class="hidden-file-input"
+                />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILTERS PANEL -->
+        <div class="tool-panel" id="filters-panel" role="tabpanel">
+          <div class="filter active" id="filter-1" data-filter="none">
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Normal</p>
+          </div>
+          <div class="filter" id="filter-2" data-filter="grayscale(100%)">
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Grayscale</p>
+          </div>
+          <div
+            class="filter"
+            id="filter-3"
+            data-filter="contrast(200%) saturate(200%) hue-rotate(25deg)"
+          >
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Distorted</p>
+          </div>
+          <div
+            class="filter"
+            id="filter-4"
+            data-filter="sepia(30%) contrast(240%) brightness(95%) saturate(60%)"
+          >
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Toaster</p>
+          </div>
+          <div
+            class="filter"
+            id="filter-5"
+            data-filter="blur(8px) contrast(110%) saturate(70%)"
+          >
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Blur</p>
+          </div>
+          <div
+            class="filter"
+            id="filter-6"
+            data-filter="hue-rotate(90deg) invert(20%) contrast(130%)"
+          >
+            <img
+              src="assets/images/baby-meme.jpg"
+              class="filter-preview"
+              alt="filter preview"
+            />
+            <p>Neon</p>
+          </div>
+        </div>
+
+        <img
+          src="assets/images/template-hexagons.svg"
+          class="hexagon-decor"
+          alt=""
+        />
       </aside>
     </div>
 
     <!-- ===== MOBILE BOTTOM TAB BAR ===== -->
     <nav class="mobile-tab-bar" aria-label="Editor tool tabs" role="tablist">
       <button
-        class="tab-btn"
+        class="tab-btn active"
         type="button"
         role="tab"
         aria-controls="text-panel"
@@ -361,10 +456,10 @@
         class="tab-btn"
         type="button"
         role="tab"
-        aria-controls="stickers-panel"
+        aria-controls="images-panel"
       >
         <i class="fa-regular fa-image"></i>
-        <span class="tab-label">Stickers</span>
+        <span class="tab-label">Images</span>
       </button>
       <button
         class="tab-btn"
@@ -386,6 +481,8 @@
       class="hexagon-decor"
       alt=""
     />
-    <script src="editor.js"></script>
+
+    <script src="assets/scripts/editor.js"></script>
+    <script src="assets/scripts/meme-session-storage.js" defer></script>
   </body>
 </html>
