@@ -30,7 +30,7 @@ describe('TemplateService', () => {
 
   //creates new instance of template service before every test
   beforeEach(() => {
-    templateService = new TemplateService(fakeRepo, fakeStrategy);
+    templateService = new TemplateService(fakeRepo, fakeStrategy, '/static');
   });
 
   afterEach(() => {
@@ -58,6 +58,9 @@ describe('TemplateService', () => {
 
     expect(templateService.templateCache.length).toBe(1);
     expect(templateService.templateCache[0]?.name).toBe('Fake Meme');
+    expect(templateService.templateCache[0]?.url).toBe(
+      `/static/${fakeRepo.saveFile.mock.results[0]?.value.filename}`
+    );
   });
 
   test('bootstrapTemplates() leaves cache empty if API fails', async () => {
@@ -86,7 +89,7 @@ describe('TemplateController', () => {
   let tempController: TemplateController;
 
   beforeEach(() => {
-    templateService = new TemplateService(fakeRepo, fakeStrategy);
+    templateService = new TemplateService(fakeRepo, fakeStrategy, '/static');
     tempController = new TemplateController(templateService);
   });
 

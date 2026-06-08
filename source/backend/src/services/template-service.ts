@@ -34,10 +34,16 @@ export class TemplateService {
 
   private fileRepo: FileRepositoryOperator;
   private diskStrategy: StorageStrategy;
+  private readonly staticPath: string;
 
-  constructor(realFileRepo: FileRepositoryOperator, strategy: StorageStrategy) {
+  constructor(
+    realFileRepo: FileRepositoryOperator,
+    strategy: StorageStrategy,
+    staticPath: string
+  ) {
     this.fileRepo = realFileRepo;
     this.diskStrategy = strategy;
+    this.staticPath = staticPath;
   }
 
   public async bootstrapTemplates() {
@@ -69,7 +75,7 @@ export class TemplateService {
           this.templateCache.push({
             id: savedRecord.id,
             name: meme.name,
-            url: meme.url,
+            url: `${this.staticPath}/${savedRecord.filename}`,
             width: meme.width,
             height: meme.height
           });
