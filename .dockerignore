@@ -1,0 +1,12 @@
+node_modules
+source/backend/node_modules
+source/backend/dist
+source/backend/uploads
+source/frontend/node_modules
+source/iOS
+admin
+artifacts
+specs
+.github
+*.md
+.git
