@@ -277,6 +277,17 @@ textarea {
     -2px -2px 0 black;
 }
 
+.caption-editor {
+  display: none;
+}
+
+.caption-instruction {
+  color: var(--lab-muted);
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
 .caption-editor label {
   display: block;
   font-size: 1rem;

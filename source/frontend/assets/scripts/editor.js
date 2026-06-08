@@ -9,6 +9,13 @@ const context = canvas.getContext('2d');
 
 const savedImage = sessionStorage.getItem('uploadedImage');
 
+let fontSize = 60;
+let fontFamily = 'Impact';
+let fontWeight = 'bold';
+
+let textColor = '#ffffff';
+let strokeColor = '#000000';
+
 // text captions
 let activeCaption = null;
 let textModeEnabled = false;
@@ -31,6 +38,166 @@ const bottomCaption = {
 const popup = document.getElementById('text-popup');
 
 const popupInput = document.getElementById('popup-input');
+
+const fontFamilySelect =
+  document.getElementById('font-family');
+
+if (fontFamilySelect) {
+  fontFamilySelect.addEventListener(
+    'change',
+    (e) => {
+      fontFamily = e.target.value;
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   FONT WEIGHT (DESKTOP)
+========================= */
+
+const fontWeightSelect =
+  document.getElementById('font-weight');
+
+if (fontWeightSelect) {
+  fontWeightSelect.addEventListener(
+    'change',
+    (e) => {
+      fontWeight = e.target.value;
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   FONT SIZE (DESKTOP)
+========================= */
+
+const fontSizeInput =
+  document.getElementById('font-size');
+
+if (fontSizeInput) {
+  fontSizeInput.addEventListener(
+    'input',
+    (e) => {
+      fontSize = Number(e.target.value);
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   FONT SIZE (MOBILE)
+========================= */
+
+const mobileSizeSlider =
+  document.getElementById(
+    'font-size-slider'
+  );
+
+if (mobileSizeSlider) {
+  mobileSizeSlider.addEventListener(
+    'input',
+    (e) => {
+      fontSize = Number(e.target.value);
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   MOBILE FONT BUTTONS
+========================= */
+
+const fontMap = {
+  Impact: 'Impact',
+  Arial: 'Arial',
+  Comic: '"Comic Sans MS"',
+  'Times NR': '"Times New Roman"'
+};
+
+document
+  .querySelectorAll('.font-btn')
+  .forEach((btn) => {
+    btn.addEventListener(
+      'click',
+      () => {
+        document
+          .querySelectorAll('.font-btn')
+          .forEach((b) =>
+            b.classList.remove('active')
+          );
+
+        btn.classList.add('active');
+
+        const label =
+          btn.textContent.trim();
+
+        fontFamily =
+          fontMap[label] || label;
+
+        renderCanvas();
+      }
+    );
+  });
+
+/* =========================
+   DESKTOP COLOR PICKER
+========================= */
+
+const desktopColorPicker =
+  document.getElementById(
+    'color-picker-desktop'
+  );
+
+if (desktopColorPicker) {
+  desktopColorPicker.addEventListener(
+    'input',
+    (e) => {
+      textColor = e.target.value;
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   MOBILE RAINBOW PICKER
+========================= */
+
+const mobileColorPicker =
+  document.getElementById(
+    'color-picker-input'
+  );
+
+if (mobileColorPicker) {
+  mobileColorPicker.addEventListener(
+    'input',
+    (e) => {
+      textColor = e.target.value;
+      renderCanvas();
+    }
+  );
+}
+
+/* =========================
+   PRESET COLOR BUTTONS
+========================= */
+
+document
+  .querySelectorAll(
+    '.color-btn[data-color]'
+  )
+  .forEach((btn) => {
+    btn.addEventListener(
+      'click',
+      () => {
+        textColor =
+          btn.dataset.color;
+
+        renderCanvas();
+      }
+    );
+  });
 
 function switchPanel(panelId) {
   toolPanels.forEach((p) => p.classList.remove('active'));
@@ -63,10 +230,6 @@ tabBtns.forEach((btn) => {
 //gets the canvas element and opens the drawing content object
 let currentImg = null;
 let activeFilter = 'none';
-
-function redrawCanvas() {
-  renderCanvas();
-}
 
 document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
   const previewImg = filterDiv.querySelector('.filter-preview');
@@ -110,7 +273,7 @@ document.querySelectorAll('#filters-panel .filter').forEach((filterDiv) => {
       .forEach((f) => f.classList.remove('active'));
     filterDiv.classList.add('active');
     activeFilter = filterDiv.dataset.filter;
-    redrawCanvas();
+    renderCanvas();
   });
 });
 
@@ -131,7 +294,7 @@ if (savedImage) {
     bottomCaption.x = canvas.width / 2;
     bottomCaption.y = canvas.height * 0.95;
 
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    renderCanvas();
 
     sessionStorage.removeItem('uploadedImage');
     updateFilterPreviews();
@@ -153,9 +316,7 @@ function loadImageOntoCanvas(file) {
 
     bottomCaption.x = canvas.width / 2;
     bottomCaption.y = canvas.height * 0.95;
-    context.filter = activeFilter;
-    context.drawImage(img, 0, 0, canvas.width, canvas.height);
-    context.filter = 'none';
+    renderCanvas();
     URL.revokeObjectURL(url);
     updateFilterPreviews();
   };
@@ -246,15 +407,7 @@ generateBtn.addEventListener('click', () => {
                   currentImg = resultImg;
                   canvas.width = resultImg.width;
                   canvas.height = resultImg.height;
-                  context.filter = activeFilter;
-                  context.drawImage(
-                    resultImg,
-                    0,
-                    0,
-                    canvas.width,
-                    canvas.height
-                  );
-                  context.filter = 'none';
+                  renderCanvas();
                   updateFilterPreviews();
                 };
 
@@ -328,22 +481,28 @@ function handleCanvasClick(event) {
 
   const distanceToBottom = Math.abs(event.offsetY - bottomCaption.y);
 
-  if (distanceToTop < 75) {
+  if (distanceToTop < 100) {
     activeCaption = topCaption;
     openEditor(topCaption);
-  } else if (distanceToBottom < 75) {
+  } else if (distanceToBottom < 100) {
     activeCaption = bottomCaption;
     openEditor(bottomCaption);
   }
 }
 
 function renderCanvas() {
-  context.clearRect(0, 0, canvas.width, canvas.height);
+    context.clearRect(0, 0, canvas.width, canvas.height);
 
   if (currentImg) {
     context.filter = activeFilter;
 
-    context.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
+    context.drawImage(
+      currentImg,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
 
     context.filter = 'none';
   }
@@ -353,17 +512,26 @@ function renderCanvas() {
 }
 
 function drawCaption(caption) {
-  if (!caption.text) return;
+ if (!caption.text) return;
 
-  context.font = 'bold 60px Impact';
+  context.font =
+    `${fontWeight} ${fontSize}px ${fontFamily}`;
 
-  context.fillStyle = 'white';
-  context.strokeStyle = 'black';
+  context.fillStyle = textColor;
+  context.strokeStyle = strokeColor;
 
   context.lineWidth = 4;
   context.textAlign = 'center';
 
-  context.strokeText(caption.text, caption.x, caption.y);
+  context.strokeText(
+    caption.text,
+    caption.x,
+    caption.y
+  );
 
-  context.fillText(caption.text, caption.x, caption.y);
+  context.fillText(
+    caption.text,
+    caption.x,
+    caption.y
+  );
 }
