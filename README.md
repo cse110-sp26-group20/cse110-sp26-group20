@@ -12,6 +12,7 @@ We follow automated code standards: Prettier for formatting and ESLint for linti
 - [Contributing Guide](CONTRIBUTING.md)
 - [Architecture Decision Records](./specs/adr/)
 - [View Team Status Video on YouTube](https://www.youtube.com/watch?v=oZjkrQSXtZM)
+- [View Public Final Video on YouTube](https://www.youtube.com/watch?v=Mn3fqQ6xI-4)
 
 ## Repository Structure
 
