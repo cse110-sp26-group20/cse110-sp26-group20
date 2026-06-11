@@ -9,6 +9,7 @@ We follow automated code standards: Prettier for formatting and ESLint for linti
 - [Team Page](./admin/team.md)
 - [Weekly Plans](./admin/plans/)
 - [Meeting Notes](./admin/meetings/)
+- [Contributing Guide](CONTRIBUTING.md)
 - [Architecture Decision Records](./specs/adr/)
 - [View Team Status Video on YouTube](https://www.youtube.com/watch?v=oZjkrQSXtZM)
 
